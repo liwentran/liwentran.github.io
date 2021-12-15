@@ -43,8 +43,8 @@ class Rectangle {
 #endif //RECTANGLE_H
 ```
 
- Defining a function outside class:
- ```c++
+Defining a function outside class:
+```c++
  // rectangle.h
  #ifndef RECTANGLE_H
  #define RECTANGLE_H
@@ -55,7 +55,8 @@ class Rectangle {
 	...
 }
 #endif //RECTANGLE_H
- ```
+```
+
 ```c++
 // rectangle.cpp
 #include "rectangle.h"
