@@ -192,8 +192,7 @@ pre {
 	flex-direction: row;
 	justify-content: space-between;
 	align-items:center;	
-	padding-top: 24px;
-	padding-bottom: 24px;
+	padding: 24px 16px;
 }
 
 .footer__container ul {
@@ -371,6 +370,13 @@ pre {
 
 /* MOBILE FRIENDLY */
 
+@media only screen and (max-width: 768px) {
+	.all-courses__container {
+		padding: 0 1em;
+	}
+}
 @media only screen and (max-width: 625px) {
-	
+	.all-courses__container {
+		padding: 0;
+	}
 }
