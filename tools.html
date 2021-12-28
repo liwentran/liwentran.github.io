@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Journal: Intermediate Programming</title>
+<base href="../../">
+<link href="style.css" rel="stylesheet" type="text/css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+<script> 
+      $(function(){
+        $("#nav").load("navigation.html"); 
+        $("#foot").load("footer.html"); 
+      });
+    </script>
+</head>
+
+<body>
+<div id="nav"></div>
+<main class="site-main container-md px-3">
+    <div class="file-path">
+        <ul class="path">
+            <li><a href="course/intermediate-programming.html">Intermediate Programming</a></li>
+            <li><a href="course/intermediate-programming/tools.html">Tools</a></li>
+        </ul>
+    </div>
+    <article class="notes">
+        <h1 class="course-title title-1">Tools</h1>
+        <h2 id="editors">Editors</h2>
+        <p><strong>Emacs</strong> and <strong>vim</strong> are the two standard editors which work via the terminal.</p>
+        <h2 id="emacs-shortcuts">Emacs Shortcuts</h2>
+        <p>Access the Emacs reference card <a href="https://www.gnu.org/software/emacs/refcards/pdf/refcard.pdf">here</a>. Common shortcuts that you will use:</p>
+        <ul>
+            <li><em>Ctrl-K</em>: cuts the line</li>
+            <li><em>Ctrl-Y</em>: pastes the line</li>
+            <li><em>Ctrl-Space</em>: starts highlighting, move arrows, then <em>Esc-W</em> to copy. </li>
+            <li><em>Ctrl-X</em> then the number. It opens multiple &quot;buffers&quot;, or sub window.
+                <ul>
+                    <li><em>Ctrl-X-O</em> jumps between buffers with . </li>
+                    <li><em>Ctrl-X-F</em> to point your buffer to another file. Provide the relative file. </li>
+                </ul>
+            </li>
+            <li><em>Ctrl-X-S</em> saves the file. </li>
+            <li><em>Ctrl-X-C</em> quits Emacs.</li>
+        </ul>
+        <h2 id="gdb">gdb</h2>
+        <p><code>gdb</code> is a GNU debugger that allows you to:</p>
+        <ul>
+            <li>flexibly <em>pause</em> and <em>resume</em></li>
+            <li>print out values of variables mid-stream</li>
+            <li>see where severe errrors like <code>Segmentation Faults</code> happen. </li>
+            <li>When using <code>gdb</code> or <code>valgrind</code>, compile with <code>-g</code>, which packages up the source code (&quot;debug symbols&quot;) along with the executable. </li>
+        </ul>
+        <h3 id="commands">Commands</h3>
+        <p> <code>break main</code> sets a break point (where you want to stop the execution) at the beginning of the main functions. <code>run</code> continues execution. <code>next</code> executes the statement on the current line and moves onto the next and then stops. Use the shortcut <code>n</code>. <code>step</code> begins to execute the statement on the current line. If the statement contains a function call, it <em>steps into</em> the function and pauses there. <code>print &lt;variable-name&gt;</code> prints out the value of the variable. <code>p</code> is the shotcut. </p>
+        <h2 id="valgrind">Valgrind</h2>
+        <p><code>valgrind</code> is a debugging tool for finding memory usage mistakes such as:</p>
+        <ul>
+            <li>invalid memory accesses: e.g. array index out of bounds</li>
+            <li>memory leaks: failure to <code>free</code> dynamically-allocated memory (<code>HEAP SUMMARY</code>).</li>
+            <li>invalid read and writes: attempts to dereference pointers to memory that is not yours. </li>
+        </ul>
+        <h3 id="how-to-use-valgrind-">How to use valgrind?</h3>
+        <ol>
+            <li>Compile program with the flag <code>-g</code></li>
+            <li>Run the program with <code>valgrind --leak-check=full ./myFile &lt;arg1&gt; &lt;arg2&gt; ...</code></li>
+            <li>Look for <code>All heap bocks were freed</code> and <code>ERROR SUMMARY: 0 errors</code> for no issues.</li>
+        </ol>
+		<br>
+    </article>
+</main>
+<div id="foot"></div>
+</body>
+</html>
