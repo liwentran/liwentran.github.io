@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Journal: Intermediate Programming</title>
+    <base href="../../">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#nav").load("navigation.html");
+            $("#foot").load("footer.html");
+        });
+    </script>
+</head>
+
+<body>
+<div id="nav"></div>
+<main class="site-main container-md px-3 py-3-bot">
+    <div class="file-path">
+        <ul class="path">
+            <li><a href="course/intermediate-programming.html">Intermediate Programming</a></li>
+            <li><a href="course/intermediate-programming/.html">Git</a></li>
+        </ul>
+    </div>
+    <article class="notes">
+        <h1 class="course-title title-1">Git</h1>
+        <p>Allows you to share files- optimized for code.
+            <em>Version control</em> allows you to record snapshots of a project, allowing you go back to earlier
+            versions. </p>
+        <h2 id="how-does-it-work-">How does it work?</h2>
+        <p>
+            <img class="img-center" src="https://www.git-tower.com/learn/git/ebook/en/command-line/remote-repositories/introduction/basic-remote-workflow.png"
+                 style="zoom:40%;" /></p>
+        <p>The repository is a database of code snapshots called &quot;commits&quot;. </p>
+        <p>Local repository contains the files on your machine that you are working with on your text editor. When you
+            confident in your changes, you can create create a commit that adds your modifications to your git
+            history. </p>
+        <ul>
+            <li>Local repositories are private to one user&#39;s account</li>
+            <li>If you can&#39;t log into the computer, you can&#39;t access it.</li>
+        </ul>
+        <p>The remote repository is on a server makes the commits available to anyone with access. Can act as a
+            backup</p>
+        <p>Information abou changes in a copy of the repo is stored across several non-human-readable files in a
+            subdirectory called <code>.git</code> which is created when you clone a repo. </p>
+        <ul>
+            <li><code>.git/config</code> might be helpful.</li>
+        </ul>
+        <h2 id="commands">Commands</h2>
+        <p>Full list of commands <a href="https://education.github.com/git-cheat-sheet-education.pdf">here</a>
+            <code>git add &lt;file&gt;</code>: add to the project (&quot;stage a file&quot; so that it will be part of
+            the commit).
+            <code>git commit -m &quot;commit message&quot;</code>: update local repo to include changes since last
+            commit (&quot;take a local scnapshot&quot;).
+            <code>git push</code>: send changes fromlocal repo to remote repo (on github)
+            <code>git status</code>: check what&#39;s been modified or staged.
+            <code>git mv &lt;file&gt; &lt;file&gt;</code>: rename a file since plain-old <code>mv</code> or
+            <code>rm</code> don&#39;t work.
+            <code>git rm &lt;file&gt;</code>: remove a file. </p>
+        <p><code>git pull</code>: local repo asks for most updated copy from remote repo.
+            <code>git push</code>: local repo sends all recent commits up to remote repo.
+            <em>Conflicts</em> can occur from these two commands</p>
+        <ul>
+            <li>on <code>git pull</code>, your local has changes which conflict with changes to the same file(s) in the
+                remote repo (merge conflict).
+            </li>
+            <li>on <code>git push</code>, the remote repo has commits you don&#39;t have in your local repo
+                (non-fast-forward update).
+            </li>
+        </ul>
+        <p><code>git clone &lt;repository-url&gt;</code> transfers files from remote repo to local machine.</p>
+        <h2 id="tracked-files">Tracked Files</h2>
+        <p>Files that are part of your project (git add&#39;ed them) are called <em>tracked</em>.
+            Tracked files can be of in the following states:</p>
+        <ul>
+            <li>Unmodified (same as copy in local repo).</li>
+            <li>Modifed (differet from copy in local repo but not yet staged).</li>
+            <li>Staged (next <code>git commit</code> will update the repo).
+                When you...
+            </li>
+            <li>edit files: unmodified -&gt; modified</li>
+            <li>do <code>git add</code>: modified -&gt; staged</li>
+            <li>do<code>git commit</code>: staged -&gt; unmodified.</li>
+        </ul>
+        <h2 id="untracked-files">Untracked Files</h2>
+        <p>Files that are <em>not yet</em> part of your project (&quot;unstaged&quot;) are called <em>untracked</em>.
+            When you create a new filed, it&#39;s <em>unstaged</em> until you <code>git add</code> it. These <em>unstaged</em>
+            files are noticed by git and appear as unstaged when you check <code>git status</code>.</p>
+        <p>If you don&#39;t want to include some untracked files, tell git to ignore a file by adding it to <code>.gitignore</code>
+            file. </p>
+        <ul>
+            <li>Example of things you don&#39;t want to include are: <code>a.out</code>, <code>gitlog.txt</code>, or
+                anything generated by the compiler (executables, .<code>.o</code> files).
+            </li>
+        </ul>
+        <h2 id="workflow">Workflow</h2>
+        <ol>
+            <li>Start each session with <code>git pull</code>, to ensure your local copy is up-to-date.</li>
+            <li>After you complete work on a small task, <code>commit</code> it.</li>
+            <li>Include a message with every commit to explain what changes you commited with <code>-m</code>.</li>
+            <li><code>commit</code> and <code>push</code> before the end of each work session.</li>
+            <li>See a record of your latest commits with <code>git log</code>.</li>
+        </ol>
+        <h3 id="commit-git-command-orders">Commit git command orders</h3>
+        <ol>
+            <li><code>git pull</code> before you start working.</li>
+            <li><code>git add &lt;files you edited&gt;</code> after you&#39;ve finished your edit.</li>
+            <li><code>git commit -m &lt;comments&gt;</code> to commit changes with <em>comments</em>.</li>
+            <li><code>git pull</code> one more time to sync with new updates.</li>
+            <li>Solve conflicts, then repeat steps 2-5.</li>
+            <li><code>git push</code> back to the repo.</li>
+        </ol>
+
+        <br>
+    </article>
+</main>
+<div id="foot"></div>
+</body>
+</html>

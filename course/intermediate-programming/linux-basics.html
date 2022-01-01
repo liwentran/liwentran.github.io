@@ -1,122 +1,157 @@
 <!doctype html>
 <html>
-    <head>
+<head>
     <meta charset="UTF-8">
     <title>Journal: Intermediate Programming</title>
-	<base href="../../">
+    <base href="../../">
     <link href="style.css" rel="stylesheet" type="text/css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
-	<script> 
-      $(function(){
-        $("#nav").load("navigation.html"); 
-        $("#foot").load("footer.html"); 
-      });
-	</script>
-    </head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#nav").load("navigation.html");
+            $("#foot").load("footer.html");
+        });
+    </script>
+</head>
 
 <body>
-	<div id="nav"></div>
-	<main class="site-main container-md px-3">
-		<div class="file-path">
-            <ul class="path">
-				<li><a href="course/intermediate-programming.html">Intermediate Programming</a></li>
-				<li><a href="course/intermediate-programming/linux-basics.html">Linux Basics</a></li>
-            </ul>
-		</div>
-		<article class="notes">
-			<h1 class="course-title title-1">Linux Basics</h1>
-			<h2 id="unix">Unix/Linux</h2>
-			<p>They are a powerful class of operating systems, designed to support the needs of programmers. They are multiuser, uses a unified file system, and are heavily based on the command-line interface called the &quot;shell.&quot; They are designed to automate tasks. Putting in upfront effort reduces the manual effort needed later, which is called &quot;long-term lazy&quot; (slower to learn, faster to use). </p>
-			<p><em>Directory</em> means the same thing as <em>folder</em>. All files and directories are referred as &quot;paths&quot;. </p>
-			<ul>
-				<li><code>~</code> denotes the home directory of your account</li>
-				<li><code>.</code> denotes the current directory</li>
-				<li><code>..</code> denotes the parent directory (one level up from current)</li>
-				<li>When you log into ugrad, you&#39;ll be in your home directory.</li>
-			</ul>
-			<h2 id="connecting-to-ugrad-from-your-own-computer">Connecting to ugrad from your own computer</h2>
-			<p>Windows: download PuTTy, set Host Name as <code>ugradx.cs.jhu.edu</code>, type account name (JHED), and password.
-				Mac: open Terminal, then type the command <code>ssh &lt;your-username&gt;@ugradx.cs.jhu.edu</code>font-family: monospace; Linux: open terminal and use <code>ssh &lt;your-username&gt;@ugradx.cs.jhu.edu</code>.</p>
-			<h2 id="command-line">Command Line</h2>
-			<p>Unix/Linux commands are case-sensitive.
-				Learn Unix/Linu command line from this <a href="https://cli-boot.camp">boot camp</a>.</p>
-			<h3 id="basic-commands">Basic Commands</h3>
-			<ul>
-				<li><code>pwd</code> - print working directory</li>
-				<li><code>ls</code> - list directory contents</li>
-				<li><code>cd &lt;folder_name&gt;</code> - change directory [specify directory name]</li>
-				<li><code>mkdir &lt;folder_name&gt;</code> makes a new directory within current directory.</li>
-				<li><code>less &lt;file_to_view&gt;</code> view text file screenful at a time.</li>
-				<li><code>mv &lt;source&gt; &lt;destination&gt;</code> changes the location of file or folder.</li>
-				<li><code>cp &lt;source&gt; &lt;destination&gt;</code> make a copy file or folder.</li>
-				<li><code>rm &lt;file_to_remove&gt;</code> remove a file. Not easy to undo deletion.
-					<ul>
-						<li>Use the flag <code>-r</code> to delete recursively and remove subdirectories and <code>-i</code> if you want to verify deletion. </li>
-					</ul>
-				</li>
-				<li>Loations can be <em>relative</em> to current directory (E.g.: <code>cp Hello.c folderForToday/hello.c</code>) or <em>absolute</em>, based on the full path in file system.</li>
-				<li><code>exit</code> logs out of the ugrad system.</li>
-				<li><code>man</code> is the manual available at command line. Using with an operation or function gets details (e.g, <code>man cp</code> or <code>man ispunct</code>).</li>
-			</ul>
-			<h2 id="copying-files">Copying Files</h2>
-			<p><code>cp</code> command in Unix is how we copy files within one machine. <code>scp</code> and <code>pscps</code> command is <em>secure</em> copy, a way to transfer copies from one machine to another. </p>
-			<p>In Mac Terminal or Windows Power Shell, use <code>scp &lt;source&gt; &lt;destination&gt;</code>.</p>
-			<p>In Windows with PuTTY, use <code>pscp &lt;source&gt; &lt;destination&gt;</code> in Command Prompt. </p>
-			<ul>
-				<li>Note that Windows machine use backslash (<code>\</code>) instead of forward slash (<code>/</code>) used in unix for file paths. </li>
-			</ul>
-			<h3 id="ugrad-to-local">Ugrad to Local</h3>
-			<pre><code>scp &lt;username&gt;@ugradx<span class="hljs-selector-class">.cs</span><span class="hljs-selector-class">.jhu</span><span class="hljs-selector-class">.edu</span>:&lt;filename&gt;<span class="hljs-selector-class">.c</span> .</code></pre>
-			<p>(in Mac Terminal or Windows Power Shell).</p>
-			<p>For example,</p>
-			<pre><code>scp ltran29@ugradx<span class="hljs-selector-class">.cs</span><span class="hljs-selector-class">.jhu</span><span class="hljs-selector-class">.edu</span>:HW1/file<span class="hljs-selector-class">.c</span> xyz/</code></pre>
-			<h2 id="zipping">Zipping</h2>
-			<pre><code>zip zipped_files<span class="hljs-selector-class">.zip</span> file1<span class="hljs-selector-class">.c</span> file2<span class="hljs-selector-class">.c</span> gitlog.txt</code></pre>
-			<p>Packs up three files into a <code>zipped_files.zip</code>.</p>
-			<p>To confirm that it contains what you want,</p>
-			<pre><code><span class="hljs-selector-tag">unzip</span> <span class="hljs-selector-tag">-1</span> <span class="hljs-selector-tag">zipped_files</span><span class="hljs-selector-class">.zip</span></code></pre>
-			<p>To unpack the zip file (i.e., extract its file),</p>
-			<pre><code><span class="hljs-selector-tag">unzip</span> <span class="hljs-selector-tag">zipped_files</span><span class="hljs-selector-class">.zip</span></code></pre>
-			<p>Move and unpack in a new/different folder to avoid overwriting the original files. </p>
-			<h2 id="i-o-redirection">I/O Redirection</h2>
-			<p>When executing a command that produces output, redirect the result to a textfile (instead of on screen) by using &#39;<code>&gt;</code> outfile&#39;:</p>
-			<pre><code><span class="hljs-selector-tag">ls</span> &gt; <span class="hljs-selector-tag">myfiles</span><span class="hljs-selector-class">.txt</span></code></pre>
-			<p>When executing a command that takes input, redirect input from a plain txt file by using &#39;<code>&lt;</code> infile&#39;:</p>
-			<pre><code>less &lt; infile.<span class="hljs-built_in">text</span></code></pre>
-			<p>Use both at once, or use a pipe command &#39;<code>|</code>&#39; to send the standard output of one command directly into standard inputfor another command. For example, to list your files but view the list one screenful at a time use:</p>
-			<pre><code>ls <span class="hljs-string">| less</span></code></pre>
-			<ul>
-				<li><code>echo 4 | ./a.out</code> sends an input directly into a program. </li>
-			</ul>
-			<h2 id="homework-workflow">Homework workflow</h2>
-			<ol>
-				<li>Write code, compile, test, and edit while continuously adding, committing, and pushing changes to personal git repo.</li>
-				<li>Generate <code>gitlog.txt</code> file to document your commits using <code>git log &gt; gitlog.txt</code>.</li>
-				<li>Bundle files for submission with <code>zip hw0.zip file1.c file2.c gitlog.txt</code>.</li>
-				<li>Confirm that your zip files contains everything with <code>unzip -1 hw0.zip</code>.</li>
-				<li>Transfer the bundle onto local machine using <code>scp &lt;username&gt;@ugradx.cs.jhu.edu:&lt;HW0/hw0.zip .</code></li>
-				<li>Upload <code>hw0.zip</code> to Gradescope. Wait for feedback and resubmit (only last one is graded).</li>
-			</ol>
-			<h2 id="tips">Tips</h2>
-			<ul>
-				<li><code>*</code>: wildcard character, helpful with file commands.
-					<ul>
-						<li><code>git add *.c*</code> adds all files ending in .c to your staging area. </li>
-						<li><code>ls f*</code> lists all files that start with f.</li>
-					</ul>
-				</li>
-				<li><code>!</code> (bang): repeats the prior command. Can be used alone or with a start of a command name.
-					<ul>
-						<li><code>! !</code> will execute the prior command. </li>
-						<li><code>!em</code> will execute the most recent command that started with &quot;em&quot; </li>
-					</ul>
-				</li>
-				<li>up and down arrows cycles through your command history</li>
-				<li>tab will complete command. </li>
-				<li><code>history | grep &lt;keyword&gt;</code>: searches history with keyword. </li>
-			</ul>
-		</article>
-	</main>
-	<div id="foot"></div>
+<div id="nav"></div>
+<main class="site-main container-md px-3 py-3-bot">
+    <div class="file-path">
+        <ul class="path">
+            <li><a href="course/intermediate-programming.html">Intermediate Programming</a></li>
+            <li><a href="course/intermediate-programming/linux-basics.html">Linux Basics</a></li>
+        </ul>
+    </div>
+    <article class="notes">
+        <h1 class="course-title title-1">Linux Basics</h1>
+        <h2 id="unix">Unix/Linux</h2>
+        <p>They are a powerful class of operating systems, designed to support the needs of programmers. They are
+            multiuser, uses a unified file system, and are heavily based on the command-line interface called the &quot;shell.&quot;
+            They are designed to automate tasks. Putting in upfront effort reduces the manual effort needed later, which
+            is called &quot;long-term lazy&quot; (slower to learn, faster to use). </p>
+        <p><em>Directory</em> means the same thing as <em>folder</em>. All files and directories are referred as &quot;paths&quot;.
+        </p>
+        <ul>
+            <li><code>~</code> denotes the home directory of your account</li>
+            <li><code>.</code> denotes the current directory</li>
+            <li><code>..</code> denotes the parent directory (one level up from current)</li>
+            <li>When you log into ugrad, you&#39;ll be in your home directory.</li>
+        </ul>
+        <h2 id="connecting-to-ugrad-from-your-own-computer">Connecting to ugrad from your own computer</h2>
+        <p>Windows: download PuTTy, set Host Name as <code>ugradx.cs.jhu.edu</code>, type account name (JHED), and
+            password.
+            Mac: open Terminal, then type the command <code>ssh &lt;your-username&gt;@ugradx.cs.jhu.edu</code>font-family:
+            monospace; Linux: open terminal and use <code>ssh &lt;your-username&gt;@ugradx.cs.jhu.edu</code>.</p>
+        <h2 id="command-line">Command Line</h2>
+        <p>Unix/Linux commands are case-sensitive.
+            Learn Unix/Linu command line from this <a href="https://cli-boot.camp">boot camp</a>.</p>
+        <h3 id="basic-commands">Basic Commands</h3>
+        <ul>
+            <li><code>pwd</code> - print working directory</li>
+            <li><code>ls</code> - list directory contents</li>
+            <li><code>cd &lt;folder_name&gt;</code> - change directory [specify directory name]</li>
+            <li><code>mkdir &lt;folder_name&gt;</code> makes a new directory within current directory.</li>
+            <li><code>less &lt;file_to_view&gt;</code> view text file screenful at a time.</li>
+            <li><code>mv &lt;source&gt; &lt;destination&gt;</code> changes the location of file or folder.</li>
+            <li><code>cp &lt;source&gt; &lt;destination&gt;</code> make a copy file or folder.</li>
+            <li><code>rm &lt;file_to_remove&gt;</code> remove a file. Not easy to undo deletion.
+                <ul>
+                    <li>Use the flag <code>-r</code> to delete recursively and remove subdirectories and <code>-i</code>
+                        if you want to verify deletion.
+                    </li>
+                </ul>
+            </li>
+            <li>Loations can be <em>relative</em> to current directory (E.g.: <code>cp Hello.c
+                folderForToday/hello.c</code>) or <em>absolute</em>, based on the full path in file system.
+            </li>
+            <li><code>exit</code> logs out of the ugrad system.</li>
+            <li><code>man</code> is the manual available at command line. Using with an operation or function gets
+                details (e.g, <code>man cp</code> or <code>man ispunct</code>).
+            </li>
+        </ul>
+        <h2 id="copying-files">Copying Files</h2>
+        <p><code>cp</code> command in Unix is how we copy files within one machine. <code>scp</code> and
+            <code>pscps</code> command is <em>secure</em> copy, a way to transfer copies from one machine to another.
+        </p>
+        <p>In Mac Terminal or Windows Power Shell, use <code>scp &lt;source&gt; &lt;destination&gt;</code>.</p>
+        <p>In Windows with PuTTY, use <code>pscp &lt;source&gt; &lt;destination&gt;</code> in Command Prompt. </p>
+        <ul>
+            <li>Note that Windows machine use backslash (<code>\</code>) instead of forward slash (<code>/</code>) used
+                in unix for file paths.
+            </li>
+        </ul>
+        <h3 id="ugrad-to-local">Ugrad to Local</h3>
+        <pre><code>scp &lt;username&gt;@ugradx<span class="hljs-selector-class">.cs</span><span
+                class="hljs-selector-class">.jhu</span><span
+                class="hljs-selector-class">.edu</span>:&lt;filename&gt;<span
+                class="hljs-selector-class">.c</span> .</code></pre>
+        <p>(in Mac Terminal or Windows Power Shell).</p>
+        <p>For example,</p>
+        <pre><code>scp ltran29@ugradx<span class="hljs-selector-class">.cs</span><span
+                class="hljs-selector-class">.jhu</span><span class="hljs-selector-class">.edu</span>:HW1/file<span
+                class="hljs-selector-class">.c</span> xyz/</code></pre>
+        <h2 id="zipping">Zipping</h2>
+        <pre><code>zip zipped_files<span class="hljs-selector-class">.zip</span> file1<span class="hljs-selector-class">.c</span> file2<span
+                class="hljs-selector-class">.c</span> gitlog.txt</code></pre>
+        <p>Packs up three files into a <code>zipped_files.zip</code>.</p>
+        <p>To confirm that it contains what you want,</p>
+        <pre><code><span class="hljs-selector-tag">unzip</span> <span class="hljs-selector-tag">-1</span> <span
+                class="hljs-selector-tag">zipped_files</span><span class="hljs-selector-class">.zip</span></code></pre>
+        <p>To unpack the zip file (i.e., extract its file),</p>
+        <pre><code><span class="hljs-selector-tag">unzip</span> <span class="hljs-selector-tag">zipped_files</span><span
+                class="hljs-selector-class">.zip</span></code></pre>
+        <p>Move and unpack in a new/different folder to avoid overwriting the original files. </p>
+        <h2 id="i-o-redirection">I/O Redirection</h2>
+        <p>When executing a command that produces output, redirect the result to a textfile (instead of on screen) by
+            using &#39;<code>&gt;</code> outfile&#39;:</p>
+        <pre><code><span class="hljs-selector-tag">ls</span> &gt; <span class="hljs-selector-tag">myfiles</span><span
+                class="hljs-selector-class">.txt</span></code></pre>
+        <p>When executing a command that takes input, redirect input from a plain txt file by using
+            &#39;<code>&lt;</code> infile&#39;:</p>
+        <pre><code>less &lt; infile.<span class="hljs-built_in">text</span></code></pre>
+        <p>Use both at once, or use a pipe command &#39;<code>|</code>&#39; to send the standard output of one command
+            directly into standard inputfor another command. For example, to list your files but view the list one
+            screenful at a time use:</p>
+        <pre><code>ls <span class="hljs-string">| less</span></code></pre>
+        <ul>
+            <li><code>echo 4 | ./a.out</code> sends an input directly into a program.</li>
+        </ul>
+        <h2 id="homework-workflow">Homework workflow</h2>
+        <ol>
+            <li>Write code, compile, test, and edit while continuously adding, committing, and pushing changes to
+                personal git repo.
+            </li>
+            <li>Generate <code>gitlog.txt</code> file to document your commits using <code>git log &gt;
+                gitlog.txt</code>.
+            </li>
+            <li>Bundle files for submission with <code>zip hw0.zip file1.c file2.c gitlog.txt</code>.</li>
+            <li>Confirm that your zip files contains everything with <code>unzip -1 hw0.zip</code>.</li>
+            <li>Transfer the bundle onto local machine using <code>scp &lt;username&gt;@ugradx.cs.jhu.edu:&lt;HW0/hw0.zip
+                .</code></li>
+            <li>Upload <code>hw0.zip</code> to Gradescope. Wait for feedback and resubmit (only last one is graded).
+            </li>
+        </ol>
+        <h2 id="tips">Tips</h2>
+        <ul>
+            <li><code>*</code>: wildcard character, helpful with file commands.
+                <ul>
+                    <li><code>git add *.c*</code> adds all files ending in .c to your staging area.</li>
+                    <li><code>ls f*</code> lists all files that start with f.</li>
+                </ul>
+            </li>
+            <li><code>!</code> (bang): repeats the prior command. Can be used alone or with a start of a command name.
+                <ul>
+                    <li><code>! !</code> will execute the prior command.</li>
+                    <li><code>!em</code> will execute the most recent command that started with &quot;em&quot;</li>
+                </ul>
+            </li>
+            <li>up and down arrows cycles through your command history</li>
+            <li>tab will complete command.</li>
+            <li><code>history | grep &lt;keyword&gt;</code>: searches history with keyword.</li>
+        </ul>
+    </article>
+</main>
+<div id="foot"></div>
 </body>
 </html>
