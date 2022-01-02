@@ -118,6 +118,7 @@ pre {
 }
 
 .header {
+    max-width: 1280px;
     display: flex !important;
     flex-direction: row !important;
     font-size: 16px;
@@ -140,7 +141,7 @@ pre {
 .logo {
     font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier, monospace;
     font-weight: 600;
-    font-size: 18px;
+    font-size: 24px;
 }
 
 .logo:hover {
@@ -155,18 +156,6 @@ pre {
     justify-content: flex-end;
 }
 
-#mobile-nav-toggle {
-    color: #24292e;
-    border: none;
-    text-decoration: none;
-    position: relative;
-    border: 0;
-    cursor: pointer;
-}
-
-.mobile-nav {
-    background: transparent!important;
-}
 
 .menu {
     display: flex;
@@ -226,6 +215,51 @@ pre {
     color: #007aff;
 }
 
+#mobile-nav-toggle {
+    color: #24292e;
+    border: none;
+    text-decoration: none;
+    position: relative;
+    border: 0;
+    cursor: pointer;
+}
+
+.mobile-nav {
+    background: transparent!important;
+}
+#js-mobile-nav {
+    width: 100%;
+    margin-bottom: 30px;
+    display: inline-block;
+}
+.hidden {
+    display: none!important;
+}
+.mobile-nav .menu {
+    display: flex;
+    flex-direction: column;
+}
+.mobile-nav .menu-item a {
+    color: #24292e;
+    align-items: flex-start;
+    height: 60px;
+    width: available;
+}
+
+.mobile-nav li {
+    border-bottom-color: rgb(209, 213, 218);
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+}
+.mobile-nav li:first-child {
+    border-top-color: rgb(209, 213, 218);
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    border-top-style: solid;
+    border-top-width: 1px;
+}
 .site-footer {
     background-color: #fafbfc!important;
     width: 100%;
@@ -356,7 +390,7 @@ pre {
         flex-wrap: wrap;
     */
     flex-direction: row;
-    margin-bottom: 36px;
+    margin-bottom: 42px;
 }
 
 .section-item__title {
@@ -372,7 +406,7 @@ pre {
 }
 
 .section-item__content {
-    margin-top: 0.5em;
+    margin-top: 0.25em;
     max-width: 75%;
     width: auto;
     list-style-type: square;
@@ -459,20 +493,20 @@ pre {
     }
     .container-xl {
         /*max-width: 1280px;*/
-        max-width: 95%;
+        max-width: 97%;
         margin-right: auto;
         margin-left: auto;
     }
 
     .container-l {
         /*max-width: 1024px;*/
-        max-width: 95%;
+        max-width: 97%;
         margin-right: auto;
         margin-left: auto;
     }
 
     .container-md {
-        max-width: 95%;
+        max-width: 97%;
         margin-right: auto;
         margin-left: auto;
     }
@@ -503,7 +537,7 @@ pre {
 }
 @media (max-width: 1012px) {
     .mobile-nav {
-        display: inline-block!important;
+        display: inline-block;
     }
     .navigation-items {
         display: none!important;
