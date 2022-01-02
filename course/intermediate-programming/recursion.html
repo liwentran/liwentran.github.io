@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Journal: Intermediate Programming</title>
+    <base href="../../">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#nav").load("navigation.html");
+            $("#foot").load("footer.html");
+        });
+    </script>
+</head>
+
+<body>
+<div id="nav"></div>
+<main class="site-main container-md px-3">
+    <div class="file-path">
+        <ul class="path">
+            <li><a href="course/intermediate-programming.html">Intermediate Programming</a></li>
+            <li><a href="course/intermediate-programming/recursion.html">Recursion</a></li>
+        </ul>
+    </div>
+    <article class="notes">
+        <h1 class="course-title title-1" id="recursion">Recursion</h1>
+        <p><em>Recursion</em> is another way to express repetition</p>
+        <ul>
+            <li>Can be more efficient and elegant than loops, but can have potential downsides.</li>
+            <li>It works by dividing large problems into one or smaller problems and then extending the solution to
+                the smaller problem(s) to a solution for the large problem.
+            </li>
+        </ul>
+        <p>Implement recursion by having the function call <em>itself</em> using different arguments. A function calling
+            itself is called a <em>recursive call</em>.</p>
+        <h2 id="when-to-use-recursion">When to Use Recursion</h2>
+        <ol>
+            <li>The smaller problem(s) ("subproblems") have the same form as the larger problem. Subproblems are solved
+                recursively by making another call to the same method using different parameter values. This means
+                arguments passed to a recursive call must describe a sub-problem that is <em>smaller</em> (simpler) than
+                the overall problem. However, you want the subproblem(s) to be as large as possible to ensure that only
+                a small amount of work is required to extend the solution to the subproblem(s) to be a solution to the
+                overall problem.
+            </li>
+            <li>There must be one or more instances of the problem that can be solved <em>without</em> recursion, known
+                as the <em>base cases</em>.
+            </li>
+            <li>All recursive calls must <em>make progress</em> towards a base case, so that the computation will
+                eventually complete. Trying to solve the same problem recursively is an <em>infinite recursion</em>.
+            </li>
+        </ol>
+        <p>Recursion is great or computation on inherently recusive structures (i.e., recursive data structures like
+            trees). Or, "divide and conquer" algorithms (e.g., merge sort, quicksort). </p>
+        <p>Avoid using deep recursion.</p>
+        <h2 id="downsides">Downsides</h2>
+        <p>Every function call requires a <em>stack frame</em>. A stack frame is an area of memory where variables and
+            temporary values for a function call are stored, as well as the <em>return address</em> indicating the code
+            location where the function call will return to. Every recursive call creates a <em>new</em> stack frame.
+        </p>
+        <ul>
+            <li>The <em>call stack</em>, where stack frames are allocated, is limited in size.</li>
+            <li>"Deep" recursion may fail because the call stack size is exceeded.</li>
+        </ul>
+        <h2 id="tracing-a-recursive-computation">Tracing a Recursive Computation</h2>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span
+                class="token keyword">unsigned</span> <span class="token function">sum_1_to_n</span><span
+                class="token punctuation">(</span><span class="token keyword">unsigned</span> n<span
+                class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>n <span
+                    class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span> <span class="token comment">// check base case</span>
+		<span class="token keyword">return</span> <span class="token number">0</span><span
+                    class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">return</span> <span class="token function">sum_1_to_n</span><span
+                    class="token punctuation">(</span>n <span class="token operator">-</span> <span
+                    class="token number">1</span><span class="token punctuation">)</span> <span
+                    class="token operator">+</span> n<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span
+                    class="token punctuation">(</span><span class="token keyword">void</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token function">printf</span><span class="token punctuation">(</span><span
+                    class="token string">"%u\n"</span><span class="token punctuation">,</span> <span
+                    class="token function">sum_1_to_n</span><span class="token punctuation">(</span><span
+                    class="token number">2</span><span class="token punctuation">)</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">return</span> <span class="token number">0</span><span
+                    class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <p></p>
+        <img src="images/stacks.png" class="internal-embed" style="width: 80%" alt="Image of a stack"></img>
+        <br>
+        Note: the maximum number of stack frames at the "deepest" point is proportional to the value of <code>n</code>
+        passed to <code>sum_1_to_n</code> (number of numbers we wanted to sum together).<p></p>
+        <br>
+    </article>
+</main>
+<div id="foot"></div>
+</body>
+</html>

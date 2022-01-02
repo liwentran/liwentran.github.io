@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Journal: Intermediate Programming</title>
+    <base href="../../">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#nav").load("navigation.html");
+            $("#foot").load("footer.html");
+        });
+    </script>
+</head>
+
+<body>
+<div id="nav"></div>
+<main class="site-main container-md px-3">
+    <div class="file-path">
+        <ul class="path">
+            <li><a href="course/intermediate-programming.html">Intermediate Programming</a></li>
+            <li><a href="course/intermediate-programming/.html">Arrays and C String</a></li>
+        </ul>
+    </div>
+    <article class="notes">
+        <h1 id="arrays" class="course-title title-1">Arrays</h1>
+        <p>An <em>array</em> variable is a <em>collection</em> of elements laid out consecutively in memory. All
+            elements have the same declared type. Individual elements are accessed with the <code>[]</code> notation
+            must come after the variable name.<br>
+            The actual value of an array variable is a memory address in C. </p>
+        <p>This is the declaration of an array that can hold 12 integer values:</p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span class="token keyword">int</span> c<span
+                class="token punctuation">[</span><span class="token number">12</span><span
+                class="token punctuation">]</span>
+</code></pre>
+        <p>The first element can be accessed with <code>c[0]</code> and the last element is always one less than the
+            size of the array (i.e., <code>c[11]</code>).<br>
+            Assign a value to an element with <code>c[0]=7</code>.</p>
+        <p>If you try to access your array before initializing, then do not know what value the elements will have and
+            you will get warnings. </p>
+        <h2 id="initializing-arrays">Initializing Arrays</h2>
+        <p>With a <code>for</code> loop:</p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span class="token keyword">int</span> c<span
+                class="token punctuation">[</span><span class="token number">12</span><span
+                class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// elements undefined</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span
+                    class="token operator">=</span> <span class="token number">0</span><span
+                    class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span
+                    class="token number">12</span><span class="token punctuation">;</span> i<span
+                    class="token operator">++</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+	c<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span
+                    class="token operator">=</span> i<span class="token punctuation">;</span> <span
+                    class="token comment">// initialize with value matching index number</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <p>With literal values by using values separated by commas within <code>{ ... }</code>. Array size can be
+            omitted when initializing with <code>{ ... }</code>. </p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span class="token keyword">int</span> c<span
+                class="token punctuation">[</span><span class="token number">5</span><span
+                class="token punctuation">]</span> <span class="token operator">=</span> <span
+                class="token punctuation">{</span><span class="token number">2</span><span
+                class="token punctuation">,</span> <span class="token number">4</span><span
+                class="token punctuation">,</span> <span class="token number">6</span><span
+                class="token punctuation">,</span> <span class="token number">8</span><span
+                class="token punctuation">,</span> <span class="token number">10</span><span
+                class="token punctuation">}</span><span class="token punctuation">;</span>
+
+c<span class="token punctuation">[</span> <span class="token punctuation">]</span> <span class="token operator">=</span> <span
+                    class="token punctuation">{</span><span class="token number">2</span><span
+                    class="token punctuation">,</span> <span class="token number">4</span><span
+                    class="token punctuation">,</span> <span class="token number">6</span><span
+                    class="token punctuation">,</span> <span class="token number">8</span><span
+                    class="token punctuation">}</span> <span class="token comment">// no size</span>
+</code></pre>
+        <h2 id="whole-array-operations-not">Whole Array Operations (NOT)</h2>
+        <ul>
+            <li>There is no "slicing" in C. (E.g., can't access several elements using <code>c[1:4]</code>).</li>
+            <li>Cannot print (<code>printf("%a", c)</code>) or read (<code>scanf("%a", c)</code>) a entire entire array
+                (except for char arrays).
+            </li>
+        </ul>
+        <h1 id="strings" class="course-title title-1">Strings</h1>
+        <p>Strings are a sequence of characters handled as a unit; not a separate type. It is an array of characters
+            with the final character equal to the "null character", <code>\0</code>, also called the "null terminator,"
+            and has the first character on the ASCII table with a value of 0. </p>
+        <p>Two declarations of string. The first declaration shows a string is like an <a class="internal-link"
+                                                                                          data-href="#Arrays"
+                                                                                          href="/Users/tran/Library/Mobile Documents/iCloud~md~obsidian/Documents/Journal/School/Intermediate Programming/index.html#Arrays"
+                                                                                          target="_blank"
+                                                                                          rel="noopener">array</a>. The
+            second uses an array with the final character equal to the "null character” and both first and second
+            strings are <em>null-terminated</em> and are arrays of size 7. The third declaration shows a string is like
+            a <em>pointer</em>.</p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span class="token keyword">char</span> day<span
+                class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span
+                class="token string">"monday"</span><span class="token punctuation">;</span>
+
+<span class="token comment">// same as</span>
+<span class="token keyword">char</span> day<span class="token punctuation">[</span><span
+                    class="token punctuation">]</span> <span class="token operator">=</span> <span
+                    class="token punctuation">{</span><span class="token string">'m'</span><span
+                    class="token punctuation">,</span> <span class="token string">'o'</span><span
+                    class="token punctuation">,</span> <span class="token string">'n'</span><span
+                    class="token punctuation">,</span> <span class="token string">'d'</span><span
+                    class="token punctuation">,</span> <span class="token string">'a'</span><span
+                    class="token punctuation">,</span> <span class="token string">'y'</span><span
+                    class="token punctuation">,</span> <span class="token string">'\0'</span><span
+                    class="token punctuation">}</span>
+
+<span class="token comment">//alteratively</span>
+<span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>day_ptr <span
+                    class="token string">"monday"</span><span class="token punctuation">;</span>
+
+
+</code></pre>
+        <h2 id="string-character-access">String Character Access</h2>
+        <p><em>Indexing</em>, or accessing elements of the string utilizes <em>square bracket</em> notation.</p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded">cnst <span
+                class="token keyword">char</span> str<span class="token punctuation">[</span><span
+                class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"hello"</span><span
+                class="token punctuation">;</span>
+<span class="token function">print</span><span class="token punctuation">(</span><span
+                    class="token string">"%c %c \n"</span><span class="token punctuation">,</span> str<span
+                    class="token punctuation">[</span><span class="token number">1</span><span
+                    class="token punctuation">]</span><span class="token punctuation">,</span> str<span
+                    class="token punctuation">[</span><span class="token number">2</span><span
+                    class="token punctuation">]</span><span class="token punctuation">)</span> <span
+                    class="token comment">// prints "e l"</span>
+</code></pre>
+        <h2 id="printing-strings">Printing Strings</h2>
+        <p>Strings are an array of null-terminated (<code>\n</code>) characters. Null termination is used to indicate
+            where the string ends, so it will only print chars up to the (first) <code>\n</code>.</p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span
+                class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%s"</span><span
+                class="token punctuation">,</span> s<span class="token punctuation">)</span><span
+                class="token punctuation">;</span>
+</code></pre>
+        <h2 id="string-functions">String Functions</h2>
+        <p>Size-related functions that return an unsigned long (<code>%lu</code> format string). </p>
+        <ul>
+            <li><code>strlen</code> function returns number of chars before <code>\n</code>. (best way to find length of
+                a given variable). From the <code>#inlude &lt;string.h&gt;</code> library.
+            </li>
+            <li><code>sizeof</code> function returns amount of space occupied by a variable; the total # of bytes.
+                <ul>
+                    <li><code>sizeof(type_name)</code> like <code>int</code> it tells you how many bytes an integer type
+                        is. <code>sizeof(array_var)</code> also tells you is declared size.
+                    </li>
+                    <li>If you had an array named <code>ra</code> of 5 integers, <code>sizeof(ra) / sizeof(int)</code>
+                        would tell you the size of the given array. Works with any type.
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <p><code>#include&lt;string.h&gt;</code> includes helpful string functions:</p>
+        <ul>
+            <li><code>strcmp(s1, s2)</code> compares two strings according to character ASCII values.
+                <ul>
+                    <li>Negative value: <code>s1</code> before <code>s2</code>, Zero: <code>s1</code> and
+                        <code>s2</code> are equal. Positive: <code>s1</code> after <code>s2</code>.
+                    </li>
+                </ul>
+            </li>
+            <li><code>strcpy(s1, s2)</code> copy effect is like <code>s1 = s2</code> as long as <code>s1</code> is
+                declared with a sufficient size to fit <code>s2</code>.
+            </li>
+            <li><code>strcat(s1, s2)</code> concatenate effect is like <code>s1 = s1 + s2</code> as long as
+                <code>s1</code> is declared with a sufficient size.
+            </li>
+            <li>See more: <code>strncpy</code>, <code>strncat</code>, <code>strtok</code>, and <a
+                    aria-label-position="top" aria-label="https://www.cplusplus.com/reference/cstring/" rel="noopener"
+                    class="external-link" href="https://www.cplusplus.com/reference/cstring/" target="_blank">others</a>.
+            </li>
+        </ul>
+        <h2 id="string-operations-not">String Operations (NOT)</h2>
+        <ul>
+            <li>There is no concatenation operator <code>+</code>.</li>
+            <li>No assignment <code>=</code> between strings declared as arrays. You cannot do a whole assignment into
+                an array because it is a fixed memory address.
+            </li>
+            <li>Assignment is allowed between strings declared as pointers.</li>
+        </ul>
+        <br>
+    </article>
+</main>
+<div id="foot"></div>
+</body>
+</html>

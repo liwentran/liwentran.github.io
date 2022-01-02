@@ -21,7 +21,7 @@
     --background-modifier-error-hover: #FF9494;
 
     --gray: #586069;
-    --gray-1: #383a42;
+    --gray-1: #85939e;
     --gray-2: #383a42;
     --red: #e75545;
     --green: #4ea24c;
@@ -34,7 +34,7 @@
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 1.5;
     color: var(--text-primary);
     margin: 0;
@@ -215,7 +215,7 @@ hr {
     margin-left: 0 !important;
     top: 4em;
     left: 1em;
-    box-shadow: 0 0 10px var(--text-muted);
+    box-shadow: 0 0 10px var(--gray-1);
     background-color: white;
     border-radius: 0.5rem;
     width: 15em;
@@ -455,6 +455,7 @@ hr {
     flex-direction: row;
     list-style-type: none !important;
     margin-block-end: .5em;
+    width: auto;
 }
 
 .path a {
@@ -483,29 +484,42 @@ hr {
     font-size: 90%;
     background-color: var(--background-secondary);
     border-radius: 3px;
+    overflow: auto;
     color: var(--code-blue);
+    display: inline;
 }
 
 .notes .comment {
-    color: var(--gray);
+    color: var(--gray-1);
 }
+
 .notes .directive-hash {
-    color:var(--purple);
+    color: var(--purple);
 }
 
 .notes .keyword {
     color: var(--blue);
 }
+
 .notes .string {
     color: var(--green);
 }
+
 .notes .function {
     color: var(--red);
 }
+
 .notes .number {
+    color: var(--purple);
+}
+
+.notes .operator {
     color: var(--orange);
 }
 
+.notes .punctuation {
+    color: var(--gray-1)
+}
 
 .notes ul {
     margin-top: 0.5em;
@@ -535,6 +549,20 @@ hr {
 .notes span {
     margin: 0;
     padding: 0;
+}
+
+.notes blockquote {
+    background: var(--background-secondary);
+    box-shadow: 0 0 10px var(--background-border);
+    padding: 12px;
+    border-radius: 0.5em;
+    font-style: italic;
+}
+
+.notes img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .indent-1 {
@@ -570,6 +598,18 @@ hr {
         max-width: 97%;
         margin-right: auto;
         margin-left: auto;
+    }
+
+    .header-title {
+        width: 50%;
+    }
+
+    .header-nav {
+        width: 50%;
+    }
+
+    .course-info {
+        font-size: 14px;
     }
 }
 

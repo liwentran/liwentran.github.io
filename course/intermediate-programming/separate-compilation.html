@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Journal: Intermediate Programming</title>
+    <base href="../../">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#nav").load("navigation.html");
+            $("#foot").load("footer.html");
+        });
+    </script>
+</head>
+
+<body>
+<div id="nav"></div>
+<main class="site-main container-md px-3">
+    <div class="file-path">
+        <ul class="path">
+            <li><a href="course/intermediate-programming.html">Intermediate Programming</a></li>
+            <li><a href="course/intermediate-programming/separate-compilation.html">Separate Compilation</a></li>
+        </ul>
+    </div>
+    <article class="notes">
+        <h1 class="course-title title-1" id="Separate Compilation">Separate Compilation</h1>
+        <p>Big software projects are typically split among multiple files. Helper functions might be separated from
+            main, grouped together as a library of functions which accomplish related tasks using header files. </p>
+        <h2 id="header-files">Header Files</h2>
+        <p>Header files specify <em>declarations</em> and a separate <code>.c</code> source file will contain <em>definitions</em>
+            for those functions declared in a <code>.h</code> header file. </p>
+        <p>Different files used within one program communicate using header files (<code>.h</code> files) to group
+            declarations, then <code>#include</code> them into appropriate files. There are two ways to include files:
+        </p>
+        <ul>
+            <li><code>#include &lt;stdio.h&gt;</code> is used when the header files are part of the standard library
+            </li>
+            <li><code>#include "myHeader.h"</code> used for user defined header files.</li>
+        </ul>
+        <p>When the pre-processor sees a <code>#include</code> directive, it inserts the content of the specified files
+            at that location in the code. </p>
+        <p>function.c:</p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span
+                class="token macro property"><span class="token directive-hash">#</span><span
+                class="token directive keyword">include</span> <span class="token string">"functions.h"</span> <span
+                class="token comment">//including my own header file (use " ")</span></span>
+
+<span class="token keyword">float</span> <span class="token function">func1</span> <span
+                    class="token punctuation">(</span><span class="token keyword">int</span> x<span
+                    class="token punctuation">,</span> <span class="token keyword">float</span> y<span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token keyword">return</span> x<span class="token operator">+</span>y<span
+                    class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">int</span> <span class="token function">func2</span> <span
+                    class="token punctuation">(</span><span class="token keyword">int</span> a<span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token keyword">return</span> <span class="token number">2</span><span
+                    class="token operator">*</span>a<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <p>function.h:</p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span
+                class="token keyword">float</span> <span class="token function">func1</span> <span
+                class="token punctuation">(</span><span class="token keyword">int</span> x<span
+                class="token punctuation">,</span> <span class="token keyword">float</span> y<span
+                class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">func2</span> <span
+                    class="token punctuation">(</span><span class="token keyword">int</span> a<span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+        <p>mainFIle.c:</p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span
+                class="token macro property"><span class="token directive-hash">#</span><span
+                class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span
+        class="token string">"functions.h"</span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%.f %d"</span><span
+                    class="token punctuation">,</span> <span class="token function">func1</span><span
+                    class="token punctuation">(</span><span class="token number">2</span><span
+                    class="token punctuation">,</span><span class="token number">3.0</span><span
+                    class="token punctuation">)</span><span class="token punctuation">,</span> <span
+                    class="token function">func2</span><span class="token punctuation">(</span><span
+                    class="token number">7</span><span class="token punctuation">)</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">return</span> <span class="token number">0</span><span
+                    class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <p>You must compile both of the c files by <code>gcc mainFile.c function.c</code>.</p>
+        <h3 id="compilation-and-linking">Compilation and Linking</h3>
+        <p></p>
+        <div src="c compilation.png" class="internal-embed"></div>
+        <br>
+        <em>Compiling</em> translates source files (<code>.c</code> files) into intermediate object files.<p></p>
+        <ul>
+            <li><code>gcc -c mainFile.c</code></li>
+            <li><code>gcc -c functions.c</code></li>
+        </ul>
+        <p><em>Linking</em> combines <code>.o</code> files into one executable file called <code>a.out</code>.</p>
+        <ul>
+            <li><code>gcc mainFile.o functions.o -o main</code></li>
+        </ul>
+        <p>This is an advantage because by compiling separately you don't need to compile every single file, which could
+            be hundreds. You only need to compile the <code>.c</code> file that you changed and link the files together.
+        </p>
+        <h3 id="Header Guards">Header Guards</h3>
+        <p>Always include <em>header guards</em> when making our own <code>.h</code> files that include
+            <em>definitions</em>. They prevent compile time error by preventing definition duplication when multiple
+            <code>.c</code> files include the same <code>.h</code> file. </p>
+        <p>Example header guard for a file named <code>rectangle.h</code>:</p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span class="token comment">// change the all-caps name to match the file name</span>
+<span class="token comment">// in this case, file is named rectangle.h</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifndef</span> <span
+        class="token expression">RECTANGLE_H </span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span
+        class="token macro-name">RECTANGLE_H</span></span>
+
+<span class="token keyword">struct</span> <span class="token class-name">rectange</span> <span
+                    class="token punctuation">{</span>
+	<span class="token keyword">int</span> height<span class="token punctuation">;</span>
+	<span class="token keyword">int</span> width<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span>
+</code></pre>
+        <p>If <code>a.h</code> includes <code>b.h</code>, and <code>main.c</code> includes <code>a.h</code> and <code>b.h</code>,
+            then <code>b.h</code> is included twice, causing an error. Header guards prevent this. </p>
+        <h2 id="make-and-makefile">make and Makefile</h2>
+        <p><code>make</code> is an automated building tool helps you keep track of which files have been changed and
+            need to be` recompiled. This saves time, avoids headaches from forgetting to recompile code, and reduces
+            typing.</p>
+        <p>To use, make a configuration-type file called <code>Makefile</code> (or <code>makefile</code>). Specify which
+            files depend on which other files, and which command should be used to create them. </p>
+        <p>There are many strict rules:</p>
+        <ul>
+            <li>Lines that begin with <code>#</code> are comments.</li>
+            <li><code>$</code> operator defines symbolic constants.
+                <ul>
+                    <li>e.g. <code>CFLAGS=-STD=C99 -pedantic -Wall -Wextra</code> can now be referred to in a command
+                        with <code>${constant-name)</code>. e.g. <code>$(CFLAGS)</code>.
+                    </li>
+                </ul>
+            </li>
+            <li>Tabs and spaces are different.</li>
+            <li>The first (topmost) target listed is the default target to run</li>
+            <li>Format of a Makefile rules:
+                <ul>
+                    <li><code>target_name&gt;: &lt;list of files on which target depends.&gt;</code></li>
+                    <li>*tab followed by command-line instruction to generate target.</li>
+                </ul>
+            </li>
+            <li>Multiple targets can be triggered by making a single target.
+                <ul>
+                    <li>If you make target <code>main</code>, then first any files on which <code>main</code> depends on
+                        will be re-made if not up-to-date.
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <h3 id="Example">Example</h3>
+        <p>Makefile:</p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded">CC<span class="token operator">=</span>gcc
+CFLAGS<span class="token operator">=</span><span class="token operator">-</span>std<span class="token operator">=</span>c99 <span
+                    class="token operator">-</span>pedantic <span class="token operator">-</span>Wall <span
+                    class="token operator">-</span>Wextra
+
+main<span class="token operator">:</span> mainFile<span class="token punctuation">.</span>o functions<span
+                    class="token punctuation">.</span>o
+	$<span class="token punctuation">(</span>CC<span class="token punctuation">)</span> <span
+                    class="token operator">-</span>o main mainFile<span
+                    class="token punctuation">.</span>o functions<span class="token punctuation">.</span>o
+
+mainFile<span class="token punctuation">.</span>o<span class="token operator">:</span> mainFile<span
+                    class="token punctuation">.</span>c functions<span class="token punctuation">.</span>h
+	$<span class="token punctuation">(</span>CC<span class="token punctuation">)</span> $<span
+                    class="token punctuation">(</span>CFLAGS<span class="token punctuation">)</span> <span
+                    class="token operator">-</span>c mainFile<span class="token punctuation">.</span>c
+
+functions<span class="token punctuation">.</span>o<span class="token operator">:</span> functions<span
+                    class="token punctuation">.</span>c functions<span class="token punctuation">.</span>h
+	$<span class="token punctuation">(</span>CC<span class="token punctuation">)</span> $<span
+                    class="token punctuation">(</span>CFLAGS<span class="token punctuation">)</span> <span
+                    class="token operator">-</span>c functions<span class="token punctuation">.</span>c
+
+clean<span class="token operator">:</span>
+	rm <span class="token operator">-</span>f <span class="token operator">*</span><span
+                    class="token punctuation">.</span>o main
+</code></pre>
+        <p>Commands to type at command prompt:</p>
+        <p><code>make functions.o</code> or <code>make mainFile.o</code></p>
+        <ul>
+            <li>Individually compiles/re-compiles the object file,<code>function.c</code> (or <code>mainFile.c</code>),
+                if needed, to create <code>function.o</code> (or <code>mainFile.o</code>)
+            </li>
+            <li>Recompiling is needed if <em>either</em> the <code>.c</code> or <code>.h</code> file has changed, since
+                the <code>functions.o</code>/<code>mainFile.o</code> target lists both files in its dependency list.
+            </li>
+            <li>Not really helpful or needed.</li>
+        </ul>
+        <p><code>make main</code></p>
+        <ul>
+            <li>Links/re-links <code>mainFile.o</code> and <code>functions.o</code> to create an executable we named
+                <code>main</code> (from the <code>-o</code> flag).
+            </li>
+            <li>First it checks if <code>mainFile.o</code> and <code>functions.o</code> are up-to-date, based on the
+                target rules specified (cascading effect through multiple rules).
+            </li>
+            <li>There is nothing special about the name <code>main</code> as the target here, we could call it anything,
+            </li>
+        </ul>
+        <p><code>make</code></p>
+        <ul>
+            <li>Runs the first target in the <code>Makefile</code>, so it has the same effect as <code>make main</code>.
+            </li>
+            <li>This is the command we will type most often.</li>
+        </ul>
+        <p><code>make clean</code></p>
+        <ul>
+            <li>removes intermediate files and the executable called <code>main</code>.</li>
+        </ul>
+        <h2 id="Others">Others</h2>
+        <p>If the compiler is trying to compile <code>main</code>, then the compiler does not need the full function
+            definition in order to produce the object file(s). If you are trying to compile the functions itself, you
+            need the full definition to create the object file. </p>
+        <p><code>sizeof()</code> is an operator, and not a function, and it returns an unsigned integer, which can be
+            printed with <code>%lu</code>. Find the size of an array by doing <code>sizeof(array)/size(type)</code></p>
+        <br>
+    </article>
+</main>
+<div id="foot"></div>
+</body>
+</html>

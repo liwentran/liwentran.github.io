@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Journal: Intermediate Programming</title>
+    <base href="../../">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#nav").load("navigation.html");
+            $("#foot").load("footer.html");
+        });
+    </script>
+</head>
+
+<body>
+<div id="nav"></div>
+<main class="site-main container-md px-3">
+    <div class="file-path">
+        <ul class="path">
+            <li><a href="course/intermediate-programming.html">Intermediate Programming</a></li>
+            <li><a href="course/intermediate-programming/file-i-o-and-assertions.html">File I/O and Assertions</a></li>
+        </ul>
+    </div>
+    <article class="notes">
+        <h1 class="course-title title-1" id="i-o">I/O</h1>
+        <h2 id="standard-streams">Standard Streams</h2>
+        <p><code>printf</code>, <code>scanf</code> only works with <code>stdin</code>/<code>stdout</code>. They use the
+            <em>standard stream</em>.</p>
+        <p>They don't have to be closed or opened; C handles that You can refer to them by these names, defined in
+            <code>stdio.h</code>:</p>
+        <ul>
+            <li><code>stdin</code></li>
+            <li><code>stdout</code></li>
+            <li><code>stderr</code></li>
+        </ul>
+        <p>For example, <code>fprintf</code> can write to <code>stdout</code> like <code>printf</code>:</p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span
+                class="token function">fprintf</span><span class="token punctuation">(</span><span
+                class="token constant">stdout</span><span class="token punctuation">,</span> <span class="token string">"Hello World\n"</span><span
+                class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+        <h2 id="c-file-i-o">C File I/O</h2>
+        <p><code>fprintf</code>, <code>fscanf</code> works with any files. Good for big inputs and outputs.</p>
+        <h3 id="fopen">fopen</h3>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span
+                class="token function">fopen</span><span class="token punctuation">(</span><span class="token string">"output.txt"</span><span
+                class="token punctuation">,</span> <span class="token string">"w"</span><span class="token punctuation">)</span><span
+                class="token punctuation">;</span>
+</code></pre>
+        <p>Use relative file path for the first parameter.<br>
+            The second parameter indicates the modes, which are:</p>
+        <ul>
+            <li><code>"w"</code> opens file for writing</li>
+            <li><code>"r"</code>: reading</li>
+            <li><code>"r+"</code>: open for reading and writing.</li>
+            <li><code>"w+"</code>: open file for reading &amp; writing.</li>
+        </ul>
+        <p>Note: <code>"r"</code> and <code>"w"</code> are common. <code>"w"</code> and <code>"w+"</code> causes the
+            named file to be overwritten if it already exists. </p>
+        <p><code>fopen</code> returns a <code>FILE*</code>, a pointer to the <code>FILE struct</code>. Returns <code>NULL</code>
+            and crashes if <code>fopen</code> failed. </p>
+        <ul>
+            <li><code>NULL</code> is a special pointer value, usually equal to <code>0</code>, and is a common way to
+                indicate failure for functions with pointer return type.
+            </li>
+        </ul>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded">FILE<span
+                class="token operator">*</span> input <span class="token operator">=</span> <span
+                class="token function">fopen</span><span class="token punctuation">(</span><span class="token string">"numbers.txt"</span><span
+                class="token punctuation">,</span> <span class="token string">"r"</span><span class="token punctuation">)</span><span
+                class="token punctuation">;</span>
+
+<span class="token keyword">if</span> <span class="token punctuation">(</span>input <span
+                    class="token operator">==</span> <span class="token constant">NULL</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Error: could not open input file\n"</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">return</span> <span class="token number">1</span><span
+                    class="token punctuation">;</span> <span class="token comment">// indicate error </span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <h3 id="fscanf">fscanf</h3>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span
+                class="token function">fscanf</span><span class="token punctuation">(</span>input<span
+                class="token punctuation">,</span> <span class="token string">"%d%d"</span><span
+                class="token punctuation">,</span> <span class="token operator">&amp;</span>destination1<span
+                class="token punctuation">,</span> <span class="token operator">&amp;</span>destination2<span
+                class="token punctuation">)</span> 
+</code></pre>
+        <ul>
+            <li>reads each line in the file named <code>input</code>.</li>
+            <li><code>scanf</code> returns the number of input collected. Do <code>while (numCollected ==2)</code> to
+                make a loop that keeps collecting two inputs from each line. Then, check if <code>(numCollected !=
+                    EOF)</code> because it would indicate that the program could not parse line instead of reaching the
+                end of file.
+            </li>
+        </ul>
+        <h3 id="other-functions">Other Functions</h3>
+        <ul>
+            <li><code>feof(fileptr)</code> returns non-zero if we've already read past the end of the file.
+                <ul>
+                    <li>Starts reading from the beginning of the file, and as you start reading, the cursor moves.</li>
+                </ul>
+            </li>
+            <li><code>ferror(fileptr)</code> returns non-zero if file is in an error state,
+                <ul>
+                    <li>e.g. if we've opened file for writing but then attempt a read.</li>
+                </ul>
+            </li>
+            <li><code>rewind(fileptr)</code> returns <code>fileptr</code> to beginning of file.</li>
+            <li><code>fclose(input)</code> closes input file.</li>
+        </ul>
+        <h1 class="course-title title-1" id="assertions">Assertions</h1>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span
+                class="token function">assert</span><span class="token punctuation">(</span>boolean expression<span
+                class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+        <p>Assertion statements help catch bugs as close to the source as possible. </p>
+        <ul>
+            <li><code>#include&lt;assert.h&gt;</code> is required to use.</li>
+            <li><code>boolean expression</code> is an expression that <em>should be true</em> if everything is okay.
+            </li>
+            <li>If it's false, program immediately exits with an error message indication failed assertion.</li>
+            <li>Create <em>test cases</em> using <code>assert</code> to make sure certain states exists.</li>
+        </ul>
+        <p>They make your assumptions clear:</p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span class="token keyword">int</span> sum <span
+                class="token operator">=</span> a<span class="token operator">*</span>a <span
+                class="token operator">+</span>b<span class="token operator">*</span>b<span
+                class="token punctuation">;</span>
+<span class="token function">assert</span> <span class="token punctuation">(</span>sum <span class="token operator">&gt;=</span> <span
+                    class="token number">0</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+</code></pre>
+        <p>We should use assert when we are verifying something about the logic of your program (checking for something
+            that implies your program is incorrect). Use if statements to check the external environment and for bad
+            user input. </p>
+        <ul>
+            <li>For example, when using <code>fopen</code> to open a file, we use <code>if(input = NULL)</code> instead
+                of an <code>assert (input != NULL)</code> because if there is a problem, it would be the fault of the
+                file (missing or corrupt), and not the program.
+            </li>
+        </ul>
+        <br>
+    </article>
+</main>
+<div id="foot"></div>
+</body>
+</html>

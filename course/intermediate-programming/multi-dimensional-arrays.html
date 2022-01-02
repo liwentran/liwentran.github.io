@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Journal: Intermediate Programming</title>
+    <base href="../../">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#nav").load("navigation.html");
+            $("#foot").load("footer.html");
+        });
+    </script>
+</head>
+
+<body>
+<div id="nav"></div>
+<main class="site-main container-md px-3">
+    <div class="file-path">
+        <ul class="path">
+            <li><a href="course/intermediate-programming.html">Intermediate Programming</a></li>
+            <li><a href="course/intermediate-programming/multi-dimensional-arrays.html">Multi-Dimensional Arrays</a></li>
+        </ul>
+    </div>
+    <article class="notes">
+        <h1 class="course-title title-1" id="Multi-Diemensional Arrays">Multi-Diemensional Arrays</h1>
+        <h2 id="declaration">Declaration</h2>
+        <ul>
+            <li><code>&lt;base_type&gt; [dim1_sz][dim2_sz];</code></li>
+            <li><code>&lt;base_type&gt; [dim1_sz][dim2_sz][dim3_sz];</code></li>
+            <li><code>&lt;base_type&gt; [dim1_sz][dim2_sz][dim3_sz][dim4_sz];</code></li>
+        </ul>
+        <h2 id="Two-dimensional arrays">Two-dimensional arrays</h2>
+        <p><code>int a[row_size][col_size]</code> is the declaration.<br>
+            Example: <code>int table[2][4] = { {1,2,3,4},{5,6,7,8};</code><br>
+        </p>
+        <div src="Pasted image 20210920142052.png" class="internal-embed"></div>
+        <p></p>
+        <ul>
+            <li>Physically in memory, laid out as one contiguous block of 2*4=8 int sized locations.</li>
+            <li>Array elements are stored in <em>row-major order</em> (all of <code>row1</code> comes first, then all of
+                <code>row2</code>).
+            </li>
+            <li><code>table</code> - holds address of first element of 2D array.</li>
+            <li><code>table[i][j]</code> - referes to the <code>j</code>th element in <code>i</code>th row of 2D array.
+            </li>
+        </ul>
+        <p>2D arrays can also be <a class="internal-link"
+                                    data-href="Memory.md#Dynamically-allocated Two Dimensional Arrays"
+                                    href="/Users/tran/Library/Mobile Documents/iCloud~md~obsidian/Documents/Journal/School/Intermediate Programming/Memory.md#Dynamically-allocated%20Two%20Dimensional%20Arrays"
+                                    target="_blank" rel="noopener">dynamically-allocated</a>.</p>
+        <h2 id="multi-dimensional-arrays-and-functions">Multi-dimensional Arrays and Functions</h2>
+        <p>When specifying multi-dimensional arrays as function parameters, you do not need to specify the first array
+            size, but the second and following dimensions must be given.</p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span class="token keyword">void</span> <span
+                class="token function">sum_matrix</span><span class="token punctuation">(</span><span
+                class="token keyword">int</span> list<span class="token punctuation">[</span><span
+                class="token punctuation">]</span><span class="token punctuation">[</span><span
+                class="token number">4</span><span class="token punctuation">]</span><span
+                class="token punctuation">,</span> <span class="token keyword">int</span> numRows<span
+                class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+        <br>
+    </article>
+</main>
+<div id="foot"></div>
+</body>
+</html>

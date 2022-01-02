@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Journal: Intermediate Programming</title>
+    <base href="../../">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#nav").load("navigation.html");
+            $("#foot").load("footer.html");
+        });
+    </script>
+</head>
+
+<body>
+<div id="nav"></div>
+<main class="site-main container-md px-3">
+    <div class="file-path">
+        <ul class="path">
+            <li><a href="course/intermediate-programming.html">Intermediate Programming</a></li>
+            <li><a href="course/intermediate-programming/functions.html">Functions</a></li>
+        </ul>
+    </div>
+    <article class="notes">
+        <h1 class="course-title title-1" id="functions">Functions</h1>
+        <p><code>printf</code>, <code>scanf</code>, <code>isalpha</code>, ... are all functions. </p>
+        <p>Functions must be called to be executed.</p>
+        <blockquote>
+            <p>“Experience has shown that the best way to develop and maintain a large program is to construct it from smaller pieces or modules, each of which is more manageable than the original program.”</p>
+        </blockquote>
+        <p>Factoring your code into functions helps...</p>
+        <ul>
+            <li>keep concentration on smaller problems, one at a time. </li>
+            <li>makes code readable</li>
+            <li>with testing because you can test <em>functions</em> one by one and are easy to write. </li>
+            <li>with collaboration.</li>
+        </ul>
+        <p>You know you need to put code in a new function when...</p>
+        <ul>
+            <li>the code has a clear distinct goal.</li>
+            <li>the number of variables used in the snippet is not large. </li>
+            <li>the code has a single result.</li>
+        </ul>
+        <h2 id="defining-functions">Defining Functions</h2>
+        <p>Function definition should appear before it is used.  </p>
+        <ul>
+            <li>"Definition" means full implementation of something.</li>
+            <li>"Declaration" is just declaring that there's going to be a function with this name, return type, property, etc. </li>
+        </ul>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span class="token keyword">int</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token keyword">char</span> c<span class="token punctuation">,</span> <span class="token keyword">int</span> i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token keyword">return</span> i<span class="token punctuation">;</span>
+ <span class="token punctuation">}</span>
+</code></pre>
+        <ul>
+            <li><code>int</code> is the <em>return</em> type.</li>
+            <li><code>foo</code> is the <em>name</em>.</li>
+            <li><code>(char c, int i)</code> is the <em>parameter list</em>.</li>
+            <li><code>char c</code> and <code>int i</code> are <em>parameters</em>. Calls to function match arguments with these.</li>
+            <li>Everything inside <code>{</code> curly braces <code>}</code> is the body.</li>
+        </ul>
+        <p>A function return nothing has return type <code>void</code>, and does not need a return statement. </p>
+        <p>Use empty parameter list <code>()</code> or <code>(void)</code> if the function does not have parameters. </p>
+        <h2 id="declaring-functions">Declaring Functions</h2>
+        <p>We can "declare" a function before the function that calls it, then fully define it later (after <code>main()</code>), after calling function's definition.</p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded">flaot <span class="token function">func1</span> <span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">float</span> y<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// declaration</span>
+</code></pre>
+        <ul>
+            <li>Semicolon after parameter list</li>
+            <li>Declaration appears before the function definition containing first call to function. </li>
+            <li>A function declaration is also known as a <em>funtion prototype</em>.</li>
+        </ul>
+        <h2 id="communication-between-functions">Communication Between Functions</h2>
+        <p>Functions communicate with function parameters and/or function return values. </p>
+        <p>External (global) variables are another option; though use of these is discouraged. </p>
+        <h2 id="parameter-passing">Parameter passing</h2>
+        <p>Argument values in C are passed by values.</p>
+        <ul>
+            <li>The function is given argument values in temporary variables (not original). You pass a copy of the value so you cannot directly modify an argument variable back in the calling function. This is called "pass by value."</li>
+        </ul>
+        <p>As soon you return from the function, all the local things will go away, such as the parameters. This means, you cannot return local arrays. </p>
+        <h3 id="passing-arrays">Passing Arrays</h3>
+        <p><a data-href="Arrays and C Strings#" href="/Users/tran/Library/Mobile Documents/iCloud~md~obsidian/Documents/Journal/School/Intermediate Programming/Arrays%20and%20C%20Strings.html#" class="internal-link" target="_blank" rel="noopener">Arrays and C Strings</a> are <em>not</em> passed by value. Instead, passing array amounts to passing a <em>pointer to its first element</em> because  copying would be excessive. </p>
+        <ul>
+            <li>A <a class="internal-link" data-href="Pointers.md#Defining Pointers" href="/Users/tran/Library/Mobile Documents/iCloud~md~obsidian/Documents/Journal/School/Intermediate Programming/Pointers.md#Defining%20Pointers" target="_blank" rel="noopener">pointers</a> is a variable which holds an address. </li>
+            <li>It "decays" into a pointer because it loses information about the boundaries of the array. </li>
+        </ul>
+        <p>Now, the callee <em>can modify</em> the array.<br>
+            Example:</p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span class="token comment">// multiply each array element by factor, modifying the array.</span>
+<span class="token keyword">void</span> <span class="token function">scale_array</span> <span class="token punctuation">(</span><span class="token keyword">float</span> arr<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">int</span> len<span class="token punctuation">,</span> <span class="token keyword">float</span> factor<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> len<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">*=</span> factor<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+</code></pre>
+        <p>When an array parameter <em>should not</em> be modified by the function, add <code>const</code> before the type. Compiler gives an error if you try to modify a <code>const</code> variable because it is <code>read-only</code>.</p>
+        <h2 id="returning-an-array">Returning an Array</h2>
+        <p>The return type is the array's base type with <code>*</code> added (a pointer). </p>
+        <p>For now, we can pass in an empty array to fill. Instead of returning a local array, caller should pass in "destination" array to modify.</p>
+        <h1 class="course-title title-1" id="command-line-arguments">Command-Line Arguments</h1>
+        <p>When you tyep <code>mkdir cs220</code> you're running a program called <code>mkdir</code> and passing it a single <em>command-line argument</em>, <code>cs220</code>.</p>
+        <p>C programs can take arguments similar to this way, but you have to declare your <code>main</code> function in a special way: </p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span> argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <ul>
+            <li><code>int argc</code> is a parameter that equals the number of command-line argument. </li>
+            <li><code>char* argv[]</code> is the second parameter that takes in an array of strings. Each element in the array is the string and is a command line argument. Also seen as <code>char argv[][]</code> or <code>**argv</code></li>
+            <li>E.g. <code>./a.out rosebud</code> is actually <code>argc</code> value of <code>2</code> because <code>./a.out</code> counts as one argument. <code>argv[0] = ./a.out</code> and <code>argv[1] = rosebud</code>. </li>
+        </ul>
+        <h1 class="course-title title-1" id="math-functions">Math Functions</h1>
+        <p><code>#include math.h</code> and compile with <code>-lm</code> option (includes the math library when <em>linking</em> to the <code>gcc</code> command to get access to: </p>
+        <ul>
+            <li><code>sqrt(x)</code>: square root</li>
+            <li><code>pow(x, y)</code>: xy  </li>
+            <li><code>exp(x)</code>: ex  </li>
+            <li><code>log(x)</code>: natural log</li>
+            <li><code>log10(x)</code>: log base 10</li>
+            <li><code>ceil(x)</code> / <code>floor(x)</code>: round up / down to nearest integer</li>
+            <li><code>sin(x)</code>: sine (other trigonometric functions available)</li>
+        </ul>
+        <p><code>x</code> and <code>y</code> arguments have a type <code>double</code>. Passing <code>int</code> is also OK. </p>
+        <ul>
+            <li>Argument type promotion: <code>int</code> -&gt; <code>float</code> -&gt; <code>double</code></li>
+        </ul>
+        <br>
+    </article>
+</main>
+<div id="foot"></div>
+</body>
+</html>

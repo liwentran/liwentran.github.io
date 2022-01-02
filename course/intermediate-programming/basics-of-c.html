@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Journal: Intermediate Programming</title>
+    <base href="../../">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#nav").load("navigation.html");
+            $("#foot").load("footer.html");
+        });
+    </script>
+</head>
+
+<body>
+<div id="nav"></div>
+<main class="site-main container-md px-3">
+    <div class="file-path">
+        <ul class="path">
+            <li><a href="course/intermediate-programming.html">Intermediate Programming</a></li>
+            <li><a href="course/intermediate-programming/basics-of-c.html">Basics of C</a></li>
+        </ul>
+    </div>
+    <article class="notes">
+        <h1 id="basics-of-c" class="course-title title-1">Basics of C</h1>
+        <h2 id="printing">Printing</h2>
+        <p><code>printf</code> can output a literal string and also allows for formatting printing of values, using
+            placeholders in the fomrat string:</p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span
+                class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"There are %d students in class."</span><span
+                class="token punctuation">,</span> <span class="token number">36</span><span
+                class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+        <p>Placeholders begin with '<code>%</code>' and then may contain additional format information. The actual
+            values corresponding to place holders are listed afte rthe format string (<code>36</code> in this example).
+        </p>
+        <ul>
+            <li>Generate a literal <code>%</code> character by specifying two <code>%</code> characters in the format
+                string.
+            </li>
+        </ul>
+        <h3 id="data-type-placeholders">Data Type Placeholders</h3>
+        <p>Some common data type placeholders to use after the <code>%</code>: </p>
+        <ul>
+            <li><code>d</code> - decimal (integer type)</li>
+            <li><code>ld</code> - long int</li>
+            <li><code>u</code> - unsigned (integer type that dis allows negatives)</li>
+            <li><code>lu</code> - for long unsigned</li>
+            <li><code>f</code> - floating point</li>
+            <li><code>e</code> - scientific notation</li>
+            <li><code>lf</code> - for double</li>
+            <li><code>c</code> - character</li>
+            <li><code>s</code> - string</li>
+        </ul>
+        <h2 id="variables">Variables</h2>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span class="token keyword">int</span> num_students<span
+                class="token punctuation">;</span>
+</code></pre>
+        <p>declares a variable with <em>type</em> of <code>int</code> and <em>name</em> of
+            <code>num_studnets</code>.<br>
+            A variable has a <em>value</em> that may change through the program's lifetime. It's value can be printed
+            with <code>printf</code>.</p>
+        <p>A two-word variable in C is often written using underscores rather than camel case (e.g.,
+            <code>numStudents</code>).</p>
+        <h2 id="types">Types</h2>
+        <p>Try to use the smallest data type. See all the data types <a aria-label-position="top"
+                                                                        aria-label="https://en.wikipedia.org/wiki/C_data_types"
+                                                                        rel="noopener" class="external-link"
+                                                                        href="https://en.wikipedia.org/wiki/C_data_types"
+                                                                        target="_blank">here</a>.</p>
+        <p>Integer types</p>
+        <ul>
+            <li><code>int</code>: signed integer, stored in 32 bits.</li>
+            <li><code>unsigned</code>: unsigned integer. Always considered positive.</li>
+            <li><code>long</code>: signed integer with significantly greater capacity than a<br>
+                plain int
+            </li>
+        </ul>
+        <p>Floating-point (decimal) types</p>
+        <ul>
+            <li><code>float</code>: single-precision floating point number. 4 bytes.</li>
+            <li><code>double</code>: double-precision floating point number. 8 bytes. Can store more decimal digits.
+            </li>
+        </ul>
+        <p>Character types</p>
+        <ul>
+            <li><code>char</code>: holds a 1-byte character, <code>A</code>, <code>B</code>, <code>$</code>, ... They
+                are stored in their unicode value.
+            </li>
+            <li>Chars must be in single quotes. Double quotes are only for strings.</li>
+            <li><code>chars</code> are basically integers, so they work for logic statements. This is valid: <code>char
+                digit = '4' - 1</code>. ASCII standard governs the mapping between characters and integers. Use <code>(int)char_variable</code>
+                to explicitly convert.
+            </li>
+            <li>The C character library <code>#include &lt;ctype.h&gt;</code> contains a bunch of <a
+                    aria-label-position="top" aria-label="https://www.tutorialspoint.com/c_standard_library/ctype_h.htm"
+                    rel="noopener" class="external-link"
+                    href="https://www.tutorialspoint.com/c_standard_library/ctype_h.htm" target="_blank">useful
+                functions</a> we can apply to character values. Boolean functions include <code>isalpha</code>, <code>isdigit</code>,
+                <code>islower</code>, <code>isspace</code>, etc that return non-zero for true and zero for false.
+                Conversion functions include <code>tolower</code> and <code>toupper</code>.
+            </li>
+        </ul>
+        <p>Boolean</p>
+        <ul>
+            <li><code>#inlcude &lt;stdbool.h</code> to use this.</li>
+            <li><code>bool</code>: value can be <code>true</code> or <code>false</code></li>
+            <li>Integer types can function as <code>bools</code>, where <code>0</code> means <code>false</code> and
+                non-0 means true.
+            </li>
+        </ul>
+        <h2 id="assignment">Assignment</h2>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded">num_students <span
+                class="token operator">=</span> <span class="token number">32</span>
+</code></pre>
+        <p><code>=</code> Is the <em>assignment operator</em>, which modifies a variable's value.</p>
+        <p>It's good practice to declare and assign at the same time:</p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span class="token keyword">int</span> num_students <span
+                class="token operator">=</span> <span class="token number">32</span>
+</code></pre>
+        <p>This prevents "undefined" values (variable that has been declared but not yet assigned). "Undefined" values
+            can cause mysterious fails.</p>
+        <h2 id="operators">Operators</h2>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span
+                class="token number">3</span> <span class="token operator">+</span> <span class="token number">4</span>
+</code></pre>
+        <p><code>3</code> and <code>4</code> are "operands" and <em>constants</em> (not variables) and <code>+</code> is
+            the "operator".</p>
+        <p>Arithmetic operators include <code>+</code> (addition), <code>-</code> (subtraction), <code>*</code>
+            (multiplication), <code>/</code> (division), and <code>%</code> (remainder).</p>
+        <ul>
+            <li>Beware of integer division: <code>7 / 2</code> yields <code>3</code>, not <code>3.5</code></li>
+        </ul>
+        <h3 id="operator-precedence">Operator Precedence</h3>
+        <p>Precedence can be found <a aria-label-position="top"
+                                      aria-label="https://en.cppreference.com/w/c/language/operator_precedence"
+                                      rel="noopener" class="external-link"
+                                      href="https://en.cppreference.com/w/c/language/operator_precedence"
+                                      target="_blank">here</a>.<br>
+            Use parentheses when in doubt.</p>
+        <h2 id="const">Const</h2>
+        <p>Put <code>const</code> before the type to say the variable to which it is applied cannot be modified.</p>
+        <p>To make a variable non-modifiable: </p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span
+                class="token keyword">const</span> <span class="token keyword">int</span> base <span
+                class="token operator">=</span> <span class="token number">32</span><span
+                class="token punctuation">;</span>
+</code></pre>
+        <ul>
+            <li>If applied to a local variable, it must be initialized when declared.</li>
+            <li>If applied to a parameter variable, it cannot be changed within the function. You can pass a non-<code>const</code>
+                variable to a <code>const</code> parameter, but you cannot pass a <code>const</code> variable to a
+                non-<code>const</code> parameter.
+            </li>
+        </ul>
+        <h2 id="formatted-input-with-scanf">Formatted input with <code>scanf</code></h2>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span class="token comment">// scanf_d.c:</span>
+<span class="token keyword">int</span> i<span class="token punctuation">;</span>
+<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Please enter an integer: "</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">scanf</span><span class="token punctuation">(</span><span
+                    class="token string">"%d"</span><span class="token punctuation">,</span> <span
+                    class="token operator">&amp;</span>i<span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"The value you entered is %d"</span><span
+                    class="token punctuation">,</span> i<span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+</code></pre>
+        <p>The <code>scanf</code> function works similarly to <code>printf</code> for reading formatted input.<br>
+            Use a format string (<code>%d</code>) followed by the memory location(s) (<code>i</code>) we are reading
+            into. Use the <code>&amp;</code> sign before the variable name. </p>
+        <ul>
+            <li>Match the format string to the <a class="internal-link"
+                                                  data-href="Basics of C.md#Data Type Placeholders"
+                                                  href="/Users/tran/Library/Mobile Documents/iCloud~md~obsidian/Documents/Journal/School/Intermediate Programming/Basics%20of%20C.md#Data%20Type%20Placeholders"
+                                                  target="_blank" rel="noopener">type of value</a> you want to collect.
+                The memory location should be able to accomodate this type.
+            </li>
+        </ul>
+        <p>The return value of <code>scanf</code> is the number of input items assigned.</p>
+        <ul>
+            <li>Zero typically indicates that the input was available but invalid for the specific type.</li>
+            <li>EOF (<code>-1</code>) indicates that no input was available.</li>
+        </ul>
+        <br>
+    </article>
+</main>
+<div id="foot"></div>
+</body>
+</html>

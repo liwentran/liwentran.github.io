@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Journal: Intermediate Programming</title>
+    <base href="../../">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#nav").load("navigation.html");
+            $("#foot").load("footer.html");
+        });
+    </script>
+</head>
+
+<body>
+<div id="nav"></div>
+<main class="site-main container-md px-3">
+    <div class="file-path">
+        <ul class="path">
+            <li><a href="course/intermediate-programming.html">Intermediate Programming</a></li>
+            <li><a href="course/intermediate-programming/control-flow.html">Control Flow</a></li>
+        </ul>
+    </div>
+    <article class="notes">
+        <h1 id="control" class="course-title title-1">Control</h1>
+        <h2 id="logical-operators">Logical Operators</h2>
+        <p>See all the operators <a aria-label-position="top"
+                                    aria-label="https://www.tutorialspoint.com/cprogramming/c_operators.htm"
+                                    rel="noopener" class="external-link"
+                                    href="https://www.tutorialspoint.com/cprogramming/c_operators.htm" target="_blank">here</a>.
+        </p>
+        <ul>
+            <li><code>&amp;&amp;</code>is called the "Logical AND" operator. If both the operands are non-zero, then the
+                condition becomes true.
+            </li>
+            <li><code>||</code> is called the "Logical OR" operator. If any of the two operands is non-zero, then the
+                condition becomes true.
+            </li>
+            <li><code>!</code> is called the "Logical NOT" operator. It is used to reverse the logical state of its
+                operand. If a condition is true, then Logical NOT operator will make it false.
+            </li>
+        </ul>
+        <h2 id="compound-assignments">Compound Assignments</h2>
+        <ul>
+            <li><code>+=</code></li>
+            <li><code>-=</code></li>
+            <li><code>*=</code></li>
+            <li><code>/=</code></li>
+            <li><code>%=</code></li>
+        </ul>
+        <h2 id="increments-and-decrements">Increments and Decrements</h2>
+        <p>There are pre-increments/decrements and post-increments/decrements. </p>
+        <ul>
+            <li><code>++</code> Increments the variable by 1
+                <ul>
+                    <li><code>++a</code> Increments, then uses the new value of <code>a</code> in the expression in
+                        which <code>b</code> resides.
+                    </li>
+                    <li><code>a++</code> Uses the current value of <code>a</code> in the expression in which
+                        <code>a</code> resides, then increments.
+                    </li>
+                </ul>
+            </li>
+            <li><code>--</code> Decreases the variable by `.
+                <ul>
+                    <li><code>--a</code> Decrements, then uses the new value of <code>b</code> in the expression in
+                        which <code>b</code> resides.
+                    </li>
+                    <li><code>b--</code> Uses the current value of <code>b</code> in the expression in which
+                        <code>b</code> resides, then decrements.
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <p>Example:</p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span class="token keyword">int</span> a <span
+                class="token operator">=</span> <span class="token number">10</span><span
+                class="token punctuation">;</span>
+<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span
+                    class="token punctuation">,</span> a<span class="token operator">++</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span> <span
+                    class="token comment">// prints 10</span>
+
+<span class="token keyword">int</span> b <span class="token operator">=</span> <span class="token number">10</span><span
+                    class="token punctuation">;</span>
+<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span
+                    class="token punctuation">,</span> <span class="token operator">--</span>b<span
+                    class="token punctuation">)</span><span class="token punctuation">;</span> <span
+                    class="token comment">// prints 9 </span>
+</code></pre>
+        <h2 id="decision-statement">Decision-statement</h2>
+        <h3 id="if-and-else-statements">if and else statements</h3>
+        <p>Suppose that <code>a</code> represents some boolean expression.</p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span
+                class="token keyword">if</span> <span class="token punctuation">(</span>a<span
+                class="token punctuation">)</span> <span class="token punctuation">{</span>
+	print <span class="token function">f</span><span class="token punctuation">(</span><span class="token string">"a is true\n"</span><span
+                    class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <p>If <code>a</code> evaluates to true, then it will print "a is true." If it is false, then the body of the if
+            statement is not executed.</p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span
+                class="token keyword">if</span> <span class="token punctuation">(</span>a<span
+                class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"a is true\n"</span><span
+                    class="token punctuation">)</span>
+<span class="token punctuation">}</span> <span class="token keyword">else</span> <span
+                    class="token punctuation">{</span>
+	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"a is false\n"</span><span
+                    class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <h3 id="switch-gates">Switch gates</h3>
+        <p>Switch gates are less versatile than if statements, but can be cleaner and shorter. </p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span
+                class="token keyword">switch</span> <span class="token punctuation">(</span>integer expr<span
+                class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">case</span> c1<span class="token operator">:</span> stmt1<span
+                    class="token punctuation">;</span>	<span
+                    class="token comment">// execution starting point for c1</span>
+  <span class="token keyword">case</span> c2<span class="token operator">:</span> stmt2<span
+                    class="token punctuation">;</span>
+    			 <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <span class="token keyword">case</span> c3<span class="token operator">:</span> 
+  <span class="token keyword">case</span> c4<span class="token operator">:</span> stmt4<span
+                    class="token punctuation">;</span> <span class="token comment">//executes stmt3, stmt4 and stmtlast for matches of c3 or c4. </span>
+  <span class="token keyword">default</span><span class="token operator">:</span> stmtlast<span
+                    class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <p>When you list switches together, then it becomes an OR statement. In the example above, c3 and c4 is <code>c3
+            || c4</code>.</p>
+        <p>If you don't have the <code>break</code>, the program will keep reading more cases, slowing down the program.
+        </p>
+        <p>Its good practice to always have a <code>default</code> case. </p>
+        <h1 id="loops">Loops</h1>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span
+                class="token keyword">while</span> <span class="token punctuation">(</span>boolean expression<span
+                class="token punctuation">)</span> <span class="token punctuation">{</span>statements<span
+                class="token punctuation">}</span>
+</code></pre>
+        <p>Iterates &gt;=0 times, as long as the boolean expression evaluates to true, the body of the while loop will
+            execute. Iterates &gt;=0 times.</p>
+        <ul>
+            <li>A comma can separate two statements within the while condition: <code>while (parse = fscanf(inFile,
+                "%f%f", &amp;p, &amp;r), parse == 2)</code> or using a parentheses <code>while ((parse = fscanf(inFile,
+                "%f%f", &amp;p, &amp;r) == 2)</code>.
+            </li>
+        </ul>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span
+                class="token keyword">do</span> <span class="token punctuation">{</span>statements<span
+                class="token punctuation">}</span> <span class="token keyword">while</span> <span
+                class="token punctuation">(</span>boolean expression<span class="token punctuation">)</span>
+</code></pre>
+        <p>Iterates &gt;=1. Will execute at least once because the statements will be executed first. Allows once, then
+            more times as long as the boolean expression evaluates to true. </p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span
+                class="token keyword">for</span><span class="token punctuation">(</span>initialize<span
+                class="token punctuation">;</span> boolean exp<span class="token punctuation">;</span> update<span
+                class="token punctuation">)</span> <span class="token punctuation">{</span>stmts<span
+                class="token punctuation">}</span>
+</code></pre>
+        <p>Initialize happens first and one time; usually declares &amp; assigns the "index variable." Then, the boolean
+            expression is evaluated, and if true, that the <code>stmts</code> are run. Right after, <code>update</code>
+            is then run *often it increments the index variable (<code>i++</code>), and the boolean expression is
+            checked once more. </p>
+        <p>Iterates &gt;= 0 times, as long as the boolean expression is true. </p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span
+                class="token keyword">break</span>
+</code></pre>
+        <p>Immediately exits loop. It is not a good practice to use <code>break</code> inside any loops. </p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span
+                class="token keyword">continue</span>
+</code></pre>
+        <p>Immediately proceeds to the next iteration of loop. It goes back up to check the boolean expression. </p>
+        <p>Example:</p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span class="token comment">// for_example.c</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span
+        class="token string">&lt;stdio.h&gt;</span></span>
+<span class="token keyword">int</span> <span class="token function">main</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i<span
+                    class="token operator">=</span> <span class="token number">0</span><span
+                    class="token punctuation">;</span> i<span class="token operator">&lt;</span><span
+                    class="token number">10</span><span class="token punctuation">;</span> i<span
+                    class="token operator">++</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span
+                    class="token string">"%d"</span><span class="token punctuation">,</span> i<span
+                    class="token punctuation">)</span><span class="token punctuation">;</span> 
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <p>Will print 10 times, starting with <code>0</code> all the way to <code>9</code>. Once <code>i</code> reaches
+            10, <code>i&lt;10</code> is not satisfied so the loop will end. </p>
+        <p>A loop that reads in values until no more are available:</p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span
+                class="token comment">// sum.c</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">inlcude</span> <span
+        class="token expression"><span class="token operator">&lt;</span>stdio<span
+        class="token punctuation">.</span>h<span class="token operator">&gt;</span></span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+  <span class="token keyword">int</span> sum <span class="token operator">=</span> <span
+                    class="token number">0</span><span class="token punctuation">;</span>
+  <span class="token keyword">int</span> addend<span class="token punctuation">;</span> <span class="token comment">// addend's value is undefiend to start</span>
+  
+  <span class="token comment">// read as many integers as we can</span>
+  <span class="token keyword">while</span> <span class="token punctuation">(</span><span
+                    class="token function">scanf</span><span class="token punctuation">(</span><span
+                    class="token string">"%d"</span><span class="token punctuation">,</span> <span
+                    class="token operator">&amp;</span>addend<span class="token punctuation">)</span><span
+                    class="token operator">==</span><span class="token number">1</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">//accumulate the sum of all numbers</span>
+    sum <span class="token operator">+=</span> addend<span class="token punctuation">;</span> 
+  <span class="token punctuation">}</span>
+  
+  <span class="token comment">// output the sum</span>
+  <span class="token function">printf</span><span class="token punctuation">(</span><span
+                    class="token string">"%d\n"</span><span class="token punctuation">,</span> sum<span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span> 
+<span class="token punctuation">}</span>
+</code></pre>
+        <p>This program continues to scan when you press enter. To signal the end-of-input, press <code>Ctrl-D</code>
+            (possibly twice). <code>Ctrl-D</code> returns DOF which is <code>-1</code>.</p>
+        <p>Note that <code>&amp;addend</code> has an ampersand in front of the variable name when working with <code>scanf</code>.
+        </p>
+        <p><code>scanf</code> has a return value. It returns how many inputs were read successfully. The boolean
+            statement basically works as long as you can successfully read one integer value from the user. </p>
+        <p>However, you should use <code>while(scanf(...) != EOF)</code> if you want to keep asking for input. </p>
+        <p>A less desirable way to write the same program is with a <code>break</code>:</p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span
+                class="token comment">// sum.c</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span
+        class="token expression"><span class="token operator">&lt;</span>stdio<span
+        class="token punctuation">.</span>h<span class="token operator">&gt;</span></span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+  <span class="token keyword">int</span> sum <span class="token operator">=</span> <span
+                    class="token number">0</span><span class="token punctuation">;</span>
+  
+  <span class="token keyword">while</span> <span class="token punctuation">(</span><span
+                    class="token number">1</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+    <span class="token keyword">int</span> addend <span class="token operator">=</span> <span
+                    class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span
+                    class="token function">scanf</span><span class="token punctuation">(</span><span
+                    class="token string">"%d"</span><span class="token punctuation">,</span> <span
+                    class="token operator">&amp;</span>addend<span class="token punctuation">)</span> <span
+                    class="token operator">!=</span> <span class="token number">1</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+      <span class="token keyword">break</span><span class="token punctuation">;</span> <span class="token comment">// immediately exit loop</span>
+    <span class="token punctuation">}</span>
+    sum <span class="token operator">+=</span> addend<span class="token punctuation">;</span> 
+  <span class="token punctuation">}</span>  
+  <span class="token comment">// output the sum</span>
+  <span class="token function">printf</span><span class="token punctuation">(</span><span
+                    class="token string">"%d\n"</span><span class="token punctuation">,</span> sum<span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span> 
+<span class="token punctuation">}</span>
+</code></pre>
+        <p>This loop is messier, harder to follow, and more prone to errors. </p>
+        <br>
+    </article>
+</main>
+<div id="foot"></div>
+</body>
+</html>
