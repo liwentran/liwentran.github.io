@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Journal: Intermediate Programming</title>
+    <base href="../../">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#nav").load("navigation.html");
+            $("#foot").load("footer.html");
+        });
+    </script>
+</head>
+
+<body>
+<div id="nav"></div>
+<main class="site-main container-md px-3">
+    <div class="file-path">
+        <ul class="path">
+            <li><a href="course/intermediate-programming.html">Intermediate Programming</a></li>
+            <li><a href="course/intermediate-programming/welcome-to-c.html">Welcome to C</a></li>
+        </ul>
+    </div>
+    <article class="notes">
+        <h1 class="course-title title-1">Welcome to C</h1>
+        <h2 id="typical-c-workflow" data-heading="Typical C Workflow">Typical C Workflow</h2>
+        <ol>
+            <li>Edit files with emacs or vim.</li>
+            <li>Compile using a GNU C compier (abbreviated as "gcc") to compile, link, and create executable.</li>
+            <li>Run the executable file.</li>
+        </ol>
+        <p>It's better to code incrementally as you will have a better time debugging. </p>
+        <h2 id="compiling" data-heading="Compiling">Compiling</h2>
+        <p>Step 1: Preprocessor</p>
+        <ul>
+            <li>Brings together all the code that belongs together</li>
+            <li>The preprocessor quickly scans your code and processes any directives that start with <code>#</code>,
+                such as <code>#include</code> or <code>#define</code>
+                <ul>
+                    <li>Checks that the library exists.</li>
+                </ul>
+            </li>
+        </ul>
+        <p>Step 2: Compiler</p>
+        <ul>
+            <li>Turns human-readable <em>source code</em> into <em>object code</em> (executable code with the extension
+                <code>.o</code>)
+                <ul>
+                    <li>Change the name of the output (executable) file from the default <em>a.out</em> using the <code>-o</code>
+                        output flag.
+                    </li>
+                </ul>
+            </li>
+            <li>Might yield warnings and errors if your code has mistakes that are "visible" to the compiler.</li>
+        </ul>
+        <p>Step 3: Linker</p>
+        <ul>
+            <li>Brings all relevant <em>object code</em> (the <code>.o</code> files) into a single executable file
+                (default name of <code>a.out</code>).
+            </li>
+            <li>Might yield warnings and errors if relevant code is missing, there's a naming conflict, etc.</li>
+            <li>We need full implementation of the function.</li>
+        </ul>
+        <h2 id="understanding-hello-world" data-heading="Understanding Hello World program">Understanding Hello World program</h2>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span class="token comment">// hello_world.c:</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span
+        class="token string">&lt;stdio.h&gt;</span></span>
+
+<span class="token comment">// Print "Hello, world!" followed by a newline and exit</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span
+                    class="token punctuation">(</span><span class="token keyword">void</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Hello, world!\n"</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">return</span> <span class="token number">0</span><span
+                    class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <ul>
+            <li>The file is named <code>hello_world.c</code>. C files have the <code>.c</code> extension.</li>
+            <li><code>#include</code> is a preprocessor directive, similar to Java <code>import</code>. Omitting <code>#include
+                &lt;stdio.h&gt;</code> results in an error.
+                <ul>
+                    <li><code>stdio</code> is standard.io and <code>.h</code> is an extension that is short for
+                        "header". Header functions are used to declare things.
+                    </li>
+                </ul>
+            </li>
+            <li><code>main</code> is the function. Every program has exactly one <code>main</code>. It is the entry
+                point and where the execution starts.
+            </li>
+            <li><code>int</code> is the function's return type.</li>
+            <li><code>main(void)</code> says that <code>main</code> takes no parameters (inputs).</li>
+            <li><code>printf</code> prints a string to "standard out" (the terminal). This function is defined in the
+                standard.io library (must include <code>&lt;stdio.h&gt;</code>).
+            </li>
+            <li><code>\n</code> is a string that denotes the newline chracter.</li>
+            <li><code>return 0</code> means "program" completed with no errors. <code>return 1</code> (or any non-zero
+                value) would indicate an error.
+            </li>
+            <li><code>// Print...</code> Explanatory comments before functions are good practice. Ignored by the
+                compiler
+            </li>
+        </ul>
+        <h3 id="compilation-and-execution" data-heading="Compilation and Execution">Compilation and Execution</h3>
+        <p>To compile hello_world.c and link to give executable file:</p>
+        <pre><code>gcc -std=c99 -Wall -Wextra -pedantic hello_world.c
+</code></pre>
+        <ul>
+            <li>The flags and switches are the parts that start with a <code>-</code>. Each switch has meaning.
+                <ul>
+                    <li><code>-std=c99</code> sets the standards to c99 made in 1999 (a popular standard still used
+                        today).
+                    </li>
+                    <li>The other three switches makes sure we get full verbose feedback from the compiler.
+                        <ul>
+                            <li>If you get an error feedback, your code won't even compile. Warnings indicate potential
+                                problem but will continue to compile.
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <p>To run executable file named <code>a.out</code>:</p>
+        <pre><code>./a.out
+</code></pre>
+        <ul>
+            <li><code>./</code> refers to something inside the current directory.</li>
+            <li><code>a.out</code> executes <code>a.out</code> from the current directory.</li>
+        </ul>
+        <h2 id="multiple-copies" data-heading="Multiple Copies of Code">Multiple Copies of Code</h2>
+        <p>To "snapshot" code is making a copy. Frequent "snapshots" is bad because it's hard to remember the
+            relationship of copies, wastes space, and is difficult for team members to track the latest version of each
+            file.</p>
+        <p>Git uses a <em>repository</em> ("repo") to store all versions of all project files. A repo (master/origin)
+            can be <em>local</em> (on your computer) or <em>remote</em> (e.g., on bitbucket.org or github.com).</p>
+    </article>
+</main>
+<div id="foot"></div>
+</body>
+</html>
