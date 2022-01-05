@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Journal: Intermediate Programming</title>
+    <base href="../../">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#nav").load("navigation.html");
+            $("#foot").load("footer.html");
+        });
+    </script>
+</head>
+
+<body>
+<div id="nav"></div>
+<main class="site-main container-md px-3">
+    <div class="file-path">
+        <ul class="path">
+            <li><a href="course/intermediate-programming.html">Intermediate Programming</a></li>
+            <li><a href="course/intermediate-programming/binary-i-o.html">Binary I/O</a></li>
+        </ul>
+    </div>
+    <article class="notes">
+        <h1 class="course-title title-1" id="Binary I/O">Binary I/O</h1>
+        <p>There are different types of files. Instead of working with <a class="internal-link"
+                                                                          href="course/intermediate-programming/file-i-o-and-assertions.html#c-file-i-o"
+                                                                          target="_blank" rel="noopener">text files</a>
+            (one byte stores one char through ANSI standard mapping), we work directly with 0's and 1's. We call
+            anything that isn't a text file a "binary file". </p>
+        <ul>
+            <li>Storing binary can be much more efficient than text (for some types of data). For example, numbers
+                stored in ANSI uses one byte per decimal digit. Instead of storing 0-255, one byte is used to store only
+                0-9.
+            </li>
+            <li>Large data files like images, audios, and video files are typically stored in binary format.
+                <ul>
+                    <li>If you want to store a lot of 0-255 values (images). In text, storing 255 takes 3 bytes. If we
+                        use binary, it only takes 1 byte (8 bits). This reduces size by a factor of three.
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <h2 id="reading-and-writing-to-binary-file">Reading and Writing to Binary File</h2>
+        <p>Tell C to open a file as a binary file using the <code>"b"</code> mode.</p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded">FILE <span
+                class="token operator">*</span>fp <span class="token operator">=</span> <span class="token function">fopen</span><span
+                class="token punctuation">(</span><span class="token string">"data.dat"</span><span
+                class="token punctuation">,</span> <span class="token string">"rb"</span><span
+                class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+        <p>This will open the file in binary read mode. </p>
+        <p>Use <code>fread</code> for reading and <code>fwrite</code> for writing. </p>
+        <ul>
+            <li>Works for arrays, structs, and arrays of structs.</li>
+            <li>Useful for reading/writing large amounts of data in one operation.</li>
+            <li>It copies bits from disk to memory (<code>fread</code>) or memory to disk (<code>fwrite</code>).</li>
+            <li>Binary files are less portable than text because some types are different sizes on some architectures.
+            </li>
+        </ul>
+        <h3 id="fread and fwrite">fread and fwrite</h3>
+        <p><code>fread</code> and <code>fwrite</code> take a pointer to a block of memory, an element size, a number of
+            elements, and a file handle</p>
+        <p><code>fread</code> reads <code>size_of_el * num_els</code> bytes of memory from the file beginning at the
+            fursor location <code>fp</code>, and stores them starting at pointer location <code>where_to</code>:</p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span class="token keyword">int</span> items_read <span
+                class="token operator">=</span> <span class="token function">fread</span><span
+                class="token punctuation">(</span>where_to<span class="token punctuation">,</span> size_of_el<span
+                class="token punctuation">,</span> num_els<span class="token punctuation">,</span> fp<span
+                class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+        <p><code>fwrite</code> does the opposite, copying data from memory to the specified file:</p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span class="token keyword">int</span> items_written <span
+                class="token operator">=</span> <span class="token function">fwrite</span><span
+                class="token punctuation">(</span>where_from<span class="token punctuation">,</span> size_of_el<span
+                class="token punctuation">,</span> num_els<span class="token punctuation">,</span> fp<span
+                class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+        <h3 id="Example">Example</h3>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span class="token comment">// bin_io.c:</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span
+        class="token string">&lt;stdio.h&gt;</span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+
+	<span class="token keyword">const</span> <span class="token keyword">int</span> SIZE <span
+                    class="token operator">=</span> <span class="token number">100</span><span
+                    class="token punctuation">;</span>  
+	<span class="token keyword">int</span> arr_write<span class="token punctuation">[</span>SIZE<span
+                    class="token punctuation">]</span><span class="token punctuation">;</span>  
+	<span class="token keyword">for</span> <span class="token punctuation">(</span><span
+                    class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span
+                    class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span
+                    class="token number">100</span><span class="token punctuation">;</span> i<span
+                    class="token operator">++</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+		arr_write<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span
+                    class="token operator">=</span> i <span class="token operator">*</span> <span class="token number">10</span><span
+                    class="token punctuation">;</span> 
+	<span class="token punctuation">}</span>
+	FILE <span class="token operator">*</span>fp <span class="token operator">=</span> <span class="token function">fopen</span><span
+                    class="token punctuation">(</span><span class="token string">"data.dat"</span><span
+                    class="token punctuation">,</span> <span class="token string">"wb"</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>fp<span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Error opening data.dat\n"</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> <span class="token number">1</span><span
+                    class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token comment">// writes an array of integers</span>
+	<span class="token function">fwrite</span><span class="token punctuation">(</span>arr_write<span
+                    class="token punctuation">,</span> <span class="token keyword">sizeof</span><span
+                    class="token punctuation">(</span>arr_write<span class="token punctuation">[</span><span
+                    class="token number">0</span><span class="token punctuation">]</span><span
+                    class="token punctuation">)</span><span class="token punctuation">,</span> SIZE<span
+                    class="token punctuation">,</span> fp<span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+	<span class="token function">fclose</span><span class="token punctuation">(</span>fp<span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+	
+	<span class="token keyword">int</span> arr_read<span class="token punctuation">[</span>SIZE<span
+                    class="token punctuation">]</span><span class="token punctuation">;</span>  
+	fp <span class="token operator">=</span> <span class="token function">fopen</span><span
+                    class="token punctuation">(</span><span class="token string">"data.dat"</span><span
+                    class="token punctuation">,</span><span class="token string">"rb"</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>fp<span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Error opening data.dat\n"</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> <span class="token number">1</span><span
+                    class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token comment">// reads an array of integer</span>
+	<span class="token keyword">int</span> num_of_ints <span class="token operator">=</span> <span
+                    class="token function">fread</span><span class="token punctuation">(</span>arr_read<span
+                    class="token punctuation">,</span> <span class="token keyword">sizeof</span><span
+                    class="token punctuation">(</span>arr_read<span class="token punctuation">[</span><span
+                    class="token number">0</span><span class="token punctuation">]</span><span
+                    class="token punctuation">)</span><span class="token punctuation">,</span> SIZE<span
+                    class="token punctuation">,</span> fp<span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>num_of_ints <span
+                    class="token operator">!=</span> SIZE<span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span> 
+		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"problem reading data.dat\n"</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> <span class="token number">1</span><span
+                    class="token punctuation">;</span>
+	<span class="token punctuation">}</span>  
+	<span class="token keyword">if</span> <span class="token punctuation">(</span><span
+                    class="token function">feof</span><span class="token punctuation">(</span>fp<span
+                    class="token punctuation">)</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"error: unexpected eof\n"</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> <span class="token number">1</span><span
+                    class="token punctuation">;</span> 
+	<span class="token punctuation">}</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span><span
+                    class="token function">ferror</span><span class="token punctuation">(</span>fp<span
+                    class="token punctuation">)</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>  
+		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"error reading data.dat\n"</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>  
+	<span class="token keyword">for</span> <span class="token punctuation">(</span><span
+                    class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span
+                    class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span
+                    class="token number">100</span><span class="token punctuation">;</span> i<span
+                    class="token operator">++</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"arr_read[%d] = %d\n"</span><span
+                    class="token punctuation">,</span> i<span class="token punctuation">,</span> arr_read<span
+                    class="token punctuation">[</span>i<span class="token punctuation">]</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token function">fclose</span><span class="token punctuation">(</span>fp<span class="token punctuation">)</span><span
+                    class="token punctuation">;</span> 
+<span class="token punctuation">}</span>
+</code></pre>
+        <br>
+    </article>
+</main>
+<div id="foot"></div>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Journal: Intermediate Programming</title>
+    <base href="../../">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#nav").load("navigation.html");
+            $("#foot").load("footer.html");
+        });
+    </script>
+</head>
+
+<body>
+<div id="nav"></div>
+<main class="site-main container-md px-3">
+    <div class="file-path">
+        <ul class="path">
+            <li><a href="course/intermediate-programming.html">Intermediate Programming</a></li>
+            <li><a href="course/intermediate-programming/linked-list.html">Linked List</a></li>
+        </ul>
+    </div>
+    <article class="notes">
+        <h1 class="course-title title-1" id="linked-list">Linked List</h1>
+        <p>A linked list is a linear data structure in which the elements, called <em>nodes</em> are not stored at
+            contiguous memory locations (in contrast to arrays).<br>
+            Each <em>node</em> comprises of two items- the data it stores and a pointer to the next node. </p>
+        <ul>
+            <li>Last node's next pointer points to <code>NULL</code></li>
+            <li>In an empty linked list, the <em>head pointer</em> points to <code>NULL</code>.</li>
+        </ul>
+        <p></p>
+        <img src="course/intermediate-programming/images/linked-list.png" class="internal-embed"></img>
+        <p></p>
+        <p>A pointer called "head" will store the address of the first node of the linked list. </p>
+        <h2 id="Linked List vs Array">Linked List vs Array</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Array</th>
+                <th>Linked List</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>size of the array is fixed</td>
+                <td>sized of linked list is not fixed</td>
+            </tr>
+            <tr>
+                <td>occupies less memory for the same number of elements</td>
+                <td>requires more space because of "next"</td>
+            </tr>
+            <tr>
+                <td>accessing i'th value is fast using indicies (simple arithmetic)</td>
+                <td>has to traverse the list from start</td>
+            </tr>
+            <tr>
+                <td>inserting new elements is expensive</td>
+                <td>after deciding where to add, is straightforward (no shifting)</td>
+            </tr>
+            <tr>
+                <td>no deleting without shifting items</td>
+                <td>deleting is easy (kind of)</td>
+            </tr>
+            </tbody>
+        </table>
+        <h2 id="implementation">Implementation</h2>
+        <p>You can define node as a new struct. It will consist of a variable of the data type of the data and a pointer
+            to a <code>Node</code>. <code>create_node</code> creates one isolated node. </p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span
+                class="token keyword">typedef</span> <span class="token keyword">struct</span> <span
+                class="token class-name">_node</span> <span class="token punctuation">{</span>
+	<span class="token keyword">char</span> data<span class="token punctuation">;</span>	<span class="token comment">// could be any time</span>
+	<span class="token keyword">struct</span> <span class="token class-name">_node</span> <span
+                    class="token operator">*</span> next<span class="token punctuation">;</span> <span
+                    class="token comment">// self-referential</span>
+<span class="token punctuation">}</span> Node<span class="token punctuation">;</span>
+
+Node <span class="token operator">*</span> <span class="token function">create_node</span> <span
+                    class="token punctuation">(</span><span class="token keyword">char</span> ch<span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+	Node <span class="token operator">*</span> node <span class="token operator">=</span> <span
+                    class="token punctuation">(</span>Node <span class="token operator">*</span><span
+                    class="token punctuation">)</span> <span class="token function">malloc</span><span
+                    class="token punctuation">(</span><span class="token keyword">sizeof</span><span
+                    class="token punctuation">(</span>Node<span class="token punctuation">)</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+	node<span class="token operator">-&gt;</span>data <span class="token operator">=</span> ch<span
+                    class="token punctuation">;</span>
+	node<span class="token operator">-&gt;</span>next <span class="token operator">=</span> <span
+                    class="token constant">NULL</span><span class="token punctuation">;</span> <span
+                    class="token comment">// one node by itself.</span>
+	<span class="token keyword">return</span> node<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <h2 id="linked-list-operations">Linked List Operations</h2>
+        <h3 id="print">print</h3>
+        <p><em>print</em> - output all data items in order from head to tail.</p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span class="token keyword">void</span> <span
+                class="token function">print</span><span class="token punctuation">(</span><span class="token keyword">const</span> Node <span
+                class="token operator">*</span> cur<span class="token punctuation">)</span>
+</code></pre>
+        <p>use a Node pointer named <code>cur</code> to advance node by node through the list and each time
+            <code>cur</code> encounters another node, output that node's data value. </p>
+        <h3 id="length">length</h3>
+        <p><em>length</em> - reports number of items currently in list</p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span class="token keyword">long</span> <span
+                class="token function">length</span><span class="token punctuation">(</span><span class="token keyword">const</span> Node <span
+                class="token operator">*</span> cur<span class="token punctuation">)</span>
+</code></pre>
+        <p>use a Node pointer named <code>cur</code> to advance node by node through list, and increment a counter each
+            time <code>cur</code> encounters another node. </p>
+        <h3 id="add_after">add_after</h3>
+        <p><em>add_after</em> - insert new node with a given data value immediately after a given existing node. </p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span class="token keyword">void</span> <span
+                class="token function">add_after</span><span class="token punctuation">(</span>Node <span
+                class="token operator">*</span> node<span class="token punctuation">,</span> <span
+                class="token keyword">char</span> val<span class="token punctuation">)</span>
+</code></pre>
+        <p><code>val</code> parameter is data value to place in new node. <code>node</code> parameter holds address of
+            existing node that new one should be placed right after.<br>
+            New node needs to be dynamically allocated.<br>
+            Additional statements are needed to adjust links appropriately so list stays connected. </p>
+        <h3 id="clear">clear</h3>
+        <p><em>clear</em> - deallocates all nodes in the list, sets head pointer to null. </p>
+        <h3 id="add_front">add_front</h3>
+        <p><em>add_front</em> - creates a new node and makes it the first node of the list.</p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span class="token keyword">void</span> <span
+                class="token function">add_front</span><span class="token punctuation">(</span>Node <span
+                class="token operator">*</span><span class="token operator">*</span> list_ptr<span
+                class="token punctuation">,</span> <span class="token keyword">char</span> val<span
+                class="token punctuation">)</span> <span class="token punctuation">{</span>
+	Node <span class="token operator">*</span> <span class="token operator">=</span> <span class="token function">create_node</span><span
+                    class="token punctuation">(</span>val<span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+	n<span class="token operator">-&gt;</span>next <span class="token operator">=</span> <span
+                    class="token operator">*</span>list_ptr<span class="token punctuation">;</span> <span
+                    class="token comment">// node's next gets address of old first node</span>
+	<span class="token operator">*</span>list_ptr <span class="token operator">=</span> n<span
+                    class="token punctuation">;</span> <span class="token comment">// head pointer gets address of new node</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <p>The function needs the ability to modify the actual head pointer (not a copy), so call with
+            <code>&amp;head</code> as argument.</p>
+        <h3 id="clear_list">clear_list</h3>
+        <p><em>clear_list</em> - free all nodes.</p>
+        <h3 id="remove_after">remove_after</h3>
+        <p><em>remove_after</em> - remove the node that is after the given node. </p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span class="token keyword">char</span> <span
+                class="token function">delete_after</span> <span class="token punctuation">(</span>Node <span
+                class="token operator">*</span> node<span class="token punctuation">)</span><span
+                class="token punctuation">;</span>
+</code></pre>
+        <p></p>
+        <img src="course/intermediate-programming/images/linked-list-remove-after.png" class="internal-embed"></img>
+        <p></p>
+        <h3 id="remove_front">remove_front</h3>
+        <p><em>remove_front</em> - remove the first node and makes the second node the first node. </p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span class="token keyword">char</span> <span
+                class="token function">delete_front</span><span class="token punctuation">(</span>Node <span
+                class="token operator">*</span><span class="token operator">*</span>list_ptr<span
+                class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+        <p></p>
+        <img src="course/intermediate-programming/images/linked-list-remove-front.png" class="internal-embed"></img>
+        <p></p>
+        <h3 id="remove_all">remove_all</h3>
+        <p><em>remove_all</em> - remove all occurences of a particular data value. </p>
+        <h3 id="More about Head">More about Head</h3>
+        <p>Some of these operations require modification of the head. Head is on the stack (while the nodes are on the
+            heap), so when we call the functions that modify the head, we need to make sure we pass the address of head
+            (pass the pointer of the pointer). </p>
+        <ul>
+            <li>Note: pointers are pass by values, so changes to p will NOT affect p.</li>
+            <li>If the function needs to update head, then that function should accept a double pointer.
+                <ul>
+                    <li>Address of the first node = <code>*list_ptr*</code></li>
+                </ul>
+            </li>
+        </ul>
+        <br>
+    </article>
+</main>
+<div id="foot"></div>
+</body>
+</html>

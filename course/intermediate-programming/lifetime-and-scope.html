@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Journal: Intermediate Programming</title>
+    <base href="../../">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#nav").load("navigation.html");
+            $("#foot").load("footer.html");
+        });
+    </script>
+</head>
+
+<body>
+<div id="nav"></div>
+<main class="site-main container-md px-3">
+    <div class="file-path">
+        <ul class="path">
+            <li><a href="course/intermediate-programming.html">Intermediate Programming</a></li>
+            <li><a href="course/intermediate-programming/lifetime-and-scope.html">Lifetime and Scope</a></li>
+        </ul>
+    </div>
+    <article class="notes">
+        <h1 class="course-title title-1" id="Lifetime and Scope">Lifetime and Scope</h1>
+        <h2 id="lifetime">Lifetime</h2>
+        <p><em>Lifetime</em> of a variable is the period of time during which the value exists in memory.</p>
+        <h2 id="scope">Scope</h2>
+        <p><em>Scope</em> of a variable is the region of code in which the variable name is usable.</p>
+        <p>A variable in scope may be temporarily "hidden" when an inner scope declare a variable with the same
+            name.</p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span class="token keyword">int</span> i <span
+                class="token operator">=</span> <span class="token number">12</span><span
+                class="token punctuation">;</span>	<span class="token comment">// a variable named i</span>
+<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"i before loop: %d	"</span><span
+                    class="token punctuation">,</span> i<span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span
+                    class="token operator">=</span> <span class="token number">0</span><span
+                    class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span
+                    class="token number">1</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span> 	<span
+                    class="token comment">// a new variable named i</span>
+	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"i inside loop: %d	"</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"i after loop: %d	"</span><span
+                    class="token punctuation">,</span> i<span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>	<span class="token comment">// the old i</span>
+</code></pre>
+        <p>Output:</p>
+        <pre><code>i before loop: 12	i inside loop: 0	i after loop: 12
+</code></pre>
+        <p>The variable foo takes precedent. </p>
+        <h2 id="types-of-variables">Types of Variables</h2>
+        <p><strong>Local ("stack") variables</strong> are alive from the point of declaration until end of block in
+            which declared. </p>
+        <ul>
+            <li>They are automatically created when that function is entered, and destroyed when that function ends.
+            </li>
+            <li>Local variables go out of scope during calls to other functions because it will be in a different stack
+                frame. (e.g., you cannot access a variable in main if you are in a different function).
+            </li>
+        </ul>
+        <p><strong>Static variables</strong> (declared using the <code>static</code> keyword) have similar scope to
+            local variables, but have a longer lifetime. </p>
+        <ul>
+            <li>Automatically created and <em>initialized to zero(!)</em>, but not destroyed at the end of block of
+                code. They persist, so that the next time same block is executed, they come back into scope with the
+                same value they had before.
+            </li>
+        </ul>
+        <p><strong>Global variables</strong> (declared outside any function; right under the headers) are automatically
+            created at program start and <em>initialized to zero(!)</em>. </p>
+        <ul>
+            <li>They have scope from point of declaration to the end of program.</li>
+            <li>Can be accessed by any function.</li>
+            <li>Can be accessed by functions in other files (after brought into scope using <code>extern &lt;type&gt;
+                &lt;name&gt;</code> in that file).
+            </li>
+            <li>Beware of global variables because they make debugging much harder. It is hard to track which function
+                might have changed a global variable's value. Since they cross boundaries between program modules, it
+                undoes benefits like readability, testability, and reusability.
+                <ul>
+                    <li>Values should be conveyed via parameter passing and return values.</li>
+                </ul>
+            </li>
+        </ul>
+        <h3 id="Where are they stored?">Where are they stored?</h3>
+        <p>Local variables are stored in a region of memory known as the <a class="internal-link"
+                                                                            data-href="Memory.md#Execution Stack"
+                                                                            href="course/intermediate-programming/memory.html#execution-stack"
+                                                                            target="_blank" rel="noopener">stack</a>.
+        </p>
+        <ul>
+            <li>Stack frames are added/removed as functions get called and then return.</li>
+        </ul>
+        <p>Both static and global variables live in a region of memory known as the data segment. </p>
+        <ul>
+            <li>Data segment is allocated when program begins, freed when program exits.</li>
+        </ul>
+        <p>Dynamically-allocated memory lives in a third region of memory, called the heap.</p>
+        <ul>
+            <li>The user is responsible for allocating and freeing memory in the heap.</li>
+        </ul>
+        <br>
+    </article>
+</main>
+<div id="foot"></div>
+</body>
+</html>

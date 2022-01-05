@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Journal: Intermediate Programming</title>
+    <base href="../../">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#nav").load("navigation.html");
+            $("#foot").load("footer.html");
+        });
+    </script>
+</head>
+
+<body>
+<div id="nav"></div>
+<main class="site-main container-md px-3">
+    <div class="file-path">
+        <ul class="path">
+            <li><a href="course/intermediate-programming.html">Intermediate Programming</a></li>
+            <li><a href="course/intermediate-programming/memory.html">Memory</a></li>
+        </ul>
+    </div>
+    <article class="notes">
+        <h1 class="course-title title-1" id="memory">Memory</h1>
+        <h2 id="execution-stack">Execution Stack</h2>
+        <p>Variables declared within a function get situated in memory within a structure called the program execution
+            <em>stack</em> or <em>call stack</em>. When you run a program, this <em>execution stack</em> gets
+            created.<br>
+            Each function call gets a new <em>stack frame</em>, also called <em>activation record</em>, put on top of
+            ("pushed onto") the stack in memory; each frame has space for local variable values as well as parameters,
+            and the values of arguments are copied into that frame.<br>
+            As soon as the function returns, the stack frame will go to bay and all the variables will go away (since
+            they live inside).<br>
+        </p>
+        <img src="course/intermediate-programming/images/execution-stack.png" class="internal-embed"></img>
+        <p></p>
+        <p>To access a caller's stack frame, you need <em>pointers</em>.</p>
+        <h3 id="Arrays within a stack frame">Arrays within a stack frame</h3>
+        <p>Arrays, when passed through a function copies the <em>address</em> of the array, as this is more
+            efficient.<br>
+            Since the calling function remains on stack while called function is executing, the address is still valid,
+            so called function can access it.</p>
+        <h3 id="Limitations of Arrays Allocated within Stack Frames">Limitations of Arrays Allocated within
+            Stack Frames</h3>
+        <p>When you try to declare an array in a function, it is local. When you return the statically-allocated array,
+            it will not work. Calling function cannot access these arrays.</p>
+        <p>Segmentation fault error also occurs when allocating a very large array inside a function. Size of array is
+            limited by size of stack frame. </p>
+        <h2 id="dynamic-allocation">Dynamic Allocation</h2>
+        <p>Dynamic allocation is needed to get around the limitations of arrays allocated within a stack frame. </p>
+        <p>Dynamically-allocated memory is located in a part of memory separate from the stack; it lives on "the
+            heap". </p>
+        <ul>
+            <li>This memory lives as long as we like (until the entire program ends).</li>
+            <li>This memory is not subject to size limitations based on stack frame size.</li>
+            <li>We can decide the size of a dynamically-allocated block of memory.</li>
+        </ul>
+        <p>To allocate memory, we use the command <code>malloc</code> (memory allocate) from
+            <code>&lt;stdlib.h&gt;</code>. </p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span class="token comment">// allocate space for one int in heap</span>
+<span class="token keyword">int</span> <span class="token operator">*</span> ip <span
+                    class="token operator">=</span> <span class="token function">malloc</span><span
+                    class="token punctuation">(</span><span class="token keyword">sizeof</span><span
+                    class="token punctuation">(</span><span class="token keyword">int</span><span
+                    class="token punctuation">)</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+<span class="token comment">// check if allocation succeeded</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>ip <span class="token operator">==</span> <span
+                    class="token constant">NULL</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span> <span class="token comment">/*output error message*/</span> <span
+                    class="token punctuation">}</span>
+<span class="token comment">// give the dynamically-allocated int an intial value</span>
+<span class="token operator">*</span>ip <span class="token operator">=</span> <span class="token number">0</span><span
+                    class="token punctuation">;</span>
+</code></pre>
+        <p>When usage of the dynamically-allocated variable is complete, deallocate it with the <code>free</code>
+            command on the address of the memory on the heap:</p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span class="token comment">// notify system that we're through with heap int</span>
+<span class="token function">free</span><span class="token punctuation">(</span>ip<span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// avoid accental attempt to use the pointer to access a released space</span>
+ip <span class="token operator">=</span> <span class="token constant">NULL</span><span
+                    class="token punctuation">;</span>
+</code></pre>
+        <p>Deallocation does not need to occur in the same function where it was allocated, but some function
+            <em>needs</em> to deallocate the block of memory. </p>
+        <p>A tool to find memory usage mistakes is <a class="internal-link" data-href="Tools.md#Valgrind"
+                                                      href="course/intermediate-programming/tools.html#valgrind"
+                                                      target="_blank" rel="noopener">valgrind</a>.</p>
+        <h3 id="dynamically-allocated-arrays">Dynamically-allocated arrays</h3>
+        <p>To allocate an array with space for <code>n</code> items:</p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span class="token keyword">int</span> <span
+                class="token operator">*</span>a <span class="token operator">=</span> <span class="token function">malloc</span><span
+                class="token punctuation">(</span><span class="token keyword">sizeof</span><span
+                class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span> <span
+                class="token operator">*</span> n<span class="token punctuation">)</span><span
+                class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>a <span
+                    class="token operator">==</span> <span class="token constant">NULL</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span> <span
+                    class="token comment">/*output error message*/</span> <span class="token punctuation">}</span>
+
+<span class="token comment">// access an array item</span>
+a<span class="token punctuation">[</span><span class="token number">0</span><span
+                    class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span
+                    class="token punctuation">;</span>
+a<span class="token punctuation">[</span>n<span class="token operator">-</span><span class="token number">1</span><span
+                    class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span
+                    class="token punctuation">;</span>
+
+<span class="token comment">// deallocate the entire array of size n:</span>
+<span class="token function">free</span><span class="token punctuation">(</span>a<span
+                    class="token punctuation">)</span><span class="token punctuation">;</span> 
+a <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+</code></pre>
+        <h3 id="Reallocate">Reallocate</h3>
+        <p><code>realloc</code> reallocates a given area of memory. Memory can be expanded or contracted, as long as the
+            memory has previously been (dynamically) allocated.<br>
+            It can be done by</p>
+        <ul>
+            <li>expanding or contracting the existing area, if possible</li>
+            <li>allocating a new memory block of new size bytes. There is a chance it changes the base address if there
+                is another block right blocking the memory block you want to change. All the content will be moved
+                automatically.
+            </li>
+        </ul>
+        <p>On success, it will return the pointer to the beginning of newly allocated memory. On failure, it will return
+            a null pointer. </p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span class="token keyword">int</span> <span
+                class="token operator">*</span>ptr <span class="token operator">=</span> <span class="token function">malloc</span><span
+                class="token punctuation">(</span><span class="token keyword">sizeof</span><span
+                class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span
+                class="token operator">*</span><span class="token number">100</span><span
+                class="token punctuation">)</span><span class="token punctuation">;</span>
+ptr <span class="token operator">=</span> <span class="token function">realloc</span><span
+                    class="token punctuation">(</span>ptr<span class="token punctuation">,</span> <span
+                    class="token keyword">sizeof</span><span class="token punctuation">(</span><span
+                    class="token keyword">int</span><span class="token punctuation">)</span><span
+                    class="token operator">*</span><span class="token number">10000</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+        <h3 id="callloc">callloc</h3>
+        <p>Similar to <code>malloc</code>, but initializes all the bits to 0.</p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span class="token keyword">int</span> <span
+                class="token operator">*</span>pData <span class="token operator">=</span> <span class="token function">calloc</span> <span
+                class="token punctuation">(</span><span class="token number">10</span><span
+                class="token punctuation">,</span> <span class="token keyword">sizeof</span><span
+                class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span
+                class="token punctuation">;</span>
+</code></pre>
+        <p>It takes two arguments: the number of elements you want and the base size. </p>
+        <h2 id="dynamically-allocated-two-dimensional-arrays">Dynamically-allocated Two Dimensional
+            Arrays</h2>
+        <p>Method 1: 1D <a class="internal-link" data-href="Arrays and C Strings.md#Arrays"
+                           href="/Users/tran/Library/Mobile Documents/iCloud~md~obsidian/Documents/Journal/School/Intermediate Programming/Arrays%20and%20C%20Strings.md#Arrays"
+                           target="_blank" rel="noopener">array</a> of items and "fake" two dimensions. </p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span class="token keyword">int</span> <span
+                class="token operator">*</span>a <span class="token operator">=</span> <span class="token function">malloc</span><span
+                class="token punctuation">(</span><span class="token keyword">sizeof</span><span
+                class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span> <span
+                class="token operator">*</span> num_rows <span class="token operator">*</span> num_cols<span
+                class="token punctuation">)</span><span class="token punctuation">;</span> 
+</code></pre>
+        <p>To access elements, convert <code>[row][col]</code> indexing to <code>[row * num_col + col]</code> and back.
+            For example, <code>a[7]</code> means <code>a[2][1]</code> for <code>num_col == 3</code>.</p>
+        <p>Method 2: double (<code>**</code>) memory allocation<br>
+            Use a 1D array of pointers to item arrays:</p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span class="token keyword">int</span> <span
+                class="token operator">*</span><span class="token operator">*</span>a <span
+                class="token operator">=</span> <span class="token function">malloc</span><span
+                class="token punctuation">(</span><span class="token keyword">sizeof</span><span
+                class="token punctuation">(</span><span class="token keyword">int</span><span
+                class="token operator">*</span><span class="token punctuation">)</span> <span
+                class="token operator">*</span> num_rows
+
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span
+                    class="token operator">=</span><span class="token number">0</span><span
+                    class="token punctuation">;</span> i <span class="token operator">&lt;</span> num_rows<span
+                    class="token punctuation">;</span> i<span class="token operator">++</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+	a<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span
+                    class="token operator">=</span> <span class="token function">malloc</span><span
+                    class="token punctuation">(</span><span class="token keyword">sizeof</span><span
+                    class="token punctuation">(</span><span class="token keyword">int</span><span
+                    class="token punctuation">)</span> <span class="token operator">*</span> num_cols<span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+a<span class="token punctuation">[</span><span class="token number">2</span><span
+                    class="token punctuation">]</span><span class="token punctuation">[</span><span
+                    class="token number">1</span><span class="token punctuation">]</span> <span
+                    class="token operator">=</span> <span class="token number">17</span> <span class="token comment">// this works</span>
+
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span
+                    class="token operator">=</span><span class="token number">0</span><span
+                    class="token punctuation">;</span> i <span class="token operator">&lt;</span> num_rows<span
+                    class="token punctuation">;</span> i<span class="token operator">++</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token function">free</span><span class="token punctuation">(</span>a<span
+                    class="token punctuation">[</span>i<span class="token punctuation">]</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token function">free</span><span class="token punctuation">(</span>a<span
+                    class="token punctuation">)</span><span class="token punctuation">;</span> 
+</code></pre>
+        <p>In this case, <code>a[i]</code> is of type int *, an array of pointers to int. Each represents one row in the
+            2D array. </p>
+        <h3 id="Non-uniform 2D arrays">Non-uniform 2D arrays</h3>
+        <p>It is possible for rows to be different sizes ("jagged"). Remember to free the memory for each row, and then
+            the overarching array itself. All rows are different size so a parallel array to hold the length of each row
+            is important. </p>
+        <br>
+    </article>
+</main>
+<div id="foot"></div>
+</body>
+</html>

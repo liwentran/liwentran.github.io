@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Journal: Intermediate Programming</title>
+    <base href="../../">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#nav").load("navigation.html");
+            $("#foot").load("footer.html");
+        });
+    </script>
+</head>
+
+<body>
+<div id="nav"></div>
+<main class="site-main container-md px-3">
+    <div class="file-path">
+        <ul class="path">
+            <li><a href="course/intermediate-programming.html">Intermediate Programming</a></li>
+            <li><a href="course/intermediate-programming/strings.html">Strings</a></li>
+        </ul>
+    </div>
+    <article class="notes">
+        <h1 class="course-title title-1" id="strings">Strings</h1>
+        <p>Strings (<code>std::string</code>) in C++ are objects, sparing us from details like null terminators. <code>#include
+            &lt;string&gt;</code> to use.</p>
+        <p>Strings can be arbitrarily long. The C++ library handles the memory (allocating and adjusting, freeing when
+            <code>string</code> goes out of scope)</p>
+        <h2 id="initializing">Initializing</h2>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded">string s1 <span
+                class="token operator">=</span> <span class="token string">"world"</span><span
+                class="token punctuation">;</span>
+string <span class="token function">s2</span><span class="token punctuation">(</span><span
+                    class="token string">"hello"</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+string <span class="token function">s3</span><span class="token punctuation">(</span><span class="token number">3</span><span
+                    class="token punctuation">,</span><span class="token string">'a'</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span> <span
+                    class="token comment">// s3 is "aaa"</span>
+string s4<span class="token punctuation">;</span> <span class="token comment">// empty string ""</span>
+string <span class="token function">s5</span><span class="token punctuation">(</span>s2<span
+                    class="token punctuation">)</span><span class="token punctuation">;</span> <span
+                    class="token comment">// copies s2 into s5</span>
+
+</code></pre>
+        <p>s1 is initialized in two steps. s2 is called with constructors.</p>
+        <h2 id="uses">Uses</h2>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded">s <span
+                class="token operator">=</span> <span class="token string">"wow"</span>	<span class="token comment">// assign literal to string</span>
+cin <span class="token operator">&gt;&gt;</span> s	<span class="token comment">// put one whitespace-deliminted input word in s</span>
+cout <span class="token operator">&lt;&lt;</span> s	<span class="token comment">// write s to standard out</span>
+<span class="token function">getline</span><span class="token punctuation">(</span>cin<span
+                    class="token punctuation">,</span>s<span class="token punctuation">)</span>	<span
+                    class="token comment">//read to end of line from stdin, store in s</span>
+s1 <span class="token operator">=</span> s2		<span class="token comment">//copy contents of s2 into s1</span>
+s1 <span class="token operator">+</span> s2		<span class="token comment">// return new string: s1 concatenated with s2</span>
+s1 <span class="token operator">+=</span> s2	<span class="token comment">// same as s1.append(s2)</span>
+<span class="token operator">==</span> <span class="token operator">!=</span> <span
+                    class="token operator">&lt;</span><span class="token operator">&gt;</span> <span
+                    class="token operator">&lt;=</span> <span class="token operator">&gt;=</span>	<span
+                    class="token comment">// relational operators; alphabetical order</span>
+</code></pre>
+        <p><code>s.capacity()</code> returns the bytes of memory allocated<br>
+            <code>s.substr(offset, howmany)</code> gives substring of s<br>
+            <code>s.c_str()</code> returns C-style <code>const char *</code> version<br>
+            <code>s[5]</code> accesses the 6th character in string<br>
+            <code>s.at(5)</code> does the same, additionally doing a "bounds check." This is preferred over
+            <code>s[5]</code>.</p>
+        <p>Commonly used <a aria-label-position="top" aria-label="https://www.cplusplus.com/reference/string/string/"
+                            rel="noopener" class="external-link"
+                            href="https://www.cplusplus.com/reference/string/string/" target="_blank">member
+            functions</a>:<br>
+            <code>s.length()</code> returns the length of the string (as a long unsigned value)<br>
+            <code>empty</code> returns false when there is at least 1 character<br>
+            <code>append</code> like <code>+=</code><br>
+            <code>push_back</code> like append for a single character<br>
+            <code>clear</code> set to empty string<br>
+            <code>insert</code> insert one string in middle of another<br>
+            <code>erase</code> removes stretch of characters from string<br>
+            <code>replace</code> replace a substring with a given string</p>
+        <br>
+    </article>
+</main>
+<div id="foot"></div>
+</body>
+</html>

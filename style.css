@@ -462,10 +462,12 @@ hr {
     color: var(--text-tertiary);
 }
 
-.path li:not(:last-child):after {
-    color: var(--text-tertiary);
-    content: ">";
-    margin: 0 0.5em;
+@media (min-width: 1012px) {
+    .path li:not(:last-child):after {
+        color: var(--text-tertiary);
+        content: ">";
+        margin: 0 0.5em;
+    }
 }
 
 .notes {
@@ -487,6 +489,7 @@ hr {
     overflow: auto;
     color: var(--code-blue);
     display: inline;
+    /*display: inline;*/
 }
 
 .notes .comment {
@@ -536,6 +539,13 @@ hr {
     margin-left: 2em;
 }
 
+.notes .language-c {
+    display: block;
+}
+
+.notes .language-cpp {
+    display: block;
+}
 
 .notes pre {
     word-wrap: normal;
@@ -563,6 +573,7 @@ hr {
     display: block;
     margin-left: auto;
     margin-right: auto;
+    width: 60%;
 }
 
 .indent-1 {
@@ -611,6 +622,10 @@ hr {
     .course-info {
         font-size: 14px;
     }
+
+    .notes img {
+        width: 80%;
+    }
 }
 
 @media (max-width: 625px) {
@@ -626,7 +641,9 @@ hr {
     .section-item__content {
         margin-left: 1.5em;
     }
-
+    .notes img {
+        width: 98%;
+    }
 }
 
 @media (min-width: 1012px) {
@@ -646,6 +663,10 @@ hr {
 
     .navigation-items {
         display: none !important;
+    }
+
+    .path li:not(:first-child) {
+        display: none;
     }
 
 }

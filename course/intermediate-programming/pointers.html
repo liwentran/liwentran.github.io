@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Journal: Intermediate Programming</title>
+    <base href="../../">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#nav").load("navigation.html");
+            $("#foot").load("footer.html");
+        });
+    </script>
+</head>
+
+<body>
+<div id="nav"></div>
+<main class="site-main container-md px-3">
+    <div class="file-path">
+        <ul class="path">
+            <li><a href="course/intermediate-programming.html">Intermediate Programming</a></li>
+            <li><a href="course/intermediate-programming/pointers.html">Pointers</a></li>
+        </ul>
+    </div>
+    <article class="notes">
+        <h1 class="course-title title-1" id="Pointers">Pointers</h1>
+        <h2 id="defining-pointers">Defining Pointers</h2>
+        <p>A <em>pointer</em> is a variable that contains the address of a variable. </p>
+        <ul>
+            <li>Each pointer points to a secific data type (except a <em>pointer to void</em>).</li>
+            <li>Declare a pointer using type of variable it will point to, and a <code>*</code>.</li>
+            <li><code>int *p</code>; says <code>p</code> is the name of a variable that holds the address of an <code>int</code>.
+            </li>
+        </ul>
+        <h2 id="operators">Operators</h2>
+        <p><code>&amp;</code> address-of operator: returns address of whatever follows it.<br>
+            <code>*</code> dereferencing operator: returns value being pointed to.</p>
+        <p>Examples:</p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span class="token keyword">int</span> x <span
+                class="token operator">=</span> <span class="token number">1</span><span
+                class="token punctuation">;</span>
+<span class="token keyword">int</span> y <span class="token operator">=</span> <span class="token number">2</span><span
+                    class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token operator">*</span>ip<span
+                    class="token punctuation">;</span> <span
+                    class="token comment">/* declare ip, a pointer to int */</span>
+ip <span class="token operator">=</span> <span class="token operator">&amp;</span>x<span
+                    class="token punctuation">;</span> <span class="token comment">/* ip now "points to "x */</span>
+y <span class="token operator">=</span> <span class="token operator">*</span>ip<span class="token punctuation">;</span> <span
+                    class="token comment">/* y is now 1*/</span>
+<span class="token operator">*</span>ip <span class="token operator">=</span> <span class="token number">0</span><span
+                    class="token punctuation">;</span> <span class="token comment">/* x is now 0 */</span>
+</code></pre>
+        <p>Suppose <code>ip</code> points to integer <code>x</code>. Then <code>*ip</code> can be used anywhere that
+            <code>x</code> makes sense:</p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span class="token operator">*</span>ip <span
+                class="token operator">=</span> <span class="token operator">*</span>ip <span
+                class="token operator">+</span> <span class="token number">10</span>
+</code></pre>
+        <p>Unary operators <code>&amp;</code> and <code>*</code> bind more tightly than binary arithmetic ops. So,
+            <code>y=*ip + 1</code> means take whatever <code>ip</code> points to, add one to it, then assign it to
+            <code>y</code>.<br>
+            This means <code>*ip += 1</code> or <code>++*ip</code> both increment what <code>ip</code> points to. (but
+            parentheses are needed for <code>(*ip)++</code> since unary operators associate from right to left).</p>
+        <h3 id="Assignment">Assignment</h3>
+        <p><code>ptr1 = ptr2</code>; assignment works for pointers of the same type. Only the memory address in <code>ptr2</code>
+            is copied. They will now reference the same memory location. Now, doing the operation <code>*ptr1 =
+                10</code> leads to <code>*ptr2 == 10</code> being true. </p>
+        <h3 id="Comparison">Comparison</h3>
+        <p><code>ptr == ptr2</code> and <code>ptr1 != ptr2</code> compare the addresses inside the pointer variables for
+            equality (do they point to the same location?).<br>
+            <code>ptr == NULL</code> will check if ptr is <code>0</code> (good initialization value to use).<br>
+            <code>ptr1 &lt; ptr2</code> compares addresses.</p>
+        <ul>
+            <li>Useful if pointer variables reference memory in the same array for example (similar to comparing
+                indicies).
+            </li>
+        </ul>
+        <h3 id="Arithmetic and Arrays">Arithmetic and Arrays</h3>
+        <p>Operators <code>+</code>, <code>-</code>, <code>+=</code>, <code>-=</code> can be used with other pointers or
+            integers for the 2nd operand.<br>
+            Most often used on pointers to array because it doesn't add the actual number. It adds that number times how
+            any bytes each element takes up based on the pointer base type. </p>
+        <ul>
+            <li>For variable <code>int * p</code>, code <code>p+1</code> will add 4 bytes (<code>sizeof(int)</code>) to
+                <code>p</code>'s address. So now, the pointer <code>p</code> will point to the second element in that
+                array.
+            </li>
+        </ul>
+        <p>For a declared array like <code>int a[10]</code>, <code>a</code> is "really" just a (non-modifiable) address
+            that starts a block of memory.</p>
+        <ul>
+            <li>Writing <code>a</code> is the same thing as writing <code>&amp;a[0]</code>.</li>
+            <li><code>a[3]</code> is a synonym for <code>*(a+3)</code> (offset three from pointer to start of array).
+            </li>
+            <li><code>&amp;a[3]</code> is a synonym for <code>a+3</code>.</li>
+        </ul>
+        <h3 id="Difference (subtraction)">Difference (subtraction)</h3>
+        <p><code>ptrdiff_t</code> is a predefined type in the library <code>stddef.h</code>. This is the resulting type
+            when subtracting pointers (memory addresses). Equivalent to the <code>long</code> integer type. </p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span class="token keyword">int</span> array<span
+                class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span
+                class="token punctuation">{</span><span class="token number">3</span><span
+                class="token punctuation">,</span><span class="token number">4</span><span
+                class="token punctuation">,</span><span class="token number">5</span><span
+                class="token punctuation">,</span><span class="token number">6</span><span
+                class="token punctuation">,</span><span class="token number">7</span><span
+                class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token operator">*</span> start <span class="token operator">=</span> <span
+                    class="token operator">&amp;</span>array<span class="token punctuation">[</span><span
+                    class="token number">0</span><span class="token punctuation">]</span><span
+                    class="token punctuation">;</span> <span class="token comment">// first element address</span>
+<span class="token keyword">int</span> <span class="token operator">*</span> end <span
+                    class="token operator">=</span> <span class="token operator">&amp;</span>array<span
+                    class="token punctuation">[</span><span class="token number">4</span><span
+                    class="token punctuation">]</span><span class="token punctuation">;</span> <span
+                    class="token comment">// last element address</span>
+<span class="token class-name">ptrdiff_t</span> capacity <span class="token operator">=</span> end <span
+                    class="token operator">-</span> start <span class="token operator">+</span> <span
+                    class="token number">1</span> <span class="token comment">// number of elements in array (5)</span>
+</code></pre>
+        <h2 id="Constants with Pointers">Constants with Pointers</h2>
+        <p><code>const</code> means <a class="internal-link" data-href="Basics of C.md#const.md"
+                                       href="course/intermediate-programming/basics-of-c.html#const"
+                                       target="_blank" rel="noopener">constant</a> and can be used at different points
+            in pointer type declarations, each with different meanings. </p>
+        <p>To make a (mutable) pointer to a const (non-modifiable) data: <code>const int * iptr</code>. This prevents
+            changing contents of the pointed to memory. </p>
+        <ul>
+            <li>Concept is similar to a <code>const int iray[]</code> where changing the contents, like <code>iray[0] =
+                10</code> is not allowed, but <code>iray = malloc(sizeof(int)</code> is allowed.
+            </li>
+        </ul>
+        <p>To make a const (non-modifiable) pointer: <code>int * const iptr</code>. It prevents assignments to change
+            (the address stored in) <code>iptr</code> or <code>iray</code></p>
+        <ul>
+            <li>Similar to <code>int iray[10]</code>; as a local variable. <code>iray = b;</code> is not allowed just as
+                <code>iptr = &amp;other</code> is not.
+            </li>
+            <li>If not a parameter, must set when declaring.</li>
+        </ul>
+        <p>To make a const <code>ptr</code> to const data: <code>const int * const iptr</code>. It doesn't allow changes
+            to the pointer variable itself, or the memory it points to. </p>
+        <ul>
+            <li>Similar to <code>const int iray[] = { 1,2,3 }</code>; as local variable.</li>
+        </ul>
+        <p>Read declarations from right to left to get them correct.</p>
+        <h2 id="swap function example">swap function example</h2>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span class="token keyword">void</span> <span
+                class="token function">swap</span> <span class="token punctuation">(</span><span class="token keyword">int</span> <span
+                class="token operator">*</span>px<span class="token punctuation">,</span> <span class="token keyword">int</span> <span
+                class="token operator">*</span>py<span class="token punctuation">)</span> <span
+                class="token punctuation">{</span>
+	<span class="token keyword">int</span> temp<span class="token punctuation">;</span>
+	temp <span class="token operator">=</span> <span class="token operator">*</span>px<span
+                    class="token punctuation">;</span>
+	<span class="token operator">*</span>py <span class="token operator">=</span> <span class="token operator">*</span>px<span
+                    class="token punctuation">;</span>
+	<span class="token operator">*</span>px <span class="token operator">=</span> <span class="token operator">*</span>temp<span
+                    class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <p>The call in main now must be <code>swap(&amp;a, &amp;b)</code> since we need to send in the addresses of
+            <code>a</code> and <code>b</code>.<br>
+            Swap function works because pointer arguments enable a function to access and modify values in the calling
+            function.</p>
+        <h2 id="Pointers vs. C-Strings">Pointers vs. C-Strings</h2>
+        <p>Given these declarations:</p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span class="token keyword">char</span> str<span
+                class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span
+                class="token string">"original"</span><span class="token punctuation">;</span>
+<span class="token keyword">char</span> <span class="token operator">*</span> str2<span
+                    class="token punctuation">;</span>
+</code></pre>
+        <ul>
+            <li><code>strcpy(str2, str1);</code> will crash because memory for str2 was never allocated. This would work
+                if you assign <code>malloc(strlen(str1)+1)</code> for str2.
+            </li>
+            <li><code>str1+=3;</code> will not compile because we cannot change the address stored in a statically
+                declared array variable. <code>*(str1+3)</code> creates a new pointer value, but it would work.
+            </li>
+            <li><code>str2 = str1;</code> Makes str2 refer to the same block of memory as str1. Only copies the memory
+                address stored in str1, and not the whole array.
+            </li>
+        </ul>
+        <br>
+    </article>
+</main>
+<div id="foot"></div>
+</body>
+</html>

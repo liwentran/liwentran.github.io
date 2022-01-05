@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Journal: Intermediate Programming</title>
+    <base href="../../">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#nav").load("navigation.html");
+            $("#foot").load("footer.html");
+        });
+    </script>
+</head>
+
+<body>
+<div id="nav"></div>
+<main class="site-main container-md px-3">
+    <div class="file-path">
+        <ul class="path">
+            <li><a href="course/intermediate-programming.html">Intermediate Programming</a></li>
+            <li><a href="course/intermediate-programming/structures.html">Structures</a></li>
+        </ul>
+    </div>
+    <article class="notes">
+        <h1 class="course-title title-1" id="Structures">Structures</h1>
+        <p>C is not an object oriented class, so there are no classes.</p>
+        <p>A <em>struct</em> is a collection of related variables, bundled together into one variable. That means there
+            are no member functions. </p>
+        <p>E.g., think about what you need in checkers. A checkers_piece would have the fields: x (horizontal offset), y
+            (vertical offset), and black (0 = white, non-0 = black). </p>
+        <h2 id="syntax">Syntax</h2>
+        <p><strong>Definition</strong><br>
+            The <code>struct name { ... };</code> syntax defines a new struct data type. </p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span
+                class="token keyword">struct</span> <span class="token class-name">date</span> <span
+                class="token punctuation">{</span>
+	<span class="token keyword">int</span> year<span class="token punctuation">;</span>
+	<span class="token keyword">int</span> month<span class="token punctuation">;</span>
+	<span class="token keyword">int</span> day<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span> 
+</code></pre>
+        <p>The variables in a struct are called <em>fields</em>. They can be other <code>structs</code>. </p>
+        <p><strong>Declaration</strong><br>
+            This syntax declares a <em>variable</em> that <em>has</em> that type:</p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span
+                class="token keyword">struct</span> <span class="token class-name">date</span> today<span
+                class="token punctuation">;</span> 
+</code></pre>
+        <p><strong>Initialization</strong><br>
+            <code>struct</code> variable can be initialized in a similar way to an array:</p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span
+                class="token keyword">struct</span> <span class="token class-name">date</span> today <span
+                class="token operator">=</span> <span class="token punctuation">(</span><span
+                class="token number">2021</span><span class="token punctuation">,</span> <span
+                class="token number">9</span><span class="token punctuation">,</span> <span
+                class="token number">28</span><span class="token punctuation">)</span><span
+                class="token punctuation">;</span>
+</code></pre>
+        <p><strong>Accessing fields</strong><br>
+            Access the fields in a parameter:</p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded">d<span
+                class="token punctuation">.</span>date <span class="token operator">=</span> <span class="token number">1</span><span
+                class="token punctuation">;</span>
+d<span class="token punctuation">.</span>month<span class="token operator">++</span><span
+                    class="token punctuation">;</span>
+</code></pre>
+        <p><strong>Pointers as fields</strong><br>
+            <code>struct</code> fields can be pointers as well, which is preferred because it is space efficient
+            (pointers are only 8 bytes) and it allows updates to "propagate" to the <code>struct</code>.</p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span
+                class="token keyword">struct</span> <span class="token class-name">team</span> <span
+                class="token punctuation">{</span>
+	<span class="token keyword">struct</span> <span class="token class-name">player</span> <span class="token operator">*</span>catcher<span
+                    class="token punctuation">;</span>
+	<span class="token keyword">struct</span> <span class="token class-name">player</span> <span class="token operator">*</span>first_baseman<span
+                    class="token punctuation">;</span>
+	<span class="token keyword">struct</span> <span class="token class-name">player</span> <span class="token operator">*</span>second_baseman<span
+                    class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <p><strong><code>sizeof()</code></strong><br>
+            <code>sizeof(struct player)</code> returns total size of all fields. (so <code>date</code> would be 12
+            bytes).<br>
+            The size of struct is <em>at least</em> the sum of the sizes of its fields. It can be bigger if the compiler
+            decides to add "padding," which is extra space between fields. </p>
+        <p><strong>Operators</strong><br>
+            <code>d-&gt;day</code> is a synonym for <code>(*d).day</code>. This is preferred because there is a smaller
+            number of operators. </p>
+        <p><strong>Arrays</strong><br>
+            You can have an array of <code>structs</code>:</p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span
+                class="token keyword">struct</span> <span class="token class-name">album</span> music_collection<span
+                class="token punctuation">[</span><span class="token number">99999</span><span
+                class="token punctuation">]</span><span class="token punctuation">;</span>
+music_collection<span class="token punctuation">[</span><span class="token number">0</span><span
+                    class="token punctuation">]</span><span class="token punctuation">.</span>name <span
+                    class="token operator">=</span> <span class="token string">"The Next Day"</span><span
+                    class="token punctuation">;</span>
+music_collection<span class="token punctuation">[</span><span class="token number">1</span><span
+                    class="token punctuation">]</span><span class="token punctuation">.</span>length <span
+                    class="token operator">=</span> <span class="token number">41.9</span><span
+                    class="token punctuation">;</span>
+</code></pre>
+        <p>You can have a <code>struct</code> with an array in it:</p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span
+                class="token keyword">struct</span> <span class="token class-name">cc_receipt</span> <span
+                class="token punctuation">{</span>
+	<span class="token keyword">char</span> cc_number<span class="token punctuation">[</span><span class="token number">16</span><span
+                    class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <h2 id="passing-into-a-function">Passing into a Function</h2>
+        <p>A struct can be a function parameter and/or return type.</p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span
+                class="token keyword">struct</span> <span class="token class-name">date</span> <span
+                class="token function">next_day</span><span class="token punctuation">(</span><span
+                class="token keyword">struct</span> <span class="token class-name">date</span> d<span
+                class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token punctuation">.</span><span class="token punctuation">.</span><span
+                    class="token punctuation">.</span>
+	<span class="token keyword">return</span> d<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <p>A <code>struct</code> is a pass-by-value so we need to return a new <code>struct</code> or take a pointer to
+            a <code>struct</code> and dereference/modify it. </p>
+        <p>When a <code>struct</code> is passed to a function, everything inside is copied, including arrays. This means
+            an array wrapped in a <code>struct</code> is a pass-by-value. </p>
+        <h2 id="Typedef">Typedef</h2>
+        <p>We can get tired of writing <code>struct</code> over and over again, so we use this shorthand:</p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span
+                class="token keyword">typedef</span> <span class="token keyword">struct</span> <span
+                class="token punctuation">{</span>
+	<span class="token keyword">float</span> amount<span class="token punctuation">;</span>
+	<span class="token keyword">char</span> cc_number<span class="token punctuation">[</span><span class="token number">16</span><span
+                    class="token punctuation">]</span><span class="token punctuation">;</span> 
+<span class="token punctuation">}</span> cc_receipt<span class="token punctuation">;</span> <span class="token comment">// we move the name to the end</span>
+
+cc_receipt lunch_receipt<span class="token punctuation">;</span>
+cc_receipt dinner_receipt<span class="token punctuation">;</span>
+</code></pre>
+        <p>Now we can refer to the type simply as <code>cc_receipt</code> instead of <code>struct cc_receipt</code>.
+        </p>
+        <h2 id="Nested structs">Nested structs</h2>
+        <p>Structures can be nested:</p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span
+                class="token keyword">typedef</span> <span class="token keyword">struct</span> <span
+                class="token punctuation">{</span>
+	<span class="token keyword">struct</span> <span class="token punctuation">{</span>
+		<span class="token keyword">int</span> r<span class="token punctuation">;</span>
+		<span class="token keyword">int</span> b<span class="token punctuation">;</span>
+		<span class="token keyword">int</span> g<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span> color<span class="token punctuation">;</span>
+	<span class="token keyword">struct</span> <span class="token punctuation">{</span>
+		<span class="token keyword">int</span> x<span class="token punctuation">;</span>
+		<span class="token keyword">int</span> y<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span> position<span class="token punctuation">;</span>
+<span class="token punctuation">}</span> pixel<span class="token punctuation">;</span>
+
+pixel p<span class="token punctuation">;</span>
+p<span class="token punctuation">.</span>color<span class="token punctuation">.</span>r <span
+                    class="token operator">=</span> <span class="token number">255</span><span
+                    class="token punctuation">;</span>
+p<span class="token punctuation">.</span>positon<span class="token punctuation">.</span>x <span
+                    class="token operator">=</span> <span class="token number">40</span><span class="token punctuation">;</span> 
+</code></pre>
+        <p>You can take out color and position and make them stand alone <code>structs</code> and then add <code>struct
+            color c</code> into pixel. However, use this when you don't need them as stand along <code>structs</code>.
+        </p>
+
+        <br>
+    </article>
+</main>
+<div id="foot"></div>
+</body>
+</html>

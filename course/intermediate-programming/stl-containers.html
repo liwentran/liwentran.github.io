@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Journal: Intermediate Programming</title>
+    <base href="../../">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#nav").load("navigation.html");
+            $("#foot").load("footer.html");
+        });
+    </script>
+</head>
+
+<body>
+<div id="nav"></div>
+<main class="site-main container-md px-3">
+    <div class="file-path">
+        <ul class="path">
+            <li><a href="course/intermediate-programming.html">Intermediate Programming</a></li>
+            <li><a href="course/intermediate-programming/stl-containers.html">STL Containers</a></li>
+        </ul>
+    </div>
+    <article class="notes">
+        <h1 class="course-title title-1" id="standard-template-library">Standard Template Library</h1>
+        <p>STL is C++'s library of useful data structures and algorithms. Similar to <code>java.util/java.lang</code>
+            and Python <code>sets</code>, <code>dictionaries</code>, <code>collections</code>.</p>
+        <h2 id="stl-containers-overview">STL Containers Overview</h2>
+        <ul>
+            <li><code>vector&lt;string&gt;</code> - vector of <code>std::strings</code></li>
+            <li><code>vector&lt;float&gt;</code> - vector of <code>floats</code></li>
+            <li><code>map&lt;string, int&gt;</code> - map containing <code>std::strings</code> with associated <code>ints</code>.
+                Similar to dictionaries.
+            </li>
+        </ul>
+        <p>Other STL containers:</p>
+        <ul>
+            <li><a aria-label-position="top" aria-label="http://www.cplusplus.com/reference/array/array/" rel="noopener"
+                   class="external-link" href="http://www.cplusplus.com/reference/array/array/"
+                   target="_blank">array</a> – fixed-length array
+            </li>
+            <li><a aria-label-position="top" aria-label="http://www.cplusplus.com/reference/vector/vector/"
+                   rel="noopener" class="external-link" href="http://www.cplusplus.com/reference/vector/vector/"
+                   target="_blank">vector</a> – dynamically-sized array
+            </li>
+            <li><a aria-label-position="top" aria-label="http://www.cplusplus.com/reference/set/set/" rel="noopener"
+                   class="external-link" href="http://www.cplusplus.com/reference/set/set/" target="_blank">set</a> –
+                set; an element can appear at most once
+            </li>
+            <li><a aria-label-position="top" aria-label="http://www.cplusplus.com/reference/list/list/" rel="noopener"
+                   class="external-link" href="http://www.cplusplus.com/reference/list/list/" target="_blank">list</a> –
+                linked list!
+            </li>
+            <li><a aria-label-position="top" aria-label="http://www.cplusplus.com/reference/map/map/" rel="noopener"
+                   class="external-link" href="http://www.cplusplus.com/reference/map/map/" target="_blank">map</a> –
+                associative list, i.e. dictionary
+            </li>
+            <li><a aria-label-position="top" aria-label="http://www.cplusplus.com/reference/stack/stack/" rel="noopener"
+                   class="external-link" href="http://www.cplusplus.com/reference/stack/stack/"
+                   target="_blank">stack</a> – last-in first-out (LIFO)
+            </li>
+            <li><a aria-label-position="top" aria-label="http://www.cplusplus.com/reference/deque/deque/" rel="noopener"
+                   class="external-link" href="http://www.cplusplus.com/reference/deque/deque/"
+                   target="_blank">deque</a> – double-ended queue, flexible combo of LIFO/FIFO
+            </li>
+            <li><a aria-label-position="top"
+                   aria-label="http://www.cplusplus.com/reference/unordered_map/unordered_map/" rel="noopener"
+                   class="external-link" href="http://www.cplusplus.com/reference/unordered_map/unordered_map/"
+                   target="_blank">unordered_map</a> – another map, more like a hash table
+            </li>
+            <li><a aria-label-position="top" aria-label="http://www.cplusplus.com/reference/utility/pair/"
+                   rel="noopener" class="external-link" href="http://www.cplusplus.com/reference/utility/pair/"
+                   target="_blank">pair</a> – pair template
+            </li>
+            <li><a aria-label-position="top" aria-label="http://www.cplusplus.com/reference/tuple/" rel="noopener"
+                   class="external-link" href="http://www.cplusplus.com/reference/tuple/" target="_blank">tuple</a> –
+                like pair, but can have &gt;2 fields
+            </li>
+        </ul>
+        <h2 id="templates">Templates</h2>
+        <p>Templates are a way of writing an object (<code>Node</code>) or function (<code>print_list</code>) so that
+            they can work with <em>any</em> type. Equivalent of <code>generics</code> in Java.</p>
+        <p>Defining a template is simultaneously defining a <em>family</em> of related objects/functions.</p>
+        <h3 id="Creating a Template">Creating a Template</h3>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded">template<span
+                class="token operator">&lt;</span>typename T<span class="token operator">&gt;</span>
+<span class="token keyword">struct</span> <span class="token class-name">Node</span> <span
+                    class="token punctuation">{</span>
+	T payload<span class="token punctuation">;</span> <span
+                    class="token comment">// 'T' is a placeholder for a type</span>
+	Node <span class="token operator">*</span>next<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+template<span class="token operator">&lt;</span>typename T<span class="token operator">&gt;</span>
+<span class="token keyword">void</span> <span class="token function">print_list</span><span
+                    class="token punctuation">(</span>Node<span class="token operator">&lt;</span>T<span
+                    class="token operator">&gt;</span> <span class="token operator">*</span>head<span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+	Node<span class="token operator">&lt;</span>T<span class="token operator">&gt;</span> <span
+                    class="token operator">*</span>cur <span class="token operator">=</span> head<span
+                    class="token punctuation">;</span>
+	<span class="token keyword">while</span> <span class="token punctuation">(</span>cur <span
+                    class="token operator">!=</span> <span class="token constant">NULL</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+		cout <span class="token operator">&lt;&lt;</span> cur<span class="token operator">-&gt;</span> payload <span
+                    class="token operator">&lt;&lt;</span> <span class="token string">" "</span><span
+                    class="token punctuation">;</span>
+		cur <span class="token operator">=</span> cur <span class="token operator">-&gt;</span> next<span
+                    class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	cout <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <p>We could replace <code>T</code> with <code>int</code>, <code>float</code>, <code>char</code> or <code>std::string</code>
+            and this would compile and work. </p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded">template<span
+                class="token operator">&lt;</span>typename T<span class="token operator">&gt;</span>
+</code></pre>
+        <p>We call the <code>T</code> a type variable or type parameter. It can be any name that is a singular capital
+            letter. </p>
+        <p>The line makes <code>Node</code> a template <code>struct</code> and <code>print_list</code> a template
+            function.</p>
+        <h3 id="usage">Usage</h3>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span
+                class="token keyword">int</span> <span class="token function">main</span><span
+                class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                class="token punctuation">{</span>
+	Node<span class="token operator">&lt;</span><span class="token keyword">float</span><span class="token operator">&gt;</span> f2 <span
+                    class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">95.1f</span><span
+                    class="token punctuation">,</span> <span class="token constant">NULL</span><span
+                    class="token punctuation">}</span><span class="token punctuation">;</span>
+	Node<span class="token operator">&lt;</span><span class="token keyword">float</span><span class="token operator">&gt;</span> f1 <span
+                    class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">35.3f</span><span
+                    class="token punctuation">,</span> <span class="token operator">&amp;</span>f2<span
+                    class="token punctuation">}</span><span class="token punctuation">;</span>
+	<span class="token function">print_list</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>f1<span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+	
+	Node<span class="token operator">&lt;</span><span class="token keyword">int</span><span
+                    class="token operator">&gt;</span> i2 <span class="token operator">=</span> <span
+                    class="token punctuation">{</span><span class="token number">230</span><span
+                    class="token punctuation">,</span> <span class="token constant">NULL</span><span
+                    class="token punctuation">}</span><span class="token punctuation">;</span>
+	Node<span class="token operator">&lt;</span><span class="token keyword">int</span><span
+                    class="token operator">&gt;</span> i1 <span class="token operator">=</span> <span
+                    class="token punctuation">{</span><span class="token number">34</span><span
+                    class="token punctuation">,</span> <span class="token operator">&amp;</span>i2<span
+                    class="token punctuation">}</span><span class="token punctuation">;</span>
+	<span class="token function">print_list</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>i1<span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+	
+	<span class="token keyword">return</span> <span class="token number">0</span><span
+                    class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <h2 id="vector">Vector</h2>
+        <p><code>vector</code> is an array that automatically grows and shrinks as you need more/less room.</p>
+        <ul>
+            <li>use <code>[]</code> to access elements, like array</li>
+            <li>Allocation, resizing, and deallocation handled by C++</li>
+            <li>Like <code>java.util.ArrayList</code> or Python's <code>list</code> type.</li>
+            <li>See the <a aria-label-position="top" aria-label="https://www.cplusplus.com/reference/vector/vector/"
+                           rel="noopener" class="external-link"
+                           href="https://www.cplusplus.com/reference/vector/vector/" target="_blank">C++ reference</a>
+                for more functionality.
+            </li>
+        </ul>
+        <p>To use, <code>#include &lt;vector&gt;</code> and <code>std::vector&lt;char&gt;</code></p>
+        <h3 id="vector-usages">Usage</h3>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span class="token comment">// declaration</span>
+using std<span class="token operator">::</span> vector<span class="token punctuation">;</span>
+vector<span class="token operator">&lt;</span>std<span class="token operator">::</span>string<span
+                    class="token operator">&gt;</span> names<span class="token punctuation">;</span>
+ 
+<span class="token comment">// add elements to vector (at the back) </span>
+names<span class="token punctuation">.</span><span class="token function">push_back</span><span
+                    class="token punctuation">(</span><span class="token string">"Alex"</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+names<span class="token punctuation">.</span><span class="token function">push_back</span><span
+                    class="token punctuation">(</span><span class="token string">"Ben"</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// print the number of items, and first and last items:</span>
+cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Size = "</span> <span
+                    class="token operator">&lt;&lt;</span> names<span class="token punctuation">.</span><span
+                    class="token function">size</span><span class="token punctuation">(</span><span
+                    class="token punctuation">)</span>
+	 <span class="token operator">&lt;&lt;</span> <span class="token string">", first ="</span> <span
+                    class="token operator">&lt;&lt;</span> names<span class="token punctuation">.</span><span
+                    class="token function">front</span><span class="token punctuation">(</span><span
+                    class="token punctuation">)</span>
+	 <span class="token operator">&lt;&lt;</span> <span class="token string">", last ="</span> <span
+                    class="token operator">&lt;&lt;</span> names<span class="token punctuation">.</span><span
+                    class="token function">back</span><span class="token punctuation">(</span><span
+                    class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span
+                    class="token punctuation">;</span>
+</code></pre>
+        <p>Print all elements of a vector with indexing:</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span
+                class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">size_t</span> i <span
+                class="token operator">=</span> <span class="token number">0</span><span
+                class="token punctuation">;</span> i <span class="token operator">&lt;</span> names<span
+                class="token punctuation">.</span><span class="token function">size</span><span
+                class="token punctuation">(</span><span class="token punctuation">)</span><span
+                class="token punctuation">;</span> i<span class="token operator">++</span><span
+                class="token punctuation">)</span> <span class="token punctuation">{</span>
+	cout <span class="token operator">&lt;&lt;</span>names<span class="token punctuation">[</span>i<span
+                    class="token punctuation">]</span> <span class="token operator">&lt;&lt;</span> endl<span
+                    class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <h3 id="Iterate through a Vector">Iterate through a Vector</h3>
+        <p>With an <a class="internal-link" data-href="STL Containers.md#Iterators"
+                      href="/Users/tran/Library/Mobile Documents/iCloud~md~obsidian/Documents/Journal/School/Intermediate Programming/STL%20Containers.md#Iterators"
+                      target="_blank" rel="noopener"><em>iterator</em></a>:</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span
+                class="token keyword">for</span> <span class="token punctuation">(</span>vector<span
+                class="token operator">&lt;</span>string<span class="token operator">&gt;</span><span
+                class="token operator">::</span>iterator it <span class="token operator">=</span> names<span
+                class="token punctuation">.</span><span class="token function">begin</span><span
+                class="token punctuation">(</span><span class="token punctuation">)</span><span
+                class="token punctuation">;</span>
+	it <span class="token operator">!=</span> names<span class="token punctuation">.</span><span class="token function">end</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+	<span class="token operator">++</span>it<span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+	cout <span class="token operator">&lt;&lt;</span> <span class="token operator">*</span>it <span
+                    class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <ul>
+            <li>Iterators are separate types. They are "clever pointers" that know how to move over the components of a
+                data structure (like a vector, linked list, or tree). They are safer and less error-prone than pointers.
+            </li>
+        </ul>
+        <p>For STL container of type <code>T</code>, iterator has type <code>T::iterator</code>:</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span
+                class="token keyword">for</span> <span class="token punctuation">(</span>vector<span
+                class="token operator">&lt;</span>string<span class="token operator">&gt;</span><span
+                class="token operator">::</span>iterator it <span class="token operator">=</span> names<span
+                class="token punctuation">.</span><span class="token function">begin</span><span
+                class="token punctuation">(</span><span class="token punctuation">)</span><span
+                class="token punctuation">;</span> it <span class="token operator">!=</span> names<span
+                class="token punctuation">.</span><span class="token function">end</span><span
+                class="token punctuation">(</span><span class="token punctuation">)</span><span
+                class="token punctuation">;</span> <span class="token operator">++</span>it<span
+                class="token punctuation">)</span> <span class="token punctuation">{</span>
+	cout <span class="token operator">&lt;&lt;</span> <span class="token operator">*</span>it <span
+                    class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+cout <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+</code></pre>
+        <ul>
+            <li><code>.begin()</code> give access to the first element.</li>
+            <li><code>.end()</code> is one past the last element.</li>
+        </ul>
+        <p>Iterate in <em>reverse</em> order by using <code>T::reverse_iterator</code>, <code>.rbegin()</code> and
+            <code>.rend()</code>:</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span
+                class="token keyword">for</span> <span class="token punctuation">(</span>vector<span
+                class="token operator">&lt;</span>string<span class="token operator">&gt;</span><span
+                class="token operator">::</span>reverse_iteartor it <span class="token operator">=</span> names<span
+                class="token punctuation">.</span><span class="token function">rbegin</span><span
+                class="token punctuation">(</span><span class="token punctuation">)</span><span
+                class="token punctuation">;</span> it <span class="token operator">!=</span> names<span
+                class="token punctuation">.</span><span class="token function">rend</span><span
+                class="token punctuation">(</span><span class="token punctuation">)</span><span
+                class="token punctuation">;</span> <span class="token operator">++</span>it<span
+                class="token punctuation">)</span> <span class="token punctuation">{</span>
+	cout <span class="token operator">&lt;&lt;</span> <span class="token operator">*</span>it <span
+                    class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <ul>
+            <li><code>.rend()</code> gives access to the last element</li>
+            <li><code>.rbegin()</code> give access to one before the first element</li>
+            <li><code>++</code> on a reverse iterator goes backwards (overloaded).</li>
+        </ul>
+        <h2 id="map">Map</h2>
+        <p>Declaration:</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded">map<span
+                class="token operator">&lt;</span><span class="token keyword">int</span><span class="token punctuation">,</span> string<span
+                class="token operator">&gt;</span> id_to_name<span class="token punctuation">;</span>
+</code></pre>
+        <p>Add a key <code>+</code> value to a map. A map can only associate 1 value with a key:</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded">id_to_name<span
+                class="token punctuation">[</span><span class="token number">342</span><span
+                class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"Alex"</span><span
+                class="token punctuation">;</span>
+id_to_name<span class="token punctuation">[</span><span class="token number">342</span><span
+                    class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"George"</span><span
+                    class="token punctuation">;</span> <span class="token comment">// "Alex" is replaced</span>
+</code></pre>
+        <p>Print a key and associated value:</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span
+                class="token keyword">const</span> <span class="token keyword">int</span> k <span
+                class="token operator">=</span> <span class="token number">342</span>
+cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Key="</span> <span class="token operator">&lt;&lt;</span> k <span
+                    class="token operator">&lt;&lt;</span> <span class="token string">", Value="</span> <span
+                    class="token operator">&lt;&lt;</span> id_to_name<span class="token punctuation">[</span>k<span
+                    class="token punctuation">]</span> <span class="token operator">&lt;&lt;</span>endl
+</code></pre>
+        <p>Get the number of keys:</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded">id_to_name<span
+                class="token punctuation">.</span><span class="token function">size</span><span
+                class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre>
+        <p>Check if map contains (has a value for) a given key using <code>.find()</code>, which returns an iterator to
+            the location where it was found. Dereferencing that iterator will give you that pair of key and value.</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span
+                class="token keyword">if</span> <span class="token punctuation">(</span>id_to_name<span
+                class="token punctuation">.</span><span class="token function">find</span><span
+                class="token punctuation">(</span><span class="token number">342</span><span
+                class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token function">id_to_name</span><span
+                class="token punctuation">(</span>end<span class="token punctuation">)</span><span
+                class="token punctuation">)</span>
+  cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Found it"</span> <span
+                    class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+ <span class="token keyword">else</span> 
+   cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Not found"</span> <span
+                    class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span> 
+</code></pre>
+        <h2 id="Iterate through map">Iterate through map</h2>
+        <p>Visit all the elements of the map using an <a class="internal-link" data-href="STL Containers.md#Iterators"
+                                                         href="/Users/tran/Library/Mobile Documents/iCloud~md~obsidian/Documents/Journal/School/Intermediate Programming/STL%20Containers.md#Iterators"
+                                                         target="_blank" rel="noopener"><em>iterator</em></a> of type
+            <code>map&lt;int,string&gt;::iterator&gt;</code>. The loop is similar to the <a class="internal-link"
+                                                                                            data-href="STL Containers.md#Iterate through a Vector"
+                                                                                            href="/Users/tran/Library/Mobile Documents/iCloud~md~obsidian/Documents/Journal/School/Intermediate Programming/STL%20Containers.md#Iterate%20through%20a%20Vector"
+                                                                                            target="_blank"
+                                                                                            rel="noopener">loop for
+                vector</a>. Iterator will move over the keys in <em>ascending order</em>. </p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span
+                class="token keyword">for</span> <span class="token punctuation">(</span>map<span
+                class="token operator">&lt;</span><span class="token keyword">int</span><span class="token punctuation">,</span>string<span
+                class="token operator">&gt;</span><span class="token operator">::</span>iterator it <span
+                class="token operator">=</span> id_to_name<span class="token punctuation">.</span><span
+                class="token function">begin</span><span class="token punctuation">(</span><span
+                class="token punctuation">)</span><span class="token punctuation">;</span> it <span
+                class="token operator">!=</span> id_to_name<span class="token punctuation">.</span><span
+                class="token function">end</span><span class="token punctuation">(</span><span
+                class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token operator">++</span>it<span
+                class="token punctuation">)</span>
+  cout <span class="token operator">&lt;&lt;</span> <span class="token string">" "</span> <span class="token operator">&lt;&lt;</span> it<span
+                    class="token operator">-&gt;</span>first <span class="token operator">&lt;&lt;</span> <span
+                    class="token string">": "</span> <span class="token operator">&lt;&lt;</span> it<span
+                    class="token operator">-&gt;</span>second <span class="token operator">&lt;&lt;</span> endl<span
+                    class="token punctuation">;</span>
+</code></pre>
+        <ul>
+            <li>it-&gt;first is the key</li>
+            <li>it-&gt;second is the value</li>
+            <li>Use <code>reverse_iterator</code>, <code>.rbegin()</code>, <code>.rend()</code> to get keys in <em>descending</em>
+                order.
+            </li>
+        </ul>
+        <h2 id="pairs">Pairs</h2>
+        <p> How can we implement a function that returns multiple values? For example, <code>divmod(10,5)</code> should
+            return <code>2</code> (quotient), <code>0</code> (remainder). </p>
+        <ol>
+            <li>Pass-by-pointer arguments:</li>
+        </ol>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span
+                class="token keyword">void</span> <span class="token function">divmod</span><span
+                class="token punctuation">(</span><span class="token keyword">int</span> a<span
+                class="token punctuation">,</span> <span class="token keyword">int</span> b<span
+                class="token punctuation">,</span> <span class="token keyword">int</span> <span
+                class="token operator">*</span>quo<span class="token punctuation">,</span> <span class="token keyword">int</span> <span
+                class="token operator">*</span>rem<span class="token punctuation">)</span> <span
+                class="token punctuation">{</span>
+	<span class="token operator">*</span>quo <span class="token operator">=</span> a<span
+                    class="token operator">/</span>b<span class="token punctuation">;</span>
+	<span class="token operator">*</span>rem <span class="token operator">=</span> a<span
+                    class="token operator">%</span>b<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <ol start="2">
+            <li>Define a <code>struct</code></li>
+        </ol>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span
+                class="token keyword">struct</span> <span class="token class-name">quo_rem</span> <span
+                class="token punctuation">{</span>
+	<span class="token keyword">int</span> quotient<span class="token punctuation">;</span>
+	<span class="token keyword">int</span> remainder<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">struct</span> <span class="token class-name">quo_rem</span> <span class="token function">divmod</span><span
+                    class="token punctuation">(</span><span class="token keyword">int</span> a<span
+                    class="token punctuation">,</span> <span class="token keyword">int</span> b<span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span><span
+                    class="token punctuation">.</span><span class="token punctuation">.</span><span
+                    class="token punctuation">.</span><span class="token punctuation">}</span>
+</code></pre>
+        <ol start="3">
+            <li>Use a <code>pair</code> to return multiple values</li>
+        </ol>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span
+                class="token macro property"><span class="token directive-hash">#</span><span
+                class="token directive keyword">include</span> <span class="token string">&lt;utility&gt;</span> <span
+                class="token comment">// where pair and make_pair are defined</span></span>
+using std<span class="token operator">::</span>pair<span class="token punctuation">;</span> using std<span
+                    class="token operator">::</span>make_pair<span class="token punctuation">;</span>
+
+pair<span class="token operator">&lt;</span><span class="token keyword">int</span><span
+                    class="token punctuation">,</span> <span class="token keyword">int</span><span
+                    class="token operator">&gt;</span> <span class="token function">divmod</span><span
+                    class="token punctuation">(</span><span class="token keyword">int</span> a<span
+                    class="token punctuation">,</span> <span class="token keyword">int</span> b<span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+ 	<span class="token keyword">return</span> <span class="token function">make_pair</span><span
+                    class="token punctuation">(</span>a<span class="token operator">/</span>b<span
+                    class="token punctuation">,</span> a<span class="token operator">%</span>b<span
+                    class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <h2 id="Usage of Pair in Maps">Usage of Pair in Maps</h2>
+        <p>A dereferenced <a class="internal-link" data-href="STL Containers.md#Iterate through map"
+                             href="/Users/tran/Library/Mobile Documents/iCloud~md~obsidian/Documents/Journal/School/Intermediate Programming/STL%20Containers.md#Iterate%20through%20map"
+                             target="_blank" rel="noopener"><code>map</code> iterator</a> is a key, value pair. </p>
+        <h2 id="Properties of pair">Properties of pair</h2>
+        <p>Relational operators for <code>pair</code> work as expected:</p>
+        <ul>
+            <li>Compares first field first</li>
+            <li>If there's a tie, compares second field.</li>
+        </ul>
+        <p><code>make_pair(2,3) &lt; make_pair(3,2)</code> is true</p>
+        <p>More about pair on its <a class="internal-link" data-href="www.cplusplus.com/reference/utility/pair/"
+                                     href="/Users/tran/Library/Mobile Documents/iCloud~md~obsidian/Documents/Journal/School/Intermediate Programming/www.cplusplus.com/reference/utility/pair.html"
+                                     target="_blank" rel="noopener">reference page</a>.</p>
+        <h2 id="typedef">typedef</h2>
+        <p>Iterator types can be complex (e.g. <code>map&lt;string, map&lt;string, int&gt;&gt;</code> is an iterator
+            over a <code>map</code> where the value is a <code>map</code>).</p>
+        <p>Use <code>typedef</code> to give shorter names to types to reduce clutter and bring related type declarations
+            closer together </p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span
+                class="token keyword">typedef</span> map<span class="token operator">&lt;</span><span
+                class="token keyword">int</span><span class="token punctuation">,</span> string<span
+                class="token operator">&gt;</span> Tmap<span class="token punctuation">;</span> <span
+                class="token comment">// map type</span>
+<span class="token keyword">typedef</span> TMap<span class="token operator">::</span>iterator TMapItr<span
+                    class="token punctuation">;</span> <span class="token comment">// map iterator type</span>
+</code></pre>
+        <h1 class="course-title title-1" id="tuple">Tuple</h1>
+        <p><code>tuple</code> is like <code>pair</code> but with as many fields as you like</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span
+                class="token macro property"><span class="token directive-hash">#</span><span
+                class="token directive keyword">include</span> <span class="token string">&lt;tuple&gt;</span></span>
+using std<span class="token operator">::</span>tuple<span class="token punctuation">;</span> using std<span
+                    class="token operator">::</span>make_tuple<span class="token punctuation">;</span>
+
+tuple<span class="token operator">&lt;</span><span class="token keyword">int</span><span
+                    class="token punctuation">,</span> <span class="token keyword">int</span><span
+                    class="token punctuation">,</span> <span class="token keyword">float</span><span
+                    class="token operator">&gt;</span> <span class="token function">divmod</span><span
+                    class="token punctuation">(</span><span class="token keyword">int</span> a<span
+                    class="token punctuation">,</span> <span class="token keyword">int</span> b<span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token keyword">return</span> <span class="token function">make_tuple</span><span
+                    class="token punctuation">(</span>a<span class="token operator">/</span>b<span
+                    class="token punctuation">,</span> a<span class="token operator">%</span>b<span
+                    class="token punctuation">,</span> <span class="token punctuation">(</span><span
+                    class="token keyword">float</span><span class="token punctuation">)</span>a<span
+                    class="token operator">/</span>b<span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <p><code>get&lt;N&gt;(tup)</code> gets the <code>N</code>th (starts at <code>0</code>) field of variable <code>tup</code>.
+        </p>
+        <h2 id="iterators">Iterators</h2>
+        <p>There are four types of iterators:</p>
+        <table>
+            <thead>
+            <tr>
+                <th>type</th>
+                <th><code>++it</code></th>
+                <th><code>--it</code></th>
+                <th>Get with</th>
+                <th><code>*it</code> type</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><code>iterator</code></td>
+                <td>forward</td>
+                <td>back</td>
+                <td><code>.begin()</code>/<code>end()</code></td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td><code>const_iterator</code></td>
+                <td>forward</td>
+                <td>back</td>
+                <td><code>.cbegin()</code>/<code>cend()</code></td>
+                <td><code>const</code></td>
+            </tr>
+            <tr>
+                <td><code>reverse_iterator</code></td>
+                <td>back</td>
+                <td>forward</td>
+                <td><code>.rbegin()</code>/<code>rend()</code></td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td><code>const_reverse_iterator</code></td>
+                <td>back</td>
+                <td>forward</td>
+                <td><code>.crbegin()</code>/<code>crend()</code></td>
+                <td><code>const</code></td>
+            </tr>
+            </tbody>
+        </table>
+        <p>Example usage in <a class="internal-link" data-href="STL Containers.md#Iterate through a Vector"
+                               href="/Users/tran/Library/Mobile Documents/iCloud~md~obsidian/Documents/Journal/School/Intermediate Programming/STL%20Containers.md#Iterate%20through%20a%20Vector"
+                               target="_blank" rel="noopener">vector</a> and <a class="internal-link"
+                                                                                data-href="STL Containers.md#Iterate through map"
+                                                                                href="/Users/tran/Library/Mobile Documents/iCloud~md~obsidian/Documents/Journal/School/Intermediate Programming/STL%20Containers.md#Iterate%20through%20map"
+                                                                                target="_blank" rel="noopener">map</a>.
+        </p>
+        <h3 id="const-iterators">Const Iterators</h3>
+        <p><code>const_iterator</code> <em>does not</em> allow modifications to the values the iterator is pointing to.
+            All values are <code>const</code> protected. </p>
+        <p> Attempts to change will return an error saying <code>assignment of read-only</code>. </p>
+        <br>
+    </article>
+</main>
+<div id="foot"></div>
+</body>
+</html>

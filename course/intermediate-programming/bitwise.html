@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Journal: Intermediate Programming</title>
+    <base href="../../">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#nav").load("navigation.html");
+            $("#foot").load("footer.html");
+        });
+    </script>
+</head>
+
+<body>
+<div id="nav"></div>
+<main class="site-main container-md px-3">
+    <div class="file-path">
+        <ul class="path">
+            <li><a href="course/intermediate-programming.html">Intermediate Programming</a></li>
+            <li><a href="course/intermediate-programming/bitwise.html">Bitwise</a></li>
+        </ul>
+    </div>
+    <article class="notes">
+        <h1 class="course-title title-1" id="bitwise">Bitwise</h1>
+        <h2 id="bitwise-operator">Bitwise Operator</h2>
+        <p>A bitwise operator performs a function across all bits in its operands. </p>
+        <h3 id="Bit AND">Bit AND</h3>
+        <p>Description: The bits in the result are set to 1 if the corresponding bits in the two operands are both
+            1. </p>
+        <p>Bitwise AND (<code>&amp;</code>) performs logical AND (<code>&amp;&amp;</code>) across all bits:<br>
+            12 = 00001100 (in binary) and 25 = 000110001. The bit AND operation of 12 and 25 would be:</p>
+        <pre><code>  00001100
+&amp; 00011001
+__________
+  00001000 = 8 (in decimals)
+</code></pre>
+        <h3 id="Bit inclusive OR">Bit inclusive OR</h3>
+        <p>Description: The bits in the results are set to 1 if at least one of the corresponding bits in the two
+            operands is 1.</p>
+        <p>Bitwise OR (<code>|</code>) performs logical OR (<code>||</code>) across all bits.<br>
+            12 = 00001100 (in binary) and 25 = 000110001. The bit OR operation of 12 and 25 would be:</p>
+        <pre><code>  00001100
+&amp; 00011001
+__________
+  00011101 = 29 (in decimals)
+</code></pre>
+        <h3 id="Bit exclusive OR">Bit exclusive OR</h3>
+        <p>Exclusive OR (<code>^</code>).<br>
+            Description: The bits in the results are set to 1 if exactly one of the corresponding bits in the two
+            operands is 1. </p>
+        <h3 id="Bit Shifting">Bit Shifting</h3>
+        <p>Description: Shifts the bits of the first operand left (respectively right) by the number of bits specified
+            by the second operand; fill from the right with 0 bits (respectively filling from the left is machine
+            dependent).</p>
+        <p><code>x &lt;&lt; n</code> shifts bits of <code>x</code> to the left <code>N</code> positions.<br>
+            <code>N</code> 0s are "shifted in" at right-hand side and <code>N</code> bits "fall off" left-hand side.<br>
+            25 = 00011001 (in binary). The bitwise left-shift of 25 by 5 positions <code>(25 &lt;&lt; 5)</code> would be
+            1100100000 = 800 (in decimals)</p>
+        <p>Similar for bitwise right shift (<code>&gt;&gt;</code>).<br>
+            Bitwise right shfit of 25 by four positions <code>(25 &gt;&gt; 4)</code> would be. 00000001 = 1 (in
+            decimals).</p>
+        <h3 id="One's Complement">One's Complement</h3>
+        <p>Description: All 0 bits are set to 1 and all 1 bits are set to 0. </p>
+
+        <br>
+    </article>
+</main>
+<div id="foot"></div>
+</body>
+</html>

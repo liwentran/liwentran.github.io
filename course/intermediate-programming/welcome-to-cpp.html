@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Journal: Intermediate Programming</title>
+    <base href="../../">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#nav").load("navigation.html");
+            $("#foot").load("footer.html");
+        });
+    </script>
+</head>
+
+<body>
+<div id="nav"></div>
+<main class="site-main container-md px-3">
+    <div class="file-path">
+        <ul class="path">
+            <li><a href="course/intermediate-programming.html">Intermediate Programming</a></li>
+            <li><a href="course/intermediate-programming/welcome-to-cpp.html">Welcome to C++</a></li>
+        </ul>
+    </div>
+    <article class="notes">
+        <h1 class="course-title title-1" id="Welcome to C++">Welcome to C++</h1>
+        <h2 id="When to use?">When to use?</h2>
+        <p>C++ is not a "superset" of C; most C programs don't immediately work in C++.<br>
+            However, C++ tries to support as much as C as possible. </p>
+        <p>Sometimes, C is the only option:</p>
+        <ul>
+            <li>"inherited" C code</li>
+            <li>No C++ compiler is available for the target system</li>
+            <li>Software must work closely with Linux kernel</li>
+        </ul>
+        <p>Otherwise, a new project created today (especially if it was big or involved with many people) will use
+            C++.</p>
+        <h2 id="what-are-the-differences">What are the differences?</h2>
+        <p>C++ is an object oriented programming language. </p>
+        <ul>
+            <li>Classes (like Java)</li>
+            <li>Templates (like Java generics)</li>
+            <li>Standard Template Library (like <code>java.util</code>)</li>
+            <li>More convenient text input &amp; output</li>
+        </ul>
+        <h2 id="features-and-concepts">Features and Concepts</h2>
+        <ul>
+            <li>types: <code>int</code>, <code>char</code>, <code>float</code>, <code>double</code>, pointer types, and
+                <code>bool</code> (C++ only)
+            </li>
+            <li>numeric representation &amp; properties</li>
+            <li>operators: assignment, arithmetic, relational, logical</li>
+            <li>arrays, pointers <code>*</code> and <code>&amp;</code>, pointer arithmetic.</li>
+            <li>control structures: <code>if</code>/<code>else</code>, <code>switch</code>/<code>case</code>,
+                <code>for</code>, <code>while</code>, <code>do</code>/<code>while</code></li>
+            <li>pass-by-value is still the default, but C++ gives the option to pass-by-address</li>
+            <li>stack vs. heap, scope &amp; lifetime</li>
+            <li><code>struct</code> works more similarly to classes.</li>
+        </ul>
+        <p>The following tools still work:</p>
+        <ul>
+            <li><code>git</code></li>
+            <li><code>make</code></li>
+            <li><code>gdb</code></li>
+            <li><code>valgrind</code></li>
+        </ul>
+        <h2 id="Hello World">Hello World</h2>
+        <p>hello_world.cpp:</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span
+                class="token macro property"><span class="token directive-hash">#</span><span
+                class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+
+using std<span class="token operator">::</span>cout<span class="token punctuation">;</span>
+using std<span class="token operator">::</span>end1<span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+	cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Hello world!"</span> <span
+                    class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+	<span class="token keyword">return</span> <span class="token number">0</span><span
+                    class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <ul>
+            <li><code>#include &lt;iostream&gt;</code> links the <a class="internal-link"
+                                                                    data-href="Welcome to C++.md#C Libraries"
+                                                                    href="course/intermediate-programming/welcome-to-cpp.html#c-libraries"
+                                                                    target="_blank" rel="noopener">library</a> for input
+                and output.
+            </li>
+            <li><code>using std::cout;</code> and <code>using std:endl;</code> these two belong to <code>std</code> <a
+                    class="internal-link" data-href="Welcome to C++.md#Namespaces"
+                    href="course/intermediate-programming/welcome-to-cpp.html#namespaces"
+                    target="_blank" rel="noopener">namespace</a>.
+            </li>
+            <li><code>cout</code> displays something on the <a class="internal-link" data-href="Welcome to C++.md#I O"
+                                                               href="course/intermediate-programming/welcome-to-cpp.html#i-o"
+                                                               target="_blank" rel="noopener">standard output</a>.
+            </li>
+            <li>Source files have extension <code>.cpp</code>.</li>
+        </ul>
+        <h3 id="compiling">Compiling</h3>
+        <pre class=" language-sh" tabindex="0"><code class="language-sh is-loaded">g++ -std=c++11 -pedantic -Wall -Wextra -c hello_world.cpp
+</code></pre>
+        <ul>
+            <li><code>g++</code> is the standard compiler that we will use for this class.</li>
+            <li><code>-c</code> compiles, but does not link. Gives the object code.</li>
+        </ul>
+        <pre class=" language-sh" tabindex="0"><code class="language-sh is-loaded">g++ hello_world.o -o hello_world
+</code></pre>
+        <ul>
+            <li>Link and create an executable.</li>
+        </ul>
+        <pre class=" language-sh" tabindex="0"><code class="language-sh is-loaded">./hello_world
+</code></pre>
+        <ul>
+            <li>Execute</li>
+            <li>Feed an input at the same time as executing by using <code>echo INPUT | ./cpp_io</code></li>
+        </ul>
+        <h2 id="c-libraries">C++ Libraries</h2>
+        <p>Include library headers with <code>&lt;</code> angle brackets <code>&gt;</code>. Omit the trailing
+            <code>.h</code> for c++ headers:</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span
+                class="token macro property"><span class="token directive-hash">#</span><span
+                class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+</code></pre>
+        <p><code>iostream</code> is the main C++ library for <a class="internal-link" data-href="Welcome to C++.md#I O"
+                                                                href="course/intermediate-programming/welcome-to-cpp.html#i-o"
+                                                                target="_blank" rel="noopener">input and output</a>
+            (like collecting user input and displaying to standard out).</p>
+        <p>User-defined headers use <code>"</code> quotes <code>"</code> and end with <code>.h</code> as usual:</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span
+                class="token macro property"><span class="token directive-hash">#</span><span
+                class="token directive keyword">include</span> <span class="token string">"linked_list.h"</span></span>
+</code></pre>
+        <p>Use familar C headers like <code>assert.h</code>, <code>math.h</code>, <code>ctype.h</code>,
+            <code>stdlib.h</code> by dropping the <code>.h</code> and adding <code>c</code> at the beginning.</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span
+                class="token macro property"><span class="token directive-hash">#</span><span
+                class="token directive keyword">include</span> <span class="token string">&lt;cassert&gt;</span> <span
+                class="token comment">// the assert.h header from C</span></span>
+</code></pre>
+        <h2 id="namespaces">Namespaces</h2>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded">using std<span
+                class="token operator">::</span>cout<span class="token punctuation">;</span>
+using std<span class="token operator">::</span>endl<span class="token punctuation">;</span>
+</code></pre>
+        <p>Think of namespaces as modules or packages. They are used to create structure. </p>
+        <ul>
+            <li>In C, when two things have the same name, we get errors (from compiler or linker) and confusing
+                situations ("shadowing")
+            </li>
+            <li>In C++, items with the same name can safely be placed in distinct "namespaces".</li>
+        </ul>
+        <h3 id="Using">Using</h3>
+        <p><code>using</code> gets rid of the need to write fully qualified name (<code>std::cout</code>) every time by
+            including it. Otherwise, you would would have to write the fully qualified name each time: <code>std::cout
+                &lt;&lt; "Hello World" &lt;&lt; std:endl;</code> instead of <code>cout &lt;&lt; "Hello World" &lt;&lt;
+                endl;</code></p>
+        <ul>
+            <li><code>::</code> is a scope operator, it means "belong to".</li>
+        </ul>
+        <h3 id="Rules">Rules</h3>
+        <p>Do not ever use <code>using</code> in a header file. It affects all source files that include that header,
+            even indirectly, which leads to name conflicts.</p>
+        <ul>
+            <li>Only use in source <code>.cpp</code> files.</li>
+            <li>Use fully qualified names (e.g. <code>std::cout</code>) in header files.</li>
+        </ul>
+        <p>Do not use <code>using namespace std;</code> because too broad.</p>
+        <ul>
+            <li>This is a catchy-all way to include everything in the <code>std</code> namespace, which causes confusion
+                due to accidental name conflicts.
+            </li>
+        </ul>
+        <h2 id="i-o">I/O</h2>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded">cout <span class="token operator">&lt;&lt;</span> <span
+                class="token string">"Hello world!"</span> <span class="token operator">&lt;&lt;</span> endl<span
+                class="token punctuation">;</span>
+</code></pre>
+        <p><code>cout</code> prints to the standard output stream (like <code>stdout</code> in C).</p>
+        <p><code>endl</code> is the new line character. </p>
+        <p><code>&lt;&lt;</code> is the <em>insert output</em> which allows you to insert something into the out put.
+        </p>
+        <p>There are no format specifier (<code>%d</code>, <code>%s</code>, etc.). Items that need to be printed are
+            arranged in printing order, which is easier to read and understand. However, if you still want to use it, it
+            does work after including <code>&lt;cstdio&gt;</code>. </p>
+        <h3 id="Chaining">Chaining</h3>
+        <p>In the above example, we send two things to <code>cout</code>, this is called <em>chaining</em>. The insert
+            operator joins all the items to write in a "chain".<br>
+            The leftmost item in the chain is the stream being written to. </p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded">cout <span class="token operator">&lt;&lt;</span> <span
+                class="token string">"We have "</span> <span class="token operator">&lt;&lt;</span> inventory <span
+                class="token operator">&lt;&lt;</span> <span class="token string">" "</span> <span
+                class="token operator">&lt;&lt;</span> item <span class="token operator">&lt;&lt;</span> <span
+                class="token string">"s left."</span> <span class="token operator">&lt;&lt;</span> endl<span
+                class="token punctuation">;</span>
+</code></pre>
+        <p><code>inventory</code> and <code>item</code> are variables. </p>
+        <h3 id="Operator Overloading">Operator Overloading</h3>
+        <p><code>&lt;&lt;</code> usually does bitwise left-shift; but if operand on the left is a C++ stream
+            (<code>cout</code>), <code>&lt;&lt;</code> is the insert operator. Shifting only applies to numbers.<br>
+            More on this later. </p>
+        <h3 id="User input">User input</h3>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded">string name<span
+                class="token punctuation">;</span>
+cin <span class="token operator">&gt;&gt;</span> name<span class="token punctuation">;</span>
+</code></pre>
+        <ul>
+            <li><code>&gt;&gt;</code> is the extract operator. Collects from standard input and stores it into the
+                variable provided.
+            </li>
+            <li><code>cin</code> is mapped to standard input. It reads one whitespace-delimited token from standard
+                input and places the result in the string <code>name</code>.
+            </li>
+            <li>Note: both are part of standard namespace: <code>using std::cin</code> and <code>using
+                std::string</code></li>
+        </ul>
+        <p> If you input an entire sentence, it will still read one token at a time (word by word per iteration). This
+            code will store the smallest word in an inputted sentence and print it out. </p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded">string word<span
+                class="token punctuation">,</span> smallest<span class="token punctuation">;</span>
+<span class="token keyword">while</span> <span class="token punctuation">(</span>cin <span class="token operator">&gt;&gt;</span> word<span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>smallest<span
+                    class="token punctuation">.</span><span class="token function">empty</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token operator">||</span> word <span class="token operator">&lt;</span> smallest<span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+		samllest <span class="token operator">=</span> word<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+count <span class="token operator">&lt;&lt;</span> smallest <span class="token operator">&lt;</span> endl<span
+                    class="token punctuation">;</span>
+</code></pre>
+        <ul>
+            <li>Note: relational operators work with strings. (operators were overloaded).</li>
+        </ul>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded">cin<span
+                class="token punctuation">.</span><span class="token function">get</span><span
+                class="token punctuation">(</span>ch<span class="token punctuation">)</span>
+</code></pre>
+        <ul>
+            <li>Reads one character from the standard input</li>
+        </ul>
+        <br>
+    </article>
+</main>
+<div id="foot"></div>
+</body>
+</html>

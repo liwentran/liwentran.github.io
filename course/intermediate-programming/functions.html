@@ -82,9 +82,9 @@
         </ul>
         <p>As soon you return from the function, all the local things will go away, such as the parameters. This means, you cannot return local arrays. </p>
         <h3 id="passing-arrays">Passing Arrays</h3>
-        <p><a data-href="Arrays and C Strings#" href="/Users/tran/Library/Mobile Documents/iCloud~md~obsidian/Documents/Journal/School/Intermediate Programming/Arrays%20and%20C%20Strings.html#" class="internal-link" target="_blank" rel="noopener">Arrays and C Strings</a> are <em>not</em> passed by value. Instead, passing array amounts to passing a <em>pointer to its first element</em> because  copying would be excessive. </p>
+        <p><a data-href="Arrays and C Strings#" href="course/intermediate-programming/arrays-and-c-strings.html" class="internal-link" target="_blank" rel="noopener">Arrays and C Strings</a> are <em>not</em> passed by value. Instead, passing array amounts to passing a <em>pointer to its first element</em> because  copying would be excessive. </p>
         <ul>
-            <li>A <a class="internal-link" data-href="Pointers.md#Defining Pointers" href="/Users/tran/Library/Mobile Documents/iCloud~md~obsidian/Documents/Journal/School/Intermediate Programming/Pointers.md#Defining%20Pointers" target="_blank" rel="noopener">pointers</a> is a variable which holds an address. </li>
+            <li>A <a class="internal-link" data-href="Pointers.md#Defining Pointers" href="course/intermediate-programming/pointers.html" target="_blank" rel="noopener">pointers</a> is a variable which holds an address. </li>
             <li>It "decays" into a pointer because it loses information about the boundaries of the array. </li>
         </ul>
         <p>Now, the callee <em>can modify</em> the array.<br>
@@ -105,7 +105,7 @@
         <p>When you tyep <code>mkdir cs220</code> you're running a program called <code>mkdir</code> and passing it a single <em>command-line argument</em>, <code>cs220</code>.</p>
         <p>C programs can take arguments similar to this way, but you have to declare your <code>main</code> function in a special way: </p>
         <pre class=" language-c" tabindex="0"><code class="language-c is-loaded"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span> argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
 <span class="token punctuation">}</span>
 </code></pre>
         <ul>
