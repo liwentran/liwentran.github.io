@@ -633,6 +633,10 @@ hr {
         padding: 0;
     }
 
+    .course-info {
+        font-size: 3vw;
+    }
+
     .section-item {
         flex-direction: column;
         margin-bottom: 36px;
