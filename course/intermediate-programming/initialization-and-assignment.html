@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Journal: Intermediate Programming</title>
+    <base href="../../">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#nav").load("navigation.html");
+            $("#foot").load("footer.html");
+        });
+    </script>
+</head>
+
+<body>
+<div id="nav"></div>
+<main class="site-main container-md px-3">
+    <div class="file-path">
+        <ul class="path">
+            <li><a href="course/intermediate-programming.html">Intermediate Programming</a></li>
+            <li><a href="course/intermediate-programming/initialization-and-assignment.html">Initialization and Assignment</a></li>
+        </ul>
+    </div>
+    <article class="notes">
+        <h1 class="course-title title-1" id="Initialization and Assignment">Initialization and Assignment</h1>
+        <h2 id="difference-between-and">Difference between <code>=</code> and <code>==</code></h2>
+        <p>There are two types of <code>=</code>:</p>
+        <ul>
+            <li><code>=</code> in a declaration, like <code>int a = 4;</code>(initialization).</li>
+            <li><code>=</code> elsewhere, like <code>a = 4;</code> (assignment).</li>
+        </ul>
+        <h2 id="Example">Example</h2>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span class="token comment">//complex.h </span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifndef</span> <span
+        class="token expression">COMPLEX_H__</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span
+        class="token macro-name">COMPLEX_H__</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span
+        class="token string">&lt;iostream&gt;</span></span>
+
+class Complex <span class="token punctuation">{</span>
+public<span class="token operator">:</span>
+	<span class="token comment">// Default constructor</span>
+	<span class="token function">Complex</span><span class="token punctuation">(</span><span
+                    class="token punctuation">)</span><span class="token operator">:</span> <span
+                    class="token function">Complex</span><span class="token punctuation">(</span><span
+                    class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span> std<span
+                    class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span
+                    class="token string">"Default"</span> <span class="token operator">&lt;&lt;</span> std<span
+                    class="token operator">::</span>endl <span class="token punctuation">}</span>
+	<span class="token comment">// Non-default constructor</span>
+	<span class="token function">Complex</span><span class="token punctuation">(</span><span class="token keyword">double</span> r<span
+                    class="token punctuation">,</span> <span class="token keyword">double</span> i<span
+                    class="token punctuation">)</span><span class="token operator">:</span> <span
+                    class="token function">real</span><span class="token punctuation">(</span>r<span
+                    class="token punctuation">)</span><span class="token punctuation">,</span> <span
+                    class="token function">imag</span><span class="token punctuation">(</span>i<span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span> std<span
+                    class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span
+                    class="token string">"Non-default"</span> <span class="token operator">&lt;&lt;</span> std<span
+                    class="token operator">::</span>endl<span class="token punctuation">;</span> <span
+                    class="token punctuation">}</span>
+	<span class="token comment">// Copy constructor</span>
+	<span class="token function">Complex</span><span class="token punctuation">(</span><span
+                    class="token keyword">const</span> Complex<span class="token operator">&amp;</span> oeprator<span
+                    class="token operator">=</span><span class="token punctuation">(</span><span class="token keyword">const</span> Complex<span
+                    class="token operator">&amp;</span> rhs<span class="token punctuation">)</span>  <span
+                    class="token punctuation">{</span>
+		std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span
+                    class="token string">"Assign"</span> <span class="token operator">&lt;&lt;</span> std<span
+                    class="token operator">::</span>endl<span class="token punctuation">;</span>
+		real <span class="token operator">=</span> rhs<span class="token punctuation">.</span>real<span
+                    class="token punctuation">;</span>
+		imag <span class="token operator">=</span> rhs<span class="token punctuation">.</span>imag<span
+                    class="token punctuation">;</span>
+		<span class="token keyword">return</span> <span class="token operator">*</span>this<span
+                    class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	
+	<span class="token keyword">double</span> <span class="token function">get_real</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token keyword">const</span> <span class="token punctuation">{</span> <span
+                    class="token keyword">return</span> real<span class="token punctuation">;</span> <span
+                    class="token punctuation">}</span>
+	<span class="token keyword">double</span> <span class="token function">get_imag</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token keyword">const</span> <span class="token punctuation">{</span> <span
+                    class="token keyword">return</span> imag<span class="token punctuation">;</span> <span
+                    class="token punctuation">}</span>
+private<span class="token operator">:</span>
+	<span class="token keyword">double</span> real<span class="token punctuation">,</span> imag<span
+                    class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span
+        class="token directive keyword">edif</span> <span class="token comment">// COMPLEX_H__</span></span>
+	
+</code></pre>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span class="token comment">// complex_main.cpp</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span
+        class="token string">"complex.h"</span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+ Complex c<span class="token punctuation">;</span> 				<span class="token comment">// default (no-argument) constructor call</span>
+ Complex c2 <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">4.09</span><span
+                    class="token punctuation">,</span> <span class="token number">0.5</span><span
+                    class="token punctuation">}</span>	<span class="token comment">// = in declaration: *initialization*</span>
+ Complex c3 <span class="token operator">=</span> c<span class="token punctuation">;</span> 			<span
+                    class="token comment">// = in declaration: also *initialization*</span>
+ c3 <span class="token operator">=</span> c2<span class="token punctuation">;</span> 					<span
+                    class="token comment">// = outside declaration: *assignmment*</span>
+ <span class="token keyword">if</span> <span class="token punctuation">(</span>c3<span
+                    class="token punctuation">.</span><span class="token function">get_real</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token operator">==</span> <span class="token number">4.9</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span><span
+                    class="token comment">// == is *equality testing*</span>
+ std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Real part of c3 is equal to 4.9"</span> <span
+                    class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span
+                    class="token punctuation">;</span>
+
+ <span class="token punctuation">}</span>
+
+ <span class="token keyword">return</span> <span class="token number">0</span>
+
+<span class="token punctuation">}</span>
+</code></pre>
+<pre class=" language-shell" tabindex="0"><code class="language-shell is-loaded">//output
+Non-default
+Default
+Non-Default
+Copy
+Assign
+</code></pre>
+        <ul>
+            <li>The first two outputs come from <code>Complex c;</code> because the default constructor calls on the
+                non-default constructor.
+            </li>
+        </ul>
+        <br>
+    </article>
+</main>
+<div id="foot"></div>
+</body>
+</html>

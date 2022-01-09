@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Journal: Intermediate Programming</title>
+    <base href="../../">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#nav").load("navigation.html");
+            $("#foot").load("footer.html");
+        });
+    </script>
+</head>
+
+<body>
+<div id="nav"></div>
+<main class="site-main container-md px-3">
+    <div class="file-path">
+        <ul class="path">
+            <li><a href="course/intermediate-programming.html">Intermediate Programming</a></li>
+            <li><a href="course/intermediate-programming/cpp-references.html">C++ References</a></li>
+        </ul>
+    </div>
+    <article class="notes">
+        <h1 class="course-title title-1" id="cpp-reference">C++ Reference</h1>
+        <p><em>Reference variable</em> is an <em>alias</em>, another name for an existing variable (memory location).
+        </p>
+        <ul>
+            <li>Used in situations that a pointer would be used in C.</li>
+            <li>References have restrictions that make it safer so you don't access invalid memory locations.
+                <ul>
+                    <li>References cannot be <code>NULL</code></li>
+                    <li>Must be initialized immediately.</li>
+                    <li>Once an alias is set to a variable, it cannot be an alias to another one.</li>
+                </ul>
+            </li>
+            <li>They provide <a class="internal-link" data-href="Pointers.md"
+                                href="course/intermediate-programming/pointers.html"
+                                target="_blank" rel="noopener">pointer</a>-like functionality while hiding the raw
+                pointers themselves.
+            </li>
+        </ul>
+        <h2 id="declaring-references">Declaring References</h2>
+        <p>To declare a reference of type <code>int</code>, use <code>int&amp;</code>. </p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span
+                class="token macro property"><span class="token directive-hash">#</span><span
+                class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+<span class="token keyword">int</span> <span class="token function">main</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+	<span class="token keyword">int</span> a <span class="token operator">=</span> <span
+                    class="token number">5</span><span class="token punctuation">;</span>
+	<span class="token keyword">int</span> <span class="token operator">&amp;</span>b <span
+                    class="token operator">=</span> a<span class="token punctuation">;</span> <span
+                    class="token comment">// b is another name for a</span>
+	<span class="token keyword">int</span><span class="token operator">*</span> c <span class="token operator">=</span> <span
+                    class="token operator">&amp;</span>b<span class="token punctuation">;</span> <span
+                    class="token comment">// c is a pointer pointing to a		</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <pre><code>&amp;a = 0x7fffd5ef7c44
+&amp;b = 0x7fffd5ef7c44
+&amp;c = 0x7fffd5ef7c48
+c = 0x7fffd5ef7c44
+</code></pre>
+        <h2 id="passing-by-references">Passing by References</h2>
+        <p>Function parameter with reference type are passed by reference like passing <em>by pointer</em> but without
+            the extra syntax inside the function</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span class="token comment">// if you have int a = 1, b = 2, then call like this:</span>
+<span class="token comment">// swap (a,b) (no ampersands)!</span>
+<span class="token keyword">void</span> <span class="token function">swap</span> <span
+                    class="token punctuation">(</span><span class="token keyword">int</span><span
+                    class="token operator">&amp;</span> a<span class="token punctuation">,</span> <span
+                    class="token keyword">int</span> <span class="token operator">&amp;</span>b<span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token keyword">int</span> tmp <span class="token operator">=</span> a<span
+                    class="token punctuation">;</span>
+	a <span class="token operator">=</span> b<span class="token punctuation">;</span>
+	b <span class="token operator">=</span> tmp<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <ul>
+            <li>Looking at the call itself doesn't tel you which parameters are passed by value and which are passed by
+                reference- you have to look at the parameters.
+            </li>
+        </ul>
+        <p>C++ has <em>both</em> pass by value (non-reference parameters) and pass by reference (reference
+            parameters).<br>
+            Functions can have a mix of both pass-by-values and pass-by-references.</p>
+        <p> When passing objects in C++, we generally pass by reference because no excessive copying occurs, and this
+            decreases runtime. </p>
+        <h2 id="Returning References">Returning References</h2>
+        <p>References can be returned:</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span
+                class="token keyword">int</span><span class="token operator">&amp;</span> <span class="token function">minref</span><span
+                class="token punctuation">(</span><span class="token keyword">int</span><span class="token operator">&amp;</span> a<span
+                class="token punctuation">,</span> <span class="token keyword">int</span><span class="token operator">&amp;</span> b<span
+                class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>a<span
+                    class="token operator">&lt;</span>b<span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+		<span class="token keyword">return</span> a<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span> <span class="token keyword">else</span> <span
+                    class="token punctuation">{</span>
+		<span class="token keyword">return</span> b
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+	<span class="token keyword">int</span> a <span class="token operator">=</span> <span
+                    class="token number">5</span><span class="token punctuation">,</span> b <span
+                    class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+	<span class="token keyword">int</span><span class="token operator">&amp;</span> min <span
+                    class="token operator">=</span> <span class="token function">minref</span><span
+                    class="token punctuation">(</span>a<span class="token punctuation">,</span>b<span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">minref</span><span class="token punctuation">(</span>a<span
+                    class="token punctuation">,</span> b<span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+	min <span class="token operator">=</span> <span class="token number">12</span><span
+                    class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <ul>
+            <li>Note: returning a reference to a local variable is as bad as returning a pointer to one. In our original
+                <code>minref</code> function, we avoided this by making the parameters themselves references
+            </li>
+        </ul>
+        <h2 id="Const Reference">Const Reference</h2>
+        <p>A reference can be a <code>const</code>. You can't subsequently assign via that reference, but you can still
+            assign the original non-const variable, or via a non-const reference to it.</p>
+        <br>
+    </article>
+</main>
+<div id="foot"></div>
+</body>
+</html>

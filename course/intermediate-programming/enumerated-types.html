@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Journal: Intermediate Programming</title>
+    <base href="../../">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#nav").load("navigation.html");
+            $("#foot").load("footer.html");
+        });
+    </script>
+</head>
+
+<body>
+<div id="nav"></div>
+<main class="site-main container-md px-3">
+    <div class="file-path">
+        <ul class="path">
+            <li><a href="course/intermediate-programming.html">Intermediate Programming</a></li>
+            <li><a href="course/intermediate-programming/enumerated-types.html">Enumerated Types</a></li>
+        </ul>
+    </div>
+    <article class="notes">
+        <h1 class="course-title title-1" id="enumeration">Enumeration</h1>
+        <p>An enumeration is a distinct type whose value is restricted to a range of values.</p>
+        <ul>
+            <li>An enum can include several explicitly named constants ("enumerators").</li>
+            <li>The values of the constant are "integer" numbers.</li>
+            <li>It is compiler-dependent to determine an "integer" type that can represent all enumerators.</li>
+        </ul>
+        <p><br>
+            We use enumeration type because it can be more comprehensive and readable. </p>
+        <h2 id="example">Example:</h2>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span
+                class="token keyword">enum</span> <span class="token class-name">Color</span> <span
+                class="token punctuation">{</span>red<span class="token punctuation">,</span> green<span
+                class="token punctuation">,</span> blue<span class="token punctuation">}</span><span
+                class="token punctuation">;</span> <span class="token comment">// an unscoped enum</span>
+
+Color r <span class="token operator">=</span> red<span class="token punctuation">;</span>
+<span class="token keyword">switch</span> <span class="token punctuation">(</span>r<span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token keyword">case</span> red<span class="token operator">:</span> <span
+                    class="token punctuation">.</span><span class="token punctuation">.</span><span
+                    class="token punctuation">.</span>
+	<span class="token keyword">case</span> green<span class="token operator">:</span> <span
+                    class="token punctuation">.</span><span class="token punctuation">.</span><span
+                    class="token punctuation">.</span>
+	<span class="token keyword">case</span> blue<span class="token operator">:</span> <span
+                    class="token punctuation">.</span><span class="token punctuation">.</span><span
+                    class="token punctuation">.</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <h2 id="underlying type">Underlying type</h2>
+        <p>Specify the underlying type:</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span
+                class="token keyword">enum</span> <span class="token class-name">class</span> Color <span
+                class="token operator">:</span> <span class="token keyword">char</span> <span class="token punctuation">{</span>red<span
+                class="token punctuation">,</span> yello<span class="token punctuation">,</span> green<span
+                class="token operator">=</span><span class="token number">20</span><span
+                class="token punctuation">,</span> blue<span class="token punctuation">}</span><span
+                class="token punctuation">;</span>
+</code></pre>
+        <h2 id="unscoped">Unscoped</h2>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span
+                class="token keyword">enum</span> <span class="token class-name">Foo</span> <span
+                class="token punctuation">{</span>a<span class="token punctuation">,</span> b<span
+                class="token punctuation">,</span> c<span class="token operator">=</span><span
+                class="token number">10</span><span class="token punctuation">,</span> d<span class="token punctuation">,</span> e<span
+                class="token operator">=</span><span class="token number">1</span><span
+                class="token punctuation">,</span> f<span class="token punctuation">,</span> g<span
+                class="token operator">=</span>f<span class="token operator">+</span>c<span
+                class="token punctuation">}</span>
+<span class="token comment">// a=0, b=1, c=10, d=11, e=1, f=2, g=12</span>
+</code></pre>
+        <ul>
+            <li>each enumerator is associated with a value of the underlying type.</li>
+        </ul>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span
+                class="token keyword">int</span> num <span class="token operator">=</span> c <span
+                class="token comment">// c is 10</span>
+</code></pre>
+        <ul>
+            <li>the values can be converted to their underlying type (implicitly).</li>
+        </ul>
+        <h2 id="scoped">Scoped</h2>
+        <p>Declaring a scoped enumeration type whose underlying type is <code>int</code> (the keywords
+            <code>class</code> and <code>struct</code> are exactly equivalent)</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span
+                class="token keyword">enum</span> <span class="token class-name">struct</span><span
+                class="token operator">|</span>class name <span class="token punctuation">{</span>enumerator <span
+                class="token operator">=</span> constexpr<span class="token punctuation">,</span> enumerator <span
+                class="token operator">=</span> constexpr <span class="token punctuation">,</span> <span
+                class="token punctuation">.</span><span class="token punctuation">.</span><span
+                class="token punctuation">.</span><span class="token punctuation">}</span>
+</code></pre>
+        <p><br>
+            For example,</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span
+                class="token keyword">enum</span> <span class="token class-name">class</span> Color <span
+                class="token punctuation">{</span> red<span class="token punctuation">,</span> green<span
+                class="token operator">=</span><span class="token number">20</span><span
+                class="token punctuation">,</span> blue<span class="token punctuation">}</span><span
+                class="token punctuation">;</span>
+Color r <span class="token operator">=</span> Color<span class="token operator">::</span>blue<span
+                    class="token punctuation">;</span>
+</code></pre>
+        <p>The values can also be converted to their underlying type but explicitly:</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span
+                class="token keyword">int</span> n <span class="token operator">=</span> Color<span
+                class="token operator">::</span>blue<span class="token punctuation">;</span> <span
+                class="token comment">// NOT OK</span>
+<span class="token keyword">int</span> m <span class="token operator">=</span> <span
+                    class="token punctuation">(</span><span class="token keyword">int</span><span
+                    class="token punctuation">)</span> Color<span class="token operator">::</span>blue<span
+                    class="token punctuation">;</span> <span class="token comment">// OK</span>
+<span class="token keyword">int</span> l <span class="token operator">=</span> static_cast<span class="token operator">&lt;</span><span
+                    class="token keyword">int</span><span class="token operator">&gt;</span><span
+                    class="token punctuation">(</span>Color<span class="token operator">::</span>blue<span
+                    class="token punctuation">)</span> <span class="token comment">// OK</span>
+</code></pre>
+        <h2 id="unscoped-vs-scoped">Unscoped vs scoped</h2>
+        <p>Unscoped enum type could be misused:</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span
+                class="token keyword">enum</span> <span class="token class-name">Color</span> <span
+                class="token punctuation">{</span> red<span class="token punctuation">,</span> yellow<span
+                class="token punctuation">,</span> blue <span class="token punctuation">}</span><span
+                class="token punctuation">;</span>
+<span class="token keyword">enum</span> <span class="token class-name">MyColor</span> <span
+                    class="token punctuation">{</span> myblue<span class="token punctuation">,</span> myyellow<span
+                    class="token punctuation">,</span> myred <span class="token punctuation">}</span><span
+                    class="token punctuation">;</span>
+
+Color col <span class="token operator">=</span> red<span class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>col <span class="token operator">==</span> myred<span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span> <span
+                    class="token comment">// should this be true?</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <ul>
+            <li><code>Color</code> shouldn't be compared with <code>MyColor</code>. You will see a compiler warning, but
+                the expression is allowed (because implicitly converted to the underlying type).
+            </li>
+            <li>Use scoped enum to avboid this.</li>
+        </ul>
+        <br>
+    </article>
+</main>
+<div id="foot"></div>
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Journal: Intermediate Programming</title>
+    <base href="../../">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#nav").load("navigation.html");
+            $("#foot").load("footer.html");
+        });
+    </script>
+</head>
+
+<body>
+<div id="nav"></div>
+<main class="site-main container-md px-3">
+    <div class="file-path">
+        <ul class="path">
+            <li><a href="course/intermediate-programming.html">Intermediate Programming</a></li>
+            <li><a href="course/intermediate-programming/template-class.html">Template Class</a></li>
+        </ul>
+    </div>
+    <article class="notes">
+        <h1 class="course-title title-1" id="template-class">Template Class</h1>
+        <h2 id="Example">Example</h2>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span class="token comment">//template_class.h</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span
+        class="token string">&lt;iostream&gt;</span></span>
+
+template<span class="token operator">&lt;</span> typename T<span class="token operator">&gt;</span>
+class Node <span class="token punctuation">{</span>
+public<span class="token operator">:</span>
+	<span class="token function">Node</span><span class="token punctuation">(</span>T pay<span
+                    class="token punctuation">,</span> Node<span class="token operator">&lt;</span>T<span
+                    class="token operator">&gt;</span> <span class="token operator">*</span>nx<span
+                    class="token punctuation">)</span> <span class="token operator">:</span> <span
+                    class="token function">payload</span><span class="token punctuation">(</span>pay<span
+                    class="token punctuation">)</span><span class="token punctuation">,</span> <span
+                    class="token function">next</span><span class="token punctuation">(</span>nx<span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span> <span
+                    class="token punctuation">}</span>
+
+	<span class="token keyword">void</span> <span class="token function">print</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token keyword">const</span> <span class="token punctuation">{</span>
+		<span class="token keyword">const</span> Node<span class="token operator">&lt;</span>T<span
+                    class="token operator">&gt;</span> <span class="token operator">*</span>cur <span
+                    class="token operator">=</span> this<span class="token punctuation">;</span>
+		<span class="token keyword">while</span><span class="token punctuation">(</span>cur <span
+                    class="token operator">!=</span> <span class="token constant">NULL</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+			std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> cur<span
+                    class="token operator">-&gt;</span>payload <span class="token operator">&lt;&lt;</span> <span
+                    class="token string">' '</span><span class="token punctuation">;</span>
+			cur <span class="token operator">=</span> cur <span class="token operator">-&gt;</span>next<span
+                    class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+		std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> std<span
+                    class="token operator">::</span>endl<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+private<span class="token operator">:</span>
+	T payload<span class="token punctuation">;</span>
+	Node<span class="token operator">&lt;</span>T<span class="token operator">&gt;</span> <span
+                    class="token operator">*</span>next<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+        <h2 id="template-classes-and-header-files">Template classes and header files</h2>
+        <p>If we separate this template class into a <code>.h</code> file and <code>.cpp</code> file we get ERRORS:</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span class="token comment">//template_class2.h</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifndef</span> <span
+        class="token expression">NODE_TEMPLATE_H__</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span
+        class="token macro-name">NODE_TEMPLATE_H__</span></span>
+template<span class="token operator">&lt;</span> typename T <span class="token operator">&gt;</span>
+public<span class="token operator">:</span>
+class Node <span class="token punctuation">{</span>
+	<span class="token function">Node</span><span class="token punctuation">(</span>T pay<span
+                    class="token punctuation">,</span> Node<span class="token operator">&lt;</span>T<span
+                    class="token operator">&gt;</span> <span class="token operator">*</span>nx<span
+                    class="token punctuation">)</span> <span class="token operator">:</span> <span
+                    class="token function">payload</span><span class="token punctuation">(</span>pay<span
+                    class="token punctuation">)</span><span class="token punctuation">,</span> <span
+                    class="token function">next</span><span class="token punctuation">(</span>nx<span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span><span
+                    class="token punctuation">}</span>
+	<span class="token keyword">void</span> <span class="token function">print</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token keyword">const</span><span class="token punctuation">;</span>
+private<span class="token operator">:</span>
+	T payload<span class="token punctuation">;</span>
+	Node<span class="token operator">&lt;</span>T<span class="token operator">&gt;</span> <span
+                    class="token operator">*</span>nx<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span class="token comment">//template_class2.cpp</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span
+        class="token string">"template_class2.h"</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span
+        class="token string">&lt;iostream&gt;</span></span>
+
+template<span class="token operator">&lt;</span> typename T<span class="token operator">&gt;</span>
+<span class="token keyword">void</span> Node<span class="token operator">&lt;</span>T<span
+                    class="token operator">&gt;</span><span class="token operator">::</span><span
+                    class="token function">print</span><span class="token punctuation">(</span><span
+                    class="token punctuation">)</span> <span class="token keyword">const</span> <span
+                    class="token punctuation">{</span>
+ 	<span class="token keyword">const</span> Node<span class="token operator">&lt;</span>T<span class="token operator">&gt;</span> <span
+                    class="token operator">*</span>cur <span class="token operator">=</span> this<span
+                    class="token punctuation">;</span>
+	<span class="token keyword">while</span><span class="token punctuation">(</span>cur <span
+                    class="token operator">!=</span> <span class="token constant">NULL</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+		std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> cur <span
+                    class="token operator">-&gt;</span>payload <span class="token operator">&lt;&lt;</span> <span
+                    class="token string">' '</span><span class="token punctuation">;</span>
+		cur <span class="token operator">=</span> cur<span class="token operator">-&gt;</span>next<span
+                    class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> std<span
+                    class="token operator">::</span>endl<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <p>When we try to use it we get errors in certain areas:</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded">Node<span class="token operator">&lt;</span><span
+                class="token keyword">float</span><span class="token operator">&gt;</span> f3 <span
+                class="token operator">=</span> <span class="token punctuation">{</span><span
+                class="token number">95.1f</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span
+                class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token comment">// instantiates Node&lt;float&gt;</span>
+Node<span class="token operator">&lt;</span><span class="token keyword">float</span><span
+                    class="token operator">&gt;</span> f2 <span class="token operator">=</span> <span
+                    class="token punctuation">{</span><span class="token number">34.4f</span><span
+                    class="token punctuation">,</span> f3<span class="token punctuation">}</span><span
+                    class="token punctuation">;</span>
+d2<span class="token punctuation">.</span><span class="token function">print</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span> <span class="token comment">// instantiate Node&lt;float&gt;::print</span>
+
+Node<span class="token operator">&lt;</span><span class="token keyword">int</span><span
+                    class="token operator">&gt;</span> i2 <span class="token operator">=</span> <span
+                    class="token punctuation">{</span><span class="token number">32</span><span
+                    class="token punctuation">,</span> <span class="token constant">NULL</span><span
+                    class="token punctuation">}</span><span class="token punctuation">;</span> <span
+                    class="token comment">// instantiates Node&lt;int&gt;</span>
+Node<span class="token operator">&lt;</span><span class="token keyword">int</span><span
+                    class="token operator">&gt;</span> i1 <span class="token operator">=</span> <span
+                    class="token punctuation">{</span><span class="token number">3</span><span
+                    class="token punctuation">,</span> i2<span class="token punctuation">}</span><span
+                    class="token punctuation">;</span>
+i1<span class="token punctuation">.</span><span class="token function">print</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span> <span class="token comment">// instantiates Node&lt;int&gt;::print</span>
+</code></pre>
+        <ul>
+            <li>When instantiating, compiler needs the relevant template classes and functions to be fully defined
+                already because the compiler acts <strong>lazily</strong> when initiating templates.
+                <ul>
+                    <li>Lazily instantiating <code>Node&lt;float&gt;</code> and <code>Node&lt;int&gt;</code> is fine
+                        because both are defined in the header.
+                    </li>
+                    <li>Instantiating <code>Node&lt;float&gt;::print()</code> and <code>Node&lt;int&gt;::print()</code>
+                        won't work because they are in separate source file that is not <code>#include</code>d (by
+                        convention we never <code>#include#</code> <code>cpp</code> files)
+                    </li>
+                </ul>
+            </li>
+            <li>In contrast to typical functions or class use, where definition can be in separate <code>.cpp</code>
+                files. i.e. template classes have to be typically defined in the header files.
+            </li>
+            <li>Solutions:
+                <ul>
+                    <li>Move <code>Node&lt;T&gt;::print()</code> definition back into header.</li>
+                    <li>Put member function definitions in a separate file and include it, but don't give it a
+                        <code>cpp</code> extension. i.e. a different extension such as <code>inc</code> or
+                        <code>.inl</code> and use <code>#include "template_class2.inc"</code> along with <code>#inlcude
+                            "template_class2.h"</code> (or use <code>#inlcude "template_class2.inc"</code> at the end of
+                        the header file).
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <br>
+    </article>
+</main>
+<div id="foot"></div>
+</body>
+</html>

@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Journal: Intermediate Programming</title>
+    <base href="../../">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#nav").load("navigation.html");
+            $("#foot").load("footer.html");
+        });
+    </script>
+</head>
+
+<body>
+<div id="nav"></div>
+<main class="site-main container-md px-3">
+    <div class="file-path">
+        <ul class="path">
+            <li><a href="course/intermediate-programming.html">Intermediate Programming</a></li>
+            <li><a href="course/intermediate-programming/cpp-classes.html">C++ Classes</a></li>
+        </ul>
+    </div>
+    <article class="notes">
+        <h1 class="course-title title-1" id="C++ Classes">C++ Classes</h1>
+        <p>We already know about <a class="internal-link" data-href="Structures.md"
+                                    href="course/intermediate-programming/structures.html"
+                                    target="_blank" rel="noopener"><code>structs</code></a> which bring together several
+            variables that describe a "thing." However, to implement functions, we'd have to pass the
+            <code>struct</code> by value. </p>
+        <p>In the object oriented way, we prefer to have related functionality (<code>print_rectangle</code>,
+            <code>area</code> for a rectangle class) be part of the object (the <code>struct</code>)</p>
+        <h2 id="what-is-a-class">What is a class</h2>
+        <ul>
+            <li>A class definition is like a <em>blueprint</em> defining a type.</li>
+            <li>Objects of that type are created from that <em>blueprint</em></li>
+            <li>Once we define a class, we have one blueprint from which we can create 0 or more objects.</li>
+            <li>Each of the objects is an <em>instance</em> of the class and has its own copies of all instance
+                variables.
+            </li>
+        </ul>
+        <h2 id="Writing C++ Classes">Writing C++ Classes</h2>
+        <ul>
+            <li>Class definition goes in a <code>.h</code> file.</li>
+            <li>Functions can be declared and defined inside <code>class {...}</code>.</li>
+            <li>Only define member functions inside the class definition if it's <em>very</em> short. This is called
+                "in-lining" the function definition. Otherwise, put a prototype in the class definition and define the
+                member function in a <code>.cpp</code> file.
+                <ul>
+                    <li>You'll need to qualify the function with the class scope such as
+                        <code>Classname::function(){}</code> in the <code>.cpp</code> file.
+                    </li>
+                    <li>Do not try to initial class fields immediately when they are declared. E.g., <code>double width
+                        = 10;</code> because this is allowed for static fields.
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <h3 id="const modifier">const modifier</h3>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span
+                class="token keyword">void</span> <span class="token function">print</span><span
+                class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span> <span
+                class="token punctuation">{</span>
+	<span class="token punctuation">.</span><span class="token punctuation">.</span><span
+                    class="token punctuation">.</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <ul>
+            <li>The use of <code>const</code> as modifier in method header indicates that the function will not modify
+                any member fields.
+            </li>
+            <li><code>const</code> can be used for member fields too.</li>
+        </ul>
+        <h3 id="Examples">Examples</h3>
+        <p>In-lining example:</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span class="token comment">// rectangle.h</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifndef</span> <span
+        class="token expression">RECTANGLE_H</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span
+        class="token macro-name">RECTANGE_H</span></span>
+
+class Rectangle <span class="token punctuation">{</span>
+	<span class="token punctuation">.</span><span class="token punctuation">.</span><span
+                    class="token punctuation">.</span>
+	<span class="token keyword">double</span> <span class="token function">area</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token keyword">const</span> <span class="token punctuation">{</span>
+	<span class="token comment">// in-lining</span>
+	<span class="token keyword">return</span> width<span class="token operator">*</span>height<span
+                    class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token punctuation">.</span><span class="token punctuation">.</span><span
+                    class="token punctuation">.</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span> <span
+        class="token comment">//RECTANGLE_H</span></span>
+</code></pre>
+        <p> Defining a function outside class:</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span class="token comment">// rectangle.h</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifndef</span> <span
+        class="token expression">RECTANGLE_H</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span
+        class="token macro-name">RECTANGLE_H</span></span>
+
+class Rectangle <span class="token punctuation">{</span>
+	<span class="token punctuation">.</span><span class="token punctuation">.</span><span
+                    class="token punctuation">.</span>
+	<span class="token keyword">double</span> <span class="token function">area</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token keyword">const</span><span class="token punctuation">;</span>
+	<span class="token punctuation">.</span><span class="token punctuation">.</span><span
+                    class="token punctuation">.</span>
+<span class="token punctuation">}</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span> <span
+        class="token comment">//RECTANGLE_H</span></span>
+</code></pre>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span class="token comment">// rectangle.cpp</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span
+        class="token string">"rectangle.h"</span></span>
+
+<span class="token keyword">double</span> Rectangle<span class="token operator">::</span><span class="token function">area</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token keyword">const</span> <span class="token punctuation">{</span>
+	<span class="token comment">//define outside class</span>
+	<span class="token keyword">return</span> width <span class="token operator">*</span> height<span
+                    class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <p>class2.cpp:</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span
+                class="token macro property"><span class="token directive-hash">#</span><span
+                class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+
+class Rectangle <span class="token punctuation">{</span>
+public<span class="token operator">:</span>
+	<span class="token keyword">double</span> width<span class="token punctuation">;</span>
+	<span class="token keyword">double</span> height<span class="token punctuation">;</span>
+	
+	<span class="token keyword">void</span> <span class="token function">print</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token keyword">const</span> <span class="token punctuation">{</span>
+		std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span
+                    class="token string">"width="</span> <span class="token operator">&lt;&lt;</span> width <span
+                    class="token operator">&lt;&lt;</span> <span class="token string">", height="</span> <span
+                    class="token operator">&lt;&lt;</span> height <span class="token operator">&lt;&lt;</span> std<span
+                    class="token operator">::</span>endl<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	
+	<span class="token keyword">double</span> <span class="token function">area</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token keyword">const</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> width<span class="token operator">*</span>height<span
+                    class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+	Rectangle r <span class="token operator">=</span> <span class="token punctuation">{</span><span
+                    class="token number">30.0</span><span class="token punctuation">,</span> <span class="token number">40.0</span><span
+                    class="token punctuation">}</span><span class="token punctuation">;</span>
+	r<span class="token punctuation">.</span><span class="token function">print</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+	std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span
+                    class="token string">"area="</span> <span class="token operator">&lt;&lt;</span> r<span
+                    class="token punctuation">.</span><span class="token function">area</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token operator">&lt;&lt;</span> std<span class="token punctuation">;</span><span
+                    class="token punctuation">;</span>endl<span class="token punctuation">;</span>
+	<span class="token keyword">return</span> <span class="token number">0</span><span
+                    class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <ul>
+            <li>Notice that the member functions doesn't need to pass in the parameters since they can directly access
+                the fields because they are in the same class.
+            </li>
+        </ul>
+        <h2 id="protection">Protection</h2>
+        <p>Fields and member functions can be <code>public</code>, <code>private</code>, or <code>protected</code>. </p>
+        <ul>
+            <li>A <code>public</code> field or member function can be accessed freely by any code with access to the
+                class definition (code that includes the <code>.h</code> file).
+            </li>
+            <li>A <code>private</code> field or member function can be accessed from other member functions in the
+                class, but <strong>not</strong> by a user of the class.<br>
+                - Base-class members marked <code>private</code> cannot be accessed from member functions defined in the
+                derived class. (They are still there, only derived class member functions can't use them without <code>public</code>
+                or <code>protected</code> accessor or mutator functions)<br>
+                We use <code>public:</code> and <code>private:</code> to divide class definition into sections according
+                to whether members are <code>public</code> or <code>private</code>.<br>
+                <code>private</code> is default.
+            </li>
+        </ul>
+        <p>How to section:</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded">class Rectangle <span
+                class="token punctuation">{</span>
+public<span class="token operator">:</span>
+	<span class="token punctuation">.</span><span class="token punctuation">.</span><span
+                    class="token punctuation">.</span>
+	<span class="token keyword">double</span> <span class="token function">area</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token keyword">const</span> <span class="token punctuation">{</span>
+	<span class="token comment">//definition inside class</span>
+	<span class="token keyword">return</span> width <span class="token operator">*</span> height<span
+                    class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token punctuation">.</span><span class="token punctuation">.</span><span
+                    class="token punctuation">.</span>
+private<span class="token operator">:</span>
+	<span class="token keyword">double</span> width<span class="token punctuation">,</span> height<span
+                    class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+        <p>\</p>
+        <ul>
+            <li>A <code>protected</code> field or member functions can be accessed from member functions of their class
+                and from functions defined in derived classes.
+                <ul>
+                    <li>Based class members marked <code>public</code> or <code>protected</code> can be accessed from
+                        member functions defined in the derived class
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <h2 id="`this` pointer"><code>this</code> pointer</h2>
+        <p>When another member function has a parameter with the same name as the instance variable it is supposed to
+            initialize, the local variable (parameter) will hide the instance variable.<br>
+            <code>this</code> is a <em>pointer</em> to the instance variable and can be used to clarify.</p>
+        <ul>
+            <li><code>this-&gt;init</code> always refers to the instance variable <code>init</code>.</li>
+        </ul>
+        <p>We don't use <code>this</code> unless necessary in C++, unlike Java, where it is a good style to always
+            qualify instance members.</p>
+        <h2 id="array-of-objects">Array of Objects</h2>
+        <p>Declaring an array of a class type makes <em>all</em> the objects, calling the <a class="internal-link"
+                                                                                             data-href="Constructors and Destructors.md#Default Constructors"
+                                                                                             href="course/intermediate-programming/constructors-and-destructors.html#default-constructors"
+                                                                                             target="_blank"
+                                                                                             rel="noopener">default
+            constructor</a> to create each one. Thus, requires the class to have a default constructor.</p>
+        <p>What if you don't want to have default constructor?</p>
+        <ol>
+            <li>
+                <p>List<br>
+                    Use list-initialization to initialize each object in the array.<br>
+                    <code>MyThing s[3] = {{3}, {2}, {4}};</code><br>
+                    Every value inside will be the engines for the objects. <code>MyThing</code> only has one member
+                    field, so we only provide one value. This is called listing test when we initialize structures by
+                    passing in different values. </p>
+            </li>
+            <li>
+                <p>use <code>STL</code> to reserve some element size</p>
+            </li>
+        </ol>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span
+                class="token keyword">int</span> <span class="token function">main</span><span
+                class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                class="token punctuation">{</span>
+	<span class="token comment">// empty vector and reserve 10 element size</span>
+	std<span class="token operator">::</span>vector<span class="token operator">&lt;</span>MyThing<span
+                    class="token operator">&gt;</span> s<span class="token punctuation">;</span>
+	s<span class="token punctuation">.</span><span class="token function">reserve</span><span class="token punctuation">(</span><span
+                    class="token number">10</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+	
+	<span class="token comment">// initialization using emplace_back</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span><span
+                    class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span
+                    class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span
+                    class="token number">10</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span
+                    class="token punctuation">)</span> s<span class="token punctuation">.</span><span
+                    class="token function">emplace_back</span><span class="token punctuation">(</span>i<span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <br>
+    </article>
+</main>
+<div id="foot"></div>
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Journal: Intermediate Programming</title>
+    <base href="../../">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#nav").load("navigation.html");
+            $("#foot").load("footer.html");
+        });
+    </script>
+</head>
+
+<body>
+<div id="nav"></div>
+<main class="site-main container-md px-3">
+    <div class="file-path">
+        <ul class="path">
+            <li><a href="course/intermediate-programming.html">Intermediate Programming</a></li>
+            <li><a href="course/intermediate-programming/polymorphism.html">Polymorphism</a></li>
+        </ul>
+    </div>
+    <article class="notes">
+        <h1 class="course-title title-1" id="polymorphism">Polymorphism</h1>
+        <p>Polymorphism means "many forms". </p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span
+                class="token keyword">int</span> <span class="token function">main</span><span
+                class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                class="token punctuation">{</span>
+	std<span class="token operator">::</span>vector<span class="token operator">&lt;</span>Account<span
+                    class="token operator">&gt;</span> my_accounts<span class="token punctuation">;</span>
+	
+	<span class="token comment">// this is sort of OK (except: "slicing" will occur)</span>
+	my_accounts<span class="token punctuation">.</span><span class="token function">push_back</span><span
+                    class="token punctuation">(</span><span class="token function">CheckingAccount</span><span
+                    class="token punctuation">(</span><span class="token number">2000.0</span><span
+                    class="token punctuation">)</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+	
+	std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> my_accounts<span
+                    class="token punctuation">.</span><span class="token function">back</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">.</span><span class="token function">type</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span
+                    class="token punctuation">;</span>
+	<span class="token keyword">return</span> <span class="token number">0</span><span
+                    class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <ul>
+            <li>We have an array of <code>Account</code> and we pushed the <code>CheckingAccount</code> back into it.
+                It's acceptable to treat this <code>CheckingAccount</code> as an <code>Account</code> because <code>CheckingAccount</code>
+                is a kind of <code>Account</code> and has everything that <code>Account</code> has because it inherits
+                from it.
+            </li>
+            <li>Each class needs the function <code>type()</code> for different outputs.</li>
+        </ul>
+        <h2 id="functions">Functions</h2>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span
+                class="token keyword">void</span> <span class="token function">print_account_type</span><span
+                class="token punctuation">(</span><span class="token keyword">const</span> Account<span
+                class="token operator">&amp;</span> acct<span class="token punctuation">)</span> <span
+                class="token punctuation">{</span>
+	std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> acct<span
+                    class="token punctuation">.</span><span class="token function">type</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span
+                    class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+	<span class="token punctuation">.</span><span class="token punctuation">.</span><span
+                    class="token punctuation">.</span>
+	CheckingAccount <span class="token function">checking</span><span class="token punctuation">(</span><span
+                    class="token number">1000.0</span><span class="token punctuation">,</span> <span
+                    class="token number">2.00</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+	<span class="token punctuation">.</span><span class="token punctuation">.</span><span
+                    class="token punctuation">.</span>
+	<span class="token function">print_account_type</span><span class="token punctuation">(</span>checking<span
+                    class="token punctuation">)</span><span class="token punctuation">;</span> <span
+                    class="token comment">// Prints "Account"</span>
+	<span class="token punctuation">.</span><span class="token punctuation">.</span><span
+                    class="token punctuation">.</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <ul>
+            <li>
+                <p>In main, <code>checking</code> has type <code>CheckingAccount</code>.</p>
+            </li>
+            <li>
+                <p>Passed to <code>print_account_type()</code> as <code>const Account&amp;</code></p>
+                <ul>
+                    <li>This is allowed because <code>CheckingAccout</code> is derived from <code>Account</code> and
+                        inherits everything from <code>Account</code>.
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <p>Prints <code>Account</code> because <code>acct</code> is treated as an <code>Account</code>. </p>
+            </li>
+            <li>
+                <p>Can we force <code>print_account_type()</code> to call the function corresponding to the <strong>actual</strong>
+                    type (<code>CheckingAccount</code>) rather than the locally declared base type (<code>Account</code>)?
+                </p>
+                <ul>
+                    <li>Yes, requires <a class="internal-link" data-href="Polymorphism#Dynamic Binding"
+                                         href="course/intermediate-programming/polymorphism.html#dynamic-binding"
+                                         target="_blank" rel="noopener">dynamic binding</a>.
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <p><br>
+            Usually you may use a variable of a derived type <strong>as though it has the base type</strong> because
+            <code>CheckingAccount</code> <strong>is-an</strong> <code>Account</code>.</p>
+        <h2 id="dynamic-binding">Dynamic Binding</h2>
+        <p>To use it, we declare relevant member functions as <code>virtual</code>.</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded">class Account<span
+                class="token punctuation">{</span>
+public<span class="token operator">:</span>
+	<span class="token punctuation">.</span><span class="token punctuation">.</span><span
+                    class="token punctuation">.</span>
+	virtual std<span class="token operator">::</span>string <span class="token function">type</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token keyword">const</span> <span class="token punctuation">{</span> <span
+                    class="token keyword">return</span> <span class="token string">"Account"</span><span
+                    class="token punctuation">;</span> <span class="token punctuation">}</span> 
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+class CheckingAccount <span class="token operator">:</span> public Account <span class="token punctuation">{</span>
+public<span class="token operator">:</span>
+	<span class="token punctuation">.</span><span class="token punctuation">.</span><span
+                    class="token punctuation">.</span>
+	virtual std<span class="token operator">::</span>string <span class="token function">type</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token keyword">const</span> <span class="token punctuation">{</span> <span
+                    class="token keyword">return</span> <span class="token string">"CheckingAccount"</span><span
+                    class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+        <p><a class="internal-link" data-href="Dynamic dispatch#Virtual Dynamic Dispatch"
+              href="course/intermediate-programming/dynamic-dispatch.html#virtual-dynamic-dispatch"
+              target="_blank" rel="noopener"><code>virtual</code></a> means that the function is essentially virtual and
+            can be replaced by something else. </p>
+        <ul>
+            <li>If the derived class implements the same function, then the derived class will override the base
+                class.
+            </li>
+        </ul>
+        <br>
+    </article>
+</main>
+<div id="foot"></div>
+</body>
+</html>

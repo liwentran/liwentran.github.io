@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Journal: Intermediate Programming</title>
+    <base href="../../">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#nav").load("navigation.html");
+            $("#foot").load("footer.html");
+        });
+    </script>
+</head>
+
+<body>
+<div id="nav"></div>
+<main class="site-main container-md px-3">
+    <div class="file-path">
+        <ul class="path">
+            <li><a href="course/intermediate-programming.html">Intermediate Programming</a></li>
+            <li><a href="course/intermediate-programming/exceptions.html">Exceptions</a></li>
+        </ul>
+    </div>
+    <article class="notes">
+        <h1 class="course-title title-1" id="exceptions">Exceptions</h1>
+        <p>We use exceptions to indicate that a <strong>fatal error</strong> has occurred, where there is no reasonable
+            way to continue from the point of error, but it might be possible to continue from <strong>somewhere
+                else</strong>, but not from the point of error</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span class="token comment">// exceptions1.cpp</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span
+        class="token string">&lt;iostream&gt;</span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+	<span class="token class-name">size_t</span> mem <span class="token operator">=</span> <span
+                    class="token number">1</span><span class="token punctuation">;</span>
+	<span class="token keyword">while</span> <span class="token punctuation">(</span>true<span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">char</span> <span class="token operator">*</span>lots_of_mem <span
+                    class="token operator">=</span> new <span class="token keyword">char</span><span
+                    class="token punctuation">[</span>mem<span class="token punctuation">]</span><span
+                    class="token punctuation">;</span>
+		delete<span class="token punctuation">[</span><span class="token punctuation">]</span> lots_of_mem<span
+                    class="token punctuation">;</span>
+		mem<span class="token operator">*=</span><span class="token number">2</span><span
+                    class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span
+                    class="token string">"Forever is a long time"</span> <span class="token operator">&lt;&lt;</span> std<span
+                    class="token operator">::</span>endl<span class="token punctuation">;</span>
+	<span class="token keyword">return</span> <span class="token number">0</span><span
+                    class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <ul>
+            <li>Output:</li>
+        </ul>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded">$ <span
+                class="token punctuation">.</span><span class="token operator">/</span>exceptions1
+terminate called after throwing an instance of <span class="token string">'std::bad_alloc'</span>
+	<span class="token function">what</span><span class="token punctuation">(</span><span
+                    class="token punctuation">)</span><span class="token operator">:</span> std<span
+                    class="token operator">::</span>bad_alloc
+<span class="token function">Aborted</span> <span class="token punctuation">(</span>core dumped<span
+                    class="token punctuation">)</span>
+</code></pre>
+        <ul>
+            <li>This program keeps allocating bigger arrays until an allocation fails.</li>
+            <li>The exception has been trown here because any pointer returned by <code>new[]</code> wouldn't be usable;
+                program doesn't necessarily expect that.
+                <ul>
+                    <li>Program can signal that it <strong>does</strong> expect that by <strong>catching</strong> the
+                        appropriate exception. (If it doesn't do that, the exception crashes the program)
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <h2 id="exception-class">Exception Class</h2>
+        <p>Standard exceptions:<br>
+            <img width="70%" src="https://www.cs.uah.edu/~rcoleman/CS307/SelectedTopics/Images/ExceptionClasses.jpg"
+                 referrerpolicy="no-referrer"></p>
+        <p>If you want to implement your own exception, you can inherit one of them.</p>
+        <h2 id="example exception mechanism">Example exception mechanism</h2>
+        <p>Use the <code>try</code> <code>catch</code> keywords</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span class="token comment">// exceptions2.cpp</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span
+        class="token string">&lt;iostream&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span
+        class="token string">&lt;new&gt;</span> <span class="token comment">//bad_alloc defined here</span></span>
+<span class="token keyword">int</span> <span class="token function">main</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+	<span class="token class-name">size_t</span> mem <span class="token operator">=</span> <span
+                    class="token number">1</span><span class="token punctuation">;</span>
+	<span class="token keyword">char</span> <span class="token operator">*</span>lots_of_mem<span
+                    class="token punctuation">;</span>
+	try <span class="token punctuation">{</span>
+		<span class="token keyword">while</span><span class="token punctuation">(</span>true<span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+			lots_of_mem <span class="token operator">=</span> new <span class="token keyword">char</span><span
+                    class="token punctuation">[</span>mem<span class="token punctuation">]</span><span
+                    class="token punctuation">;</span>
+			delete<span class="token punctuation">[</span><span class="token punctuation">]</span> lots_of_mem<span
+                    class="token punctuation">;</span>
+			mem<span class="token operator">*=</span><span class="token number">2</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+	<span class="token function">catch</span> <span class="token punctuation">(</span><span
+                    class="token keyword">const</span> std<span class="token operator">::</span>bad_alloc<span
+                    class="token operator">&amp;</span> ex<span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+		std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span
+                    class="token string">"got a bad_alloc"</span>
+			<span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span> endl <span
+                    class="token operator">&lt;&lt;</span> ex<span class="token punctuation">.</span><span
+                    class="token function">what</span><span class="token punctuation">(</span><span
+                    class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> std<span
+                    class="token operator">::</span>endl<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span
+                    class="token string">"Forever is a long time"</span> <span class="token operator">&lt;&lt;</span> std<span
+                    class="token operator">::</span>endl<span class="token punctuation">;</span>
+	<span class="token keyword">return</span> <span class="token number">0</span><span
+                    class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <pre><code>$ ./exceptions2
+got a bad alloc
+std::badd_alloc
+Forever is a long time
+</code></pre>
+        <p><br>
+            Always guaranteeing that you catch out of range exceptions:</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span class="token comment">// exceptions3.cpp</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span
+        class="token string">&lt;iostream&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span
+        class="token string">&lt;vector&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span
+        class="token string">&lt;stdexcept&gt;</span> <span
+        class="token comment">// standard exception classes defined</span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+	std<span class="token operator">::</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span
+                    class="token operator">&gt;</span> vec <span class="token operator">=</span> <span
+                    class="token punctuation">{</span><span class="token number">1</span><span
+                    class="token punctuation">,</span> <span class="token number">2</span><span
+                    class="token punctuation">,</span> <span class="token number">3</span><span
+                    class="token punctuation">}</span><span class="token punctuation">;</span>
+	try <span class="token punctuation">{</span>
+		std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> vec<span
+                    class="token punctuation">.</span><span class="token function">at</span><span
+                    class="token punctuation">(</span><span class="token number">3</span><span
+                    class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> std<span
+                    class="token operator">::</span>endl<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span> <span class="token function">catch</span> <span
+                    class="token punctuation">(</span><span class="token keyword">const</span> std<span
+                    class="token operator">::</span>out_of_range<span class="token operator">&amp;</span> e<span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+		std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span
+                    class="token string">"Exception: "</span> <span class="token operator">&lt;&lt;</span> std<span
+                    class="token operator">::</span>endl <span class="token operator">&lt;&lt;</span> e<span
+                    class="token punctuation">.</span><span class="token function">what</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span
+                    class="token punctuation">;</span>
+	<span class="token punctuation">}</span> 
+	<span class="token keyword">return</span> <span class="token number">0</span><span
+                    class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <pre><code>$ ./exceptions3
+Exception:
+vector::_M_range_check __n (which is 3) &gt;= this-&gt;size() (which is 3)
+</code></pre>
+        <h3 id="exceptions-thrown-by-new">Exceptions thrown by <code>new</code></h3>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span
+                class="token keyword">char</span> <span class="token operator">*</span>lots_of_mem <span
+                class="token operator">=</span> new <span class="token keyword">char</span><span
+                class="token punctuation">[</span>mem<span class="token punctuation">]</span><span
+                class="token punctuation">;</span>
+</code></pre>
+        <p>Why doesn't <code>new[]</code> return <code>NULL</code> on failure, like <code>malloc</code>?</p>
+        <ul>
+            <li>When the call stack is deep: <code>f1() -&gt; f2() -&gt; ...</code> propagating errors backwards
+                requires much coordination.
+            </li>
+            <li>If any functions fails to propagate error back, the chain is broken.</li>
+            <li>Error encoding must be managed (e.g. 1= success, 2 = out of memory, ...); no standard (<code>enum</code>
+                helps but is not perfect).
+            </li>
+        </ul>
+        <p>Exceptions are more flexible; often less error prone, more concise than manually propagating errors back
+            through the chain of callers. </p>
+        <p><br>
+            Looking in the <a aria-label-position="top"
+                              aria-label="https://www.cplusplus.com/reference/new/operator%20new/" rel="noopener"
+                              class="external-link" href="https://www.cplusplus.com/reference/new/operator%20new/"
+                              target="_blank">documentation</a> for <code>new</code>/<code>new T[n]</code>, you can see
+            the exception thrown is of type <code>bad_alloc</code>. </p>
+        <h2 id="keywords">Keywords</h2>
+        <p>Keyword <code>try</code> marks block of code where an exception might be thrown. It tells C++: "exceptions
+            might be thrown, and I'm read to handle some or all of them".</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded">try <span class="token punctuation">{</span>
+	<span class="token keyword">while</span><span class="token punctuation">(</span>true<span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+		lots_of_mem <span class="token operator">=</span> new <span class="token keyword">char</span><span
+                    class="token punctuation">[</span>mem<span class="token punctuation">]</span><span
+                    class="token punctuation">;</span>
+		delete<span class="token punctuation">[</span><span class="token punctuation">]</span> lots_of_mem<span
+                    class="token punctuation">;</span>
+		mem<span class="token operator">*=</span><span class="token number">2</span><span
+                    class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <p><br>
+            The <code>catch</code> block, immediately after the <code>try</code> block, says what to do in the event of
+            a particular exception.</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded">	<span class="token function">catch</span><span
+                class="token punctuation">(</span><span class="token keyword">const</span> bad_alloc<span
+                class="token operator">&amp;</span> ex<span class="token punctuation">)</span> <span
+                class="token punctuation">{</span>
+		std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span
+                    class="token string">"yelo, got a bad_alloc"</span> <span class="token operator">&lt;&lt;</span> std<span
+                    class="token operator">::</span>endl<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+</code></pre>
+        <ul>
+            <li>If you catch a base exception class, you can handle a family of exceptions that inherits from this base
+                exception class. (e.g. catch <code>std::exception</code> to handle all exceptions, catch <code>std::runtime_error</code>
+                to handle <code>std::range_error</code>, <code>std::overflow_error</code>,
+                <code>std::underflow_error</code>)
+            </li>
+        </ul>
+        <p><br>
+            There can be multiple <code>catch</code> blocks for one <code>try</code> statement.</p>
+        <ul>
+            <li>The specific catch statements should come before the most general exceptions.</li>
+            <li>C++ will pass control to the <strong>first</strong> <code>catch</code> block whose type equals or is the
+                base class of the thrown exception.
+            </li>
+        </ul>
+        <h2 id="unwinding">Unwinding</h2>
+        <p>The point in the program where the exception is actually thrown is called the <strong>throw
+            point</strong>.<br>
+            When exception is thrown, we <strong>don't</strong> proceed to the next statement, instead we follow a
+            process of "unwinding"</p>
+        <p><br>
+            Unwinding: keep moving "up" to wider enclosing scopes; stop at <code>try</code> block with relevant <code>catch</code>
+            clause.<br>
+            If we unwind all the way to the point where our scope is an entire function, we jump back to the caller and
+            continue unwinding.<br>
+            If exception is never caught - i.e. we unwind all the way through <code>main</code> - exception info is
+            printed to console and program exits. </p>
+        <p><br>
+            For example, when <code>runtime_error</code> is thrown, it will keep moving up to wider enclosing scopes,
+            stop at <code>try</code> block and continue with the relevant <code>catch</code> block. </p>
+        <pre><code>if (a==b) {
+	try {
+		while {
+			try {
+				if(d%3 == 1) {
+				throw std::runtime_error("!");
+			}
+			catch (const bad_alloc &amp;e) {
+				...
+			}
+		}
+	}
+	catch (const runtime_error &amp;e) {
+		// after throw, control moves here
+	}
+}
+</code></pre>
+        <p>It will even jump back to the caller and continue unwinding. </p>
+        <p><br>
+            Unwinding will cause local variables to go out of scope, so destructors will always be called, regardless of
+            whether scope is exited because of reaching end, <code>return</code>, <code>break</code>,
+            <code>continue</code>, <code>exception</code>, ... </p>
+        <h1 class="course-title title-1" id="customizing-exceptions">Customizing Exceptions</h1>
+        <p>You can define your own exception class, derived from <code>std::exception</code>.<br>
+            Since <code>exceptions</code> are related through inheritance, you can choose whether to catch a base class
+            (thereby catching more different things) or a derived class.</p>
+        <h2 id="example-customized-exception">Example customized exception</h2>
+        <p>Exception for a game-card program:</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded">class BadCardError <span
+                class="token operator">:</span> public std<span class="token operator">::</span>runtime_error <span
+                class="token punctuation">{</span>
+public<span class="token operator">:</span>
+	<span class="token function">BadCardError</span> <span class="token punctuation">(</span>Card c<span
+                    class="token punctuation">)</span> <span class="token operator">:</span>
+	std<span class="token operator">::</span><span class="token function">runtime_error</span><span
+                    class="token punctuation">(</span><span class="token string">"bad card"</span><span
+                    class="token punctuation">)</span><span class="token punctuation">,</span> <span
+                    class="token function">card</span><span class="token punctuation">(</span>c<span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span> <span
+                    class="token punctuation">}</span>
+private<span class="token operator">:</span>
+	Card card<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+        <br>
+    </article>
+</main>
+<div id="foot"></div>
+</body>
+</html>

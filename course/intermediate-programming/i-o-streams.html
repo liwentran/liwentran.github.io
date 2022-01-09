@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Journal: Intermediate Programming</title>
+    <base href="../../">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#nav").load("navigation.html");
+            $("#foot").load("footer.html");
+        });
+    </script>
+</head>
+
+<body>
+<div id="nav"></div>
+<main class="site-main container-md px-3">
+    <div class="file-path">
+        <ul class="path">
+            <li><a href="course/intermediate-programming.html">Intermediate Programming</a></li>
+            <li><a href="course/intermediate-programming/i-o-streams.html">I/O Streams</a></li>
+        </ul>
+    </div>
+    <article class="notes">
+        <h1 class="course-title title-1" id="I/O Streams">I/O Streams</h1>
+        <h2 id="i-o">I/O</h2>
+        <p>Overview of <code>iostream</code>, the main C++ Library for input and output:</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span
+                class="token macro property"><span class="token directive-hash">#</span><span
+                class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+
+using std<span class="token operator">::</span>cin<span class="token punctuation">;</span> <span class="token comment">// default input stream</span>
+using std<span class="token operator">::</span>cout<span class="token punctuation">;</span> <span class="token comment">// default output stream</span>
+using std<span class="token operator">::</span>endl<span class="token punctuation">;</span> <span class="token comment">// end of line, flushes buffer</span>
+using std<span class="token operator">::</span>cerr<span class="token punctuation">;</span> <span class="token comment">//default error output stream</span>
+</code></pre>
+        <h3 id="cout">cout</h3>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded">cout <span class="token operator">&lt;&lt;</span> <span
+                class="token string">"Hello world!"</span> <span class="token operator">&lt;&lt;</span> endl<span
+                class="token punctuation">;</span>
+</code></pre>
+        <ul>
+            <li><code>cout</code> prints to the standard output stream (like <code>stdout</code> in C).</li>
+            <li><code>endl</code> is the new line character.</li>
+            <li><code>&lt;&lt;</code> is the <em>insert output</em> which allows you to insert something into a stream.
+            </li>
+        </ul>
+        <p>There are no format specifier (<code>%d</code>, <code>%s</code>, etc.). Items that need to be printed are
+            arranged in printing order, which is easier to read and understand. However, if you still want to use it, it
+            does work after including <code>&lt;cstdio&gt;</code>. </p>
+        <h3 id="cin">cin</h3>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded">string name<span
+                class="token punctuation">;</span>
+cin <span class="token operator">&gt;&gt;</span> name<span class="token punctuation">;</span>
+</code></pre>
+        <ul>
+            <li><code>&gt;&gt;</code> is the extract operator. Collects from standard input and stores it into the
+                variable provided.
+            </li>
+            <li><code>cin</code> is mapped to standard input. It reads one whitespace-delimited token from standard
+                input and places the result in the string <code>name</code>.
+            </li>
+            <li>Note: both are part of standard namespace: <code>using std::cin</code> and <code>using
+                std::string</code></li>
+        </ul>
+        <p> If you input an entire sentence, it will still read one token at a time (word by word per iteration). This
+            code will store the smallest word in an inputted sentence and print it out. </p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded">string word<span
+                class="token punctuation">,</span> smallest<span class="token punctuation">;</span>
+<span class="token keyword">while</span> <span class="token punctuation">(</span>cin <span class="token operator">&gt;&gt;</span> word<span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>smallest<span
+                    class="token punctuation">.</span><span class="token function">empty</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token operator">||</span> word <span class="token operator">&lt;</span> smallest<span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+		samllest <span class="token operator">=</span> word<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+count <span class="token operator">&lt;&lt;</span> smallest <span class="token operator">&lt;</span> endl<span
+                    class="token punctuation">;</span>
+</code></pre>
+        <ul>
+            <li>Note: relational operators work with strings. (operators were overloaded).</li>
+        </ul>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded">cin<span
+                class="token punctuation">.</span><span class="token function">get</span><span
+                class="token punctuation">(</span>ch<span class="token punctuation">)</span>
+</code></pre>
+        <ul>
+            <li>Reads one character from the standard input</li>
+        </ul>
+        <h3 id="chaining">Chaining</h3>
+        <p>In the <a class="internal-link" data-href="IO Streams.md#cout"
+                     href="course/intermediate-programming/i-o-streams.html#cout"
+                     target="_blank" rel="noopener">above example</a>, we send two things to <code>cout</code>, this is
+            called <em>chaining</em>. The insert operator joins all the items to write in a "chain".<br>
+            The leftmost item in the chain is the stream being written to. </p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded">cout <span class="token operator">&lt;&lt;</span> <span
+                class="token string">"We have "</span> <span class="token operator">&lt;&lt;</span> inventory <span
+                class="token operator">&lt;&lt;</span> <span class="token string">" "</span> <span
+                class="token operator">&lt;&lt;</span> item <span class="token operator">&lt;&lt;</span> <span
+                class="token string">"s left."</span> <span class="token operator">&lt;&lt;</span> endl<span
+                class="token punctuation">;</span>
+</code></pre>
+        <p><code>inventory</code> and <code>item</code> are variables. </p>
+        <h3 id="operator-overloading">Operator Overloading</h3>
+        <p><code>&lt;&lt;</code> usually does bitwise left-shift; but if operand on the left is a C++ stream
+            (<code>cout</code>), <code>&lt;&lt;</code> is the insert operator. Shifting only applies to numbers.<br>
+            More on this later. </p>
+        <h2 id="file-i-o">File I/O</h2>
+        <p>In C we used <code>fprintf</code> and <code>fscanf</code> to read and write from files. In C++, <code>std::ofstream</code>
+            and <code>std::instream</code> are their counterparts.<br>
+            These are defined in the file-stream header: <code>#include &lt;fstream&gt;</code> and still use the <code>&lt;&lt;</code>
+            and <code>&gt;&gt;</code> operators. </p>
+        <ul>
+            <li><code>ofstream</code> for writing to a file</li>
+            <li><code>ifstream</code> for reading from a file</li>
+            <li><code>fstream</code> for reading and writing to/from a file.</li>
+        </ul>
+        <h3 id="examples">Examples</h3>
+        <p>ofstream:</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span
+                class="token macro property"><span class="token directive-hash">#</span><span
+                class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span
+        class="token string">&lt;fstream&gt;</span></span>
+<span class="token keyword">int</span> <span class="token function">main</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+	std<span class="token operator">::</span>ofstream <span class="token function">ofile</span><span
+                    class="token punctuation">(</span><span class="token string">"hello.txt"</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+	ofile <span class="token operator">&lt;&lt;</span> <span class="token string">"Hello world!"</span> <span
+                    class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span
+                    class="token punctuation">;</span>
+	<span class="token keyword">return</span> <span class="token number">0</span><span
+                    class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <p>This program writes "<code>Hello world!</code>" to a text file named "<code>hello.txt</code>".</p>
+        <p>ifstream:</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span
+                class="token macro property"><span class="token directive-hash">#</span><span
+                class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span
+        class="token string">&lt;fstream&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">inclue</span> <span
+        class="token expression"><span class="token operator">&lt;</span>string<span class="token operator">&gt;</span></span></span>
+<span class="token keyword">int</span> <span class="token function">main</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+	std<span class="token operator">::</span>ifstream <span class="token function">ifile</span><span
+                    class="token punctuation">(</span><span class="token string">"hello.txt"</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+	std<span class="token operator">::</span>string word<span class="token punctuation">;</span>
+	<span class="token keyword">while</span><span class="token punctuation">(</span> ifile <span class="token operator">&gt;&gt;</span> word <span
+                    class="token punctuation">)</span>
+		std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> word <span
+                    class="token operator">&lt;&lt;</span>std<span class="token operator">::</span>endl<span
+                    class="token punctuation">;</span>
+	<span class="token keyword">return</span> <span class="token number">0</span><span
+                    class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <p>This program will print</p>
+        <pre class=" language-shell" tabindex="0"><code class="language-shell is-loaded">Hello,
+World<span class="token operator">!</span>
+</code></pre>
+        <h2 id="i-o-from-to-strings">I/O from/to strings</h2>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded">std<span
+                class="token operator">::</span>stringstream
+</code></pre>
+        <p>Instead of reading or writing to console or file, it reads and writes to a temporary string ("buffer") stored
+            inside. Useful for programs that process strings, like one that parses input. </p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span
+                class="token macro property"><span class="token directive-hash">#</span><span
+                class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span
+        class="token string">&lt;sstream&gt;</span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+	std<span class="token operator">:</span>stringstream ss<span class="token punctuation">;</span> <span
+                    class="token comment">// create object</span>
+	ss <span class="token operator">&lt;&lt;</span> <span class="token string">"Hello, world!"</span>" <span
+                    class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span
+                    class="token punctuation">;</span>
+	std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> ss<span
+                    class="token punctuation">.</span><span class="token function">str</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+	<span class="token keyword">return</span> <span class="token number">0</span><span
+                    class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <h3 id="stringstream-details">stringstream details</h3>
+        <ul>
+            <li>A string buffer that contains a sequence of characters.</li>
+            <li>Call <code>str()</code> function on a <code>stringstream</code> to create a string from that <code>stringstream</code>
+                to get the content of the buffer.
+            </li>
+            <li><code>str(string)</code> sets the content of the buffer to the string argument.
+                <ul>
+                    <li>For example, <code>std::stringstream ss("Ali")</code> creates a <code>stringstream</code> buffer
+                        and puts <code>"Ali"</code> into that stream.
+                    </li>
+                </ul>
+            </li>
+            <li><code>&lt;&lt;</code> and <code>&gt;&gt;</code> operators can be used with <code>stringstream</code> to
+                insert/extract content.
+            </li>
+        </ul>
+        <p><code>stringstream</code> also comes in flavors that only do reading or writing:</p>
+        <ul>
+            <li><code>istringstream</code> &lt;-&gt; <code>ifstream</code></li>
+            <li><code>ostringstream</code> &lt;-&gt; <code>ostream</code></li>
+        </ul>
+        <h3 id="example">example</h3>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span
+                class="token keyword">int</span> num<span class="token punctuation">;</span>
+std<span class="token operator">::</span>string word1<span class="token punctuation">,</span> word2<span
+                    class="token punctuation">;</span>
+
+ss <span class="token operator">&lt;&lt;</span> <span class="token string">"Hello"</span> <span class="token operator">&lt;&lt;</span> <span
+                    class="token string">' '</span> <span class="token operator">&lt;&lt;</span> <span
+                    class="token number">2019</span> <span class="token operator">&lt;&lt;</span> <span
+                    class="token string">" world"</span><span class="token punctuation">;</span>
+ss <span class="token operator">&gt;&gt;</span> word1 <span class="token operator">&gt;&gt;</span> num <span
+                    class="token operator">&gt;&gt;</span> word2<span class="token punctuation">;</span>
+</code></pre>
+        <p>This will store <code>Hello</code> into <code>word1</code>, <code>2019</code> into <code>num</code>, and
+            <code>world</code> into <code>word2</code>.</p>
+        <br>
+    </article>
+</main>
+<div id="foot"></div>
+</body>
+</html>

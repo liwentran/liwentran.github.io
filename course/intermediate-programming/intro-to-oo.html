@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Journal: Intermediate Programming</title>
+    <base href="../../">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#nav").load("navigation.html");
+            $("#foot").load("footer.html");
+        });
+    </script>
+</head>
+
+<body>
+<div id="nav"></div>
+<main class="site-main container-md px-3">
+    <div class="file-path">
+        <ul class="path">
+            <li><a href="course/intermediate-programming.html">Intermediate Programming</a></li>
+            <li><a href="course/intermediate-programming/intro-to-oo.html">Intro to OO</a></li>
+        </ul>
+    </div>
+    <article class="notes">
+        <h1 class="course-title title-1" id="Intro to Object Oriented Programming">Intro to Object Oriented
+            Programming<h1/>
+        <p>Where as defining new C data types used <a class="internal-link" data-href="Structures.md"
+                                                      href="course/intermediate-programming/structures.html"
+                                                      target="_blank" rel="noopener"><code>struct</code></a>, we use <a
+                class="internal-link" data-href="C++ Classes"
+                href="course/intermediate-programming/cpp-classes.html"
+                target="_blank" rel="noopener">classes</a> to define new data types in C++. </p>
+        <h2 id="overview-of-classes">Overview of classes</h2>
+        <p>Features of <a class="internal-link" data-href="C++ Classes"
+                          href="course/intermediate-programming/cpp-classes.html"
+                          target="_blank" rel="noopener">classes</a>: </p>
+        <ul>
+            <li>Include functions that directly operate on the fields.
+                <ul>
+                    <li>Special functions called <em>constructors</em> are used to initialize class objects (also called
+                        <em>instances</em> - variables declared to be of a class type).
+                    </li>
+                    <li>Special functions called <em>destructors</em> are used to perform clean-up operations just
+                        before the lifetime of a class instance ends.
+                    </li>
+                </ul>
+            </li>
+            <li>Add <em>protection levels</em> for the fields and functions (e.g. private) to provide data hiding and
+                encapsulation.
+            </li>
+            <li>Use <em>inheritance</em> to define a class by extending an existing class.</li>
+        </ul>
+        <h2 id="stream-class-hierarchy">stream class Hierarchy</h2>
+        <p>Inheritance: class A inherits from class B if every class A object is-a class B object also.<br>
+        </p>
+        <img src="course/intermediate-programming/images/cpp-stream-class-hierarchy.png" class="internal-embed"></img>
+        <p></p>
+        <ul>
+            <li><code>istream</code> and <code>ostream</code> are both derived from <code>ios</code>.</li>
+            <li><code>iostream</code> inherits from both <code>istream</code> and <code>ostream</code>.
+                <ul>
+                    <li>Note that multiple inheritance is allowed. A class can derive from multiple classes</li>
+                </ul>
+            </li>
+            <li>steam extraction (<code>&gt;&gt;</code>) operator defined for all <code>istreams</code> and insertion
+                (<code>&lt;&lt;</code>) operator defined for all <code>ostreams</code>, and because <code>fstream</code>
+                and <code>stringstream</code> are both derived from <code>iostream</code>, they can use both <code>&lt;&lt;</code>
+                and <code>&gt;&gt;</code>.
+            </li>
+        </ul>
+        <h3 id="file input (std::ifstream)">file input (std::ifstream)</h3>
+        <ul>
+            <li><code>ifstream</code> has a <em>constructor</em> taking a string specifying the filename.
+                <ul>
+                    <li>Calling the constructor with a filename is the same as calling <code>fopen</code> with the
+                        filename using a <code>r</code> flag.
+                    </li>
+                    <li>The file must already exist.</li>
+                </ul>
+            </li>
+            <li>since <code>ifstream</code> <em>inherits</em> from <code>istream</code>, we get the insertion (<code>&lt;&lt;</code>)
+                operator.
+            </li>
+            <li><code>ifstream</code> has a destructor that closes the file. When the <code>ifstream</code> object's
+                lifetime ends, it automatically closes itself.
+            </li>
+        </ul>
+        <br>
+    </article>
+</main>
+<div id="foot"></div>
+</body>
+</html>

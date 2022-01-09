@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Journal: Intermediate Programming</title>
+    <base href="../../">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#nav").load("navigation.html");
+            $("#foot").load("footer.html");
+        });
+    </script>
+</head>
+
+<body>
+<div id="nav"></div>
+<main class="site-main container-md px-3">
+    <div class="file-path">
+        <ul class="path">
+            <li><a href="course/intermediate-programming.html">Intermediate Programming</a></li>
+            <li><a href="course/intermediate-programming/inheritance.html">Inheritance</a></li>
+        </ul>
+    </div>
+    <article class="notes">
+        <h1 class="course-title title-1" id="inheritance">Inheritance</h1>
+        <h2 id="relationships">Relationships</h2>
+        <p>Inheritance models an <strong>is-a</strong> relationship.<br>
+            - E.g., a checking account <em>is a</em> kind of account.<br>
+            <br>
+            Composition or aggregation models a <strong>has-a</strong> relationship.<br>
+            - E.g., a grade list that <em>has a</em> vector of grades as part of it. </p>
+        <h2 id="Inheritance Hierarchy">Inheritance Hierarchy</h2>
+        <p>We can have multi level inheritance and have a derived class that inherits from multiple base class. </p>
+        <h2 id="declaration-and-terminology">Declaration and Terminology</h2>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded">class BaseClass <span class="token punctuation">{</span>
+	<span class="token comment">// definitions</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+class DerivedClass<span class="token operator">:</span> public BaseClass <span class="token punctuation">{</span>
+	<span class="token comment">// definitions</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <ul>
+            <li>
+                <p><strong>Derived class</strong> inherits from <strong>base class</strong>. </p>
+                <ul>
+                    <li>In Java-like vocab: "subclass inherits from superclass".</li>
+                </ul>
+            </li>
+            <li>
+                <p>This is a <strong>public inheritance</strong> (most common)</p>
+                <ul>
+                    <li>Access of members in the base class is passed down and preserved.</li>
+                </ul>
+            </li>
+            <li>
+                <p><code>protected</code> &amp; <code>private</code> inheritance is possible (not common). If you forget to explicitly say <code>public</code>, the default is <code>private</code></p>
+                <ul>
+                    <li><code>protected</code> inheritance means you will inherit all the <code>public</code> and <code>protected</code> members as <code>protected</code> field. That means all the <code>public</code> member fields/functions in the base class, after your inheritance in the derived class, will become <code>protected</code> member fields/functions. This means that future classes that derive from this derived class will not be able to access it. </li>
+                    <li><code>private</code> inheritance is even stronger. All <code>public</code> or <code>protected</code> fields/functions will become <code>private</code> in the derived class. Any class that tries to inherit this class won't have any access right to the protected fields of your base class (since the first inheritance changed the access right from <code>protected</code> to <code>private</code>.)</li>
+                    <li>Basically, the <a class="internal-link" data-href="C++ Classes.md#Protection" href="course/intermediate-programming/cpp-classes.html#protection" target="_blank" rel="noopener">access right</a> defined here will determine what access right the public inherited fields in the base class will have. </li>
+                </ul>
+            </li>
+            <li>
+                <p>Derived class inherits most members of base class, regardless of protection. They can only access <code>public</code> and <code>protected</code> </p>
+            </li>
+            <li>
+                <p>Derived class does not inherit</p>
+                <ul>
+                    <li>constructors</li>
+                    <li>assignment operators if explicitly defined</li>
+                </ul>
+            </li>
+            <li>
+                <p>Derived class cannot delete things it inherited; cannot pick and choose what to inherit</p>
+            </li>
+            <li>
+                <p>Derived class can <strong>override</strong> inherited member functions. </p>
+            </li>
+        </ul>
+        <h2 id="inheritance-and-constructor">Inheritance and Constructor</h2>
+        <p>Derived classes don't inherit constructors, but usually needs to call their base class constructor to initialize inherited data member. </p>
+        <ul>
+            <li>Do this with the base class name in C++ (no <code>super()</code> like in Java).</li>
+            <li>The base class constructor must be the first thing in the derived class constructor because if it is missing, then a default constructor for the base class will be called automatically; error if one doesn't exist. </li>
+        </ul>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span class="token function">CheckingAccount</span><span class="token punctuation">(</span><span class="token keyword">double</span> initial<span class="token punctuation">,</span> <span class="token keyword">double</span> atm<span class="token punctuation">)</span> <span class="token operator">:</span>
+	<span class="token function">Account</span><span class="token punctuation">(</span>initial<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">total_fees</span><span class="token punctuation">(</span><span class="token number">0.0</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">atm_fee</span><span class="token punctuation">(</span>atm<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span>
+</code></pre>
+        <ul>
+            <li>When a derived class object is created, its inherited (base) parts must be initialized before any newly defined parts by executing a base constructor</li>
+        </ul>
+        <h2 id="inheritance-and-destructor">Inheritance and Destructor</h2>
+        <p>When the lifetime of a derived object is about to end, two destructors are called: the one defined for the derived object, and the one defined for the base class.</p>
+        <ul>
+            <li>Destructor may be explicitly defined, or just provided the default</li>
+            <li>A chain call happens for multi-level inheritance</li>
+            <li>Constructors and destructors are executed in opposite orders!</li>
+        </ul>
+        <br>
+    </article>
+</main>
+<div id="foot"></div>
+</body>
+</html>

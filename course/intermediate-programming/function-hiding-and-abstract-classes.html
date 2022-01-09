@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Journal: Intermediate Programming</title>
+    <base href="../../">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#nav").load("navigation.html");
+            $("#foot").load("footer.html");
+        });
+    </script>
+</head>
+
+<body>
+<div id="nav"></div>
+<main class="site-main container-md px-3">
+    <div class="file-path">
+        <ul class="path">
+            <li><a href="course/intermediate-programming.html">Intermediate Programming</a></li>
+            <li><a href="course/intermediate-programming/function-hiding-and-abstract-classes.html">Function Hiding and
+                Abstract Classes</a></li>
+        </ul>
+    </div>
+    <article class="notes">
+        <h1 class="course-title title-1" id="function-hiding">Function Hiding</h1>
+        <p>If you have a function with the same name (even with different parameters) in a derived class, it will <em>hide</em>
+            the function in the base class (without the <code>virtual</code> keyword).</p>
+        <p><br>
+            Example hiding : </p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span class="token comment">//hiding5.cpp</span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span
+        class="token string">&lt;iostream&gt;</span></span>
+
+class Base <span class="token punctuation">{</span>
+public<span class="token operator">:</span>
+	virtual <span class="token keyword">void</span> <span class="token function">fun</span><span
+                    class="token punctuation">(</span><span class="token keyword">int</span> i<span
+                    class="token punctuation">,</span> <span class="token keyword">int</span> j<span
+                    class="token punctuation">)</span> <span class="token keyword">const</span> <span
+                    class="token punctuation">{</span> std<span class="token operator">::</span>cout <span
+                    class="token operator">&lt;&lt;</span> <span class="token string">"Base "</span> <span
+                    class="token operator">&lt;&lt;</span> i <span class="token operator">&lt;&lt;</span> <span
+                    class="token string">" "</span> <span class="token operator">&lt;&lt;</span> j <span
+                    class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span
+                    class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+class Derived<span class="token operator">:</span> public Base <span class="token punctuation">{</span>
+public<span class="token operator">:</span>
+	<span class="token keyword">void</span> <span class="token function">fun</span><span
+                    class="token punctuation">(</span><span class="token keyword">char</span> c<span
+                    class="token punctuation">)</span> <span class="token keyword">const</span> <span
+                    class="token punctuation">{</span>std<span class="token operator">::</span>cout <span
+                    class="token operator">&lt;&lt;</span> <span class="token string">"Derived"</span> <span
+                    class="token operator">&lt;&lt;</span> i <span class="token operator">&lt;&lt;</span> <span
+                    class="token string">" "</span> <span class="token operator">&lt;&lt;</span> j <span
+                    class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span><span
+                    class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+	Derived d<span class="token punctuation">;</span>
+	d<span class="token punctuation">.</span><span class="token function">fun</span><span
+                    class="token punctuation">(</span><span class="token number">76</span><span
+                    class="token punctuation">,</span> <span class="token number">77</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span> <span
+                    class="token comment">// Derived 76 77</span>
+	d<span class="token punctuation">.</span>Base<span class="token operator">::</span><span
+                    class="token function">fun</span><span class="token punctuation">(</span><span class="token number">76</span><span
+                    class="token punctuation">,</span> <span class="token number">77</span><span
+                    class="token punctuation">)</span> <span class="token comment">// Base 76 77</span>
+	<span class="token punctuation">(</span><span class="token punctuation">(</span>Base<span class="token operator">&amp;</span><span
+                    class="token punctuation">)</span> d<span class="token punctuation">)</span><span
+                    class="token punctuation">.</span><span class="token function">fun</span><span
+                    class="token punctuation">(</span><span class="token number">76</span><span
+                    class="token punctuation">,</span> <span class="token number">77</span><span
+                    class="token punctuation">)</span> <span class="token comment">// Derived 76 77</span>
+	<span class="token punctuation">(</span><span class="token punctuation">(</span>Base<span class="token punctuation">)</span> d<span
+                    class="token punctuation">)</span><span class="token punctuation">.</span><span
+                    class="token function">fun</span><span class="token punctuation">(</span><span class="token number">76</span><span
+                    class="token punctuation">,</span> <span class="token number">77</span><span
+                    class="token punctuation">)</span> <span class="token comment">// Base 76 77</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <ul>
+            <li>Specify <code>Base::fun</code> to chose the scope of it and compile over there</li>
+            <li>Use dynamic dispatch by casting <code>d</code> as a reference with <code>Base&amp;</code> to treat it as
+                as a memory layout of the base class. It will call the derived class version because we have the <code>virtual</code>
+                function.
+            </li>
+            <li>Simple casting will call the base class version.</li>
+        </ul>
+        <h2 id="pure-virtual-functions">Pure <code>virtual</code> functions</h2>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded">class Shape <span
+                class="token punctuation">{</span>
+public<span class="token operator">:</span>
+	virtual <span class="token keyword">double</span> <span class="token function">size</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token keyword">const</span> <span class="token operator">=</span> <span class="token number">0</span><span
+                    class="token punctuation">;</span>
+	<span class="token punctuation">.</span><span class="token punctuation">.</span><span
+                    class="token punctuation">.</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+        <ul>
+            <li>Declaring a <code>virtual</code> member function and adding <code>=0</code> means it is a pure <code>virtual</code>
+                function.
+            </li>
+            <li>In memory layout, it means to set the address of the virtual function to <code>nullptr</code>.</li>
+        </ul>
+        <p><br>
+            When we declare a pure <code>virtual</code> function:</p>
+        <ul>
+            <li>Do not give it a implementation</li>
+            <li>Make the class its declared in an abstract class.</li>
+            <li>We cannot create a new object with this type, though we might be able to create an object from a derived
+                type (if they provide an implementation for all the pure <code>virtual</code> functions).
+            </li>
+            <li>When a class has one or more pure virtual functions, it cannot be instantiated; it is <a
+                    class="internal-link" data-href="Function Hiding and Abstract Classes.md#Abstract Classes"
+                    href="course/intermediate-programming/dynamic-dispatch.html#acourse/intermediate-programming/function-hiding-and-abstract-classes.html#abstract-classes"
+                    target="_blank" rel="noopener">abstract</a>.
+            </li>
+        </ul>
+        <h1 class="course-title title-1" id="abstract-classes">Abstract Classes</h1>
+        <p>A class is <strong>abstract</strong> if it has at least one pure virtual function or has only non-public
+            constructor.</p>
+        <ul>
+            <li>Variables cannot be of abstract type</li>
+            <li>Similar to abstract class and interface in Java</li>
+            <li>We can have pointers and references of abstract class types but not concrete objects (cannot be
+                instantiated)
+            </li>
+            <li>If we do not override the pure virtual functions in derived class, then derived class also becomes
+                abstract class
+            </li>
+            <li>An abstract class can have constructors</li>
+        </ul>
+        <p><br>
+            Another way to make a class abstract is give it only non-public constructors. </p>
+        <ul>
+            <li>Can't instantiate the abstract class because constructor cannot called from the outside. Derived class
+                can still use protected constructor in base class.
+            </li>
+        </ul>
+        <p><br>
+            Example:</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded">class Piece <span
+                class="token punctuation">{</span>
+public<span class="token operator">:</span>
+	<span class="token punctuation">.</span><span class="token punctuation">.</span><span
+                    class="token punctuation">.</span>
+protected<span class="token operator">:</span>
+	<span class="token comment">// this is the only constructor</span>
+	<span class="token function">Piece</span> <span class="token punctuation">(</span>bool is_white<span
+                    class="token punctuation">)</span><span class="token operator">:</span> <span
+                    class="token function">is_white</span><span class="token punctuation">(</span>is_white<span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span> <span
+                    class="token punctuation">}</span>
+	<span class="token punctuation">.</span><span class="token punctuation">.</span><span
+                    class="token punctuation">.</span>
+private<span class="token operator">:</span>
+	bool is_white<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+class Queen<span class="token operator">:</span> public Piece <span class="token punctuation">{</span>
+	<span class="token punctuation">.</span><span class="token punctuation">.</span><span
+                    class="token punctuation">.</span>
+	<span class="token comment">// Queen constructor calls Piece constructor</span>
+	<span class="token comment">// OK because it's protected</span>
+	<span class="token function">Queen</span><span class="token punctuation">(</span>bool is_white<span
+                    class="token punctuation">)</span><span class="token operator">:</span> <span
+                    class="token function">Piece</span> <span class="token punctuation">(</span>is_white<span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span> <span
+                    class="token punctuation">}</span> 
+	<span class="token punctuation">.</span><span class="token punctuation">.</span><span
+                    class="token punctuation">.</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+        <br>
+    </article>
+</main>
+<div id="foot"></div>
+</body>
+</html>

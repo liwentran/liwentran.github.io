@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Journal: Intermediate Programming</title>
+    <base href="../../">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#nav").load("navigation.html");
+            $("#foot").load("footer.html");
+        });
+    </script>
+</head>
+
+<body>
+<div id="nav"></div>
+<main class="site-main container-md px-3">
+    <div class="file-path">
+        <ul class="path">
+            <li><a href="course/intermediate-programming.html">Intermediate Programming</a></li>
+            <li><a href="course/intermediate-programming/rule-of-three.html">Rule of Three</a></li>
+        </ul>
+    </div>
+    <article class="notes">
+        <h1 class="course-title title-1" id="rule-of-three">Rule of Three</h1>
+        <p>If a class manages resources, it has a <strong>non-trivial</strong> <a class="internal-link" data-href="Constructors and Destructors.md#Destructor" href="course/intermediate-programming/constructors-and-destructors.html#destructor" target="_blank" rel="noopener">destructor</a>. </p>
+        <p>Rule of 3: If you have to manage how an object is destroyed, you should also manage how it is copied.</p>
+        <ul>
+            <li>Technical version: If you have a non-trivial destructor, you should also define a  <a class="internal-link" data-href="Overloading.md#Copy constructor" href="course/intermediate-programming/overloading.html#copy-constructor" target="_blank" rel="noopener">copy constructor</a> and <a class="internal-link" data-href="Overloading.md#Assignment Operator" href="course/intermediate-programming/overloading.html#assignment-operator" target="_blank" rel="noopener">assignment operator</a>.</li>
+            <li>Another perspective: if your class has a non-trivial destructor, you probably don't want shallow copying. </li>
+        </ul>
+        <p><br>
+            Also consider whether or not you need equality operator (design decision).</p>
+        <br>
+    </article>
+</main>
+<div id="foot"></div>
+</body>
+</html>

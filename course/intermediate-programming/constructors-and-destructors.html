@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Journal: Intermediate Programming</title>
+    <base href="../../">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#nav").load("navigation.html");
+            $("#foot").load("footer.html");
+        });
+    </script>
+</head>
+
+<body>
+<div id="nav"></div>
+<main class="site-main container-md px-3">
+    <div class="file-path">
+        <ul class="path">
+            <li><a href="course/intermediate-programming.html">Intermediate Programming</a></li>
+            <li><a href="course/intermediate-programming/constructors-and-destructors.html">Constructors and Destructors</a></li>
+        </ul>
+    </div>
+    <article class="notes">
+        <h1 class="course-title title-1" id="constructors">Constructors</h1>
+        <p>A constructor is a member function you can define yourself that initializes <a class="internal-link"
+                                                                                          data-href="C++ Classes.md"
+                                                                                          href="course/intermediate-programming/cpp-classes.html"
+                                                                                          target="_blank"
+                                                                                          rel="noopener"><code>class</code></a>
+            and decides how fields should be initialized. There are a few rules:</p>
+        <ul>
+            <li>
+                <p>Define the constructor as <code>public</code></p>
+            </li>
+            <li>
+                <p>The function name must match the class name exactly. </p>
+            </li>
+            <li>
+                <p>If it takes no arguments, it is called a <strong>default</strong> constructor. </p>
+            </li>
+            <li>
+                <p>Provide at least one constructor or the compiler generates a default one for you.</p>
+            </li>
+            <li>
+                <p>See a good example of all the different <a class="internal-link"
+                                                              data-href="Initialization and Assignment.md#Example"
+                                                              href="course/intermediate-programming/initialization-and-assignment.md#example"
+                                                              target="_blank" rel="noopener">examples here</a>.</p>
+            </li>
+        </ul>
+        <h2 id="default-constructors">Default Constructors</h2>
+        <p>The <strong>default</strong> constructor for a class is a member function that C++ calls when you declare a
+            new variable of that class without any initialization, or when a constructor takes no arguments.</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded">class Rectangle <span
+                class="token punctuation">{</span>
+public<span class="token operator">:</span>
+    <span class="token comment">//default constructor for Rectangle</span>
+    <span class="token function">Rectangle</span><span class="token punctuation">(</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span> <span
+                    class="token punctuation">.</span><span class="token punctuation">.</span><span
+                    class="token punctuation">.</span> <span class="token punctuation">}</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span
+                    class="token punctuation">.</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <p>What does a compiler-generated default constructor do? For each member field:</p>
+        <ul>
+            <li>If it is a built-in type (<code>int</code>, <code>doubles</code>, ...) it isn’t initialized (so it has a
+                garbage value).
+            </li>
+            <li>If it is a class type, the default constructor for that class type is called.</li>
+        </ul>
+        <p>A constructor is called implicitly when a new object is declared or explicitly when one is created using
+            <code>new</code>.</p>
+        <p>If we created our own constructor, the compiler won’t generate any constructor for us.</p>
+        <h2 id="constructor-initializer-list">Constructor Initializer List</h2>
+        <p>Define our own default constructor to initialize values:</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded">class Rectangle <span
+                class="token punctuation">{</span>
+public<span class="token operator">:</span>
+    <span class="token function">Rectange</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token operator">:</span> <span class="token function">width</span><span
+                    class="token punctuation">(</span><span class="token number">0.0</span><span
+                    class="token punctuation">)</span><span class="token punctuation">,</span> <span
+                    class="token function">height</span><span class="token punctuation">(</span><span
+                    class="token number">0.0</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span> <span class="token punctuation">}</span>
+private<span class="token operator">:</span>
+    <span class="token keyword">double</span> width<span class="token punctuation">,</span> height<span
+                    class="token punctuation">;</span> 
+<span class="token punctuation">}</span>
+</code></pre>
+        <p>If the dimensions were objects themselves, we could call the object’s constructor here (e.g.
+            <code>list()</code> where <code>list</code> is a <code>vector&lt;int</code>&gt;).</p>
+        <p>Which is the better method? </p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span class="token comment">// initializer list style</span>
+<span class="token function">IntAndString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token operator">:</span> <span class="token function">i</span><span
+                    class="token punctuation">(</span><span class="token number">7</span><span
+                    class="token punctuation">)</span><span class="token punctuation">,</span> <span
+                    class="token function">s</span><span class="token punctuation">(</span><span class="token string">"hello"</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span> <span
+                    class="token punctuation">}</span>
+
+<span class="token comment">// other method</span>
+<span class="token function">IntAndString</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+    i <span class="token operator">=</span> <span class="token number">7</span><span class="token punctuation">;</span>
+    s <span class="token operator">=</span> <span class="token string">"hello"</span><span
+                    class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <p>The initializer list is the better choice because it works as expected, even for reference variables.
+            Furthermore, we can use default or non-default constructors to initialize fields: <code>IntAndString():
+                i(7), s(“hello”) { }</code>. This reduces the extra step that <code>s = “hello”</code> does of first
+            being initialized and then set, wastefully. </p>
+        <h2 id="non-default-constructors">Non-Default Constructors</h2>
+        <p>Constructors can take arguments, allowing the caller to "customize" the object.<br>
+            Example using initializer list:</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded">class DefaultSeven <span
+                class="token punctuation">{</span>
+public<span class="token operator">:</span>
+	<span class="token function">DefaultSeven</span><span class="token punctuation">(</span><span class="token keyword">int</span> initial<span
+                    class="token punctuation">)</span><span class="token operator">:</span> <span
+                    class="token function">i</span><span class="token punctuation">(</span>initial<span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span> <span
+                    class="token punctuation">}</span> 
+	
+	<span class="token keyword">int</span> <span class="token function">get_i</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span><span class="token keyword">return</span> i<span
+                    class="token punctuation">;</span><span class="token punctuation">}</span>
+
+private<span class="token operator">:</span>
+	<span class="token keyword">int</span> i<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+        <p>When we supply an alternative (non-default) constructor, there is no implicitly-created default constructor
+            by the compiler. </p>
+        <h3 id="default-arguments">Default Arguments</h3>
+        <ul>
+            <li>In C++ we can specify default values for function arguments in the definition.</li>
+            <li>We can then omit parameters when calling the function, but only sequentially from right to left.</li>
+            <li>Default argument values create several functions in one.</li>
+            <li>This applies to functions in classes, as well as any other function.</li>
+            <li>Useful when creating multiple constructors.
+                <ul>
+                    <li>If include default values for all arguments, this results in usage as a default (parameter-less)
+                        constructor.
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <p>Example of constructor with default arguments.</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded">class DefaultSeven <span
+                class="token punctuation">{</span>
+public<span class="token operator">:</span>
+	<span class="token comment">// three ways to call constructor </span>
+	<span class="token function">DefaultSeven</span><span class="token punctuation">(</span><span class="token keyword">int</span> initial <span
+                    class="token operator">=</span> <span class="token number">7</span><span
+                    class="token punctuation">,</span> <span class="token keyword">double</span> val <span
+                    class="token operator">=</span> <span class="token number">.5</span><span class="token punctuation">)</span><span
+                    class="token operator">:</span> <span class="token function">i</span><span
+                    class="token punctuation">(</span>initial<span class="token punctuation">)</span><span
+                    class="token punctuation">,</span> <span class="token function">v</span><span
+                    class="token punctuation">(</span>val<span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span> <span class="token punctuation">}</span> 
+	
+	<span class="token keyword">int</span> <span class="token function">get_i</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span><span class="token keyword">return</span> i<span
+                    class="token punctuation">;</span><span class="token punctuation">}</span>
+	<span class="token keyword">double</span> <span class="token function">get_v</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span><span class="token keyword">return</span> v<span
+                    class="token punctuation">;</span><span class="token punctuation">}</span>
+private<span class="token operator">:</span>
+	<span class="token keyword">int</span> i<span class="token punctuation">;</span>
+	<span class="token keyword">double</span> v<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+	DefaultSeven <span class="token function">one</span><span class="token punctuation">(</span><span
+                    class="token number">10</span><span class="token punctuation">,</span><span
+                    class="token number">20</span><span class="token punctuation">)</span><span
+                    class="token punctuation">,</span> <span class="token function">two</span><span
+                    class="token punctuation">(</span><span class="token number">2</span><span
+                    class="token punctuation">)</span><span class="token punctuation">,</span> tre
+<span class="token punctuation">}</span>
+</code></pre>
+        <p>What happens when a constructor parameter has the same name as the instance variable it is supposed to
+            initialize (<code>MyClass(int init) : init(init) { }</code>)? It would be okay in an initializer list
+            because context makes it okay.</p>
+        <h1 class="course-title title-1" id="destructor">Destructor</h1>
+        <p><code>new</code> as mentioned in <a class="internal-link" data-href="C++ Dynamic Allocation.md"
+                                               href="course/intermediate-programming/cpp-dynamic-allocation.html"
+                                               target="_blank" rel="noopener">C++ Dynamic Allocation</a> will call the
+            default constructor of our class.</p>
+        <p>A class <code>constructor</code>'s job is to initialize the fields of the object, it is also common for a
+            constructor to obtain a resource (allocate memory, open a file, etc.) that should be released when the
+            object is destroyed (deallocate memory, close a file, etc.).</p>
+        <p>A class <code>destructor</code> is a method called by C++ when the object's lifetime ends or it is otherwise
+            deallocated (ie, with <code>delete</code>). It is always automatically called when object's lifetime ends,
+            including when it is deallocated. However, the destructor of an object is not necessarily called if there
+            are no references or pointers to an object because there is no tracking. </p>
+        <p>A destructor's name is the class name prepended with <code>~</code>, e.g. <code>~Rectangle()</code>.</p>
+        <p>Example:</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span
+                class="token macro property"><span class="token directive-hash">#</span><span
+                class="token directive keyword">ifndef</span> <span class="token expression">SEQUENCE_H</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span
+        class="token macro-name">SEQUENCE_H</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span
+        class="token string">&lt;cassert&gt;</span></span>
+class Sequence <span class="token punctuation">{</span>
+public<span class="token operator">:</span>
+	<span class="token function">Sequence</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token operator">:</span> <span class="token function">array</span><span
+                    class="token punctuation">(</span><span class="token constant">NULL</span><span
+                    class="token punctuation">)</span><span class="token punctuation">,</span> <span
+                    class="token function">size</span><span class="token punctuation">(</span><span
+                    class="token number">0</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span> <span class="token punctuation">}</span>
+	<span class="token function">Sequence</span><span class="token punctuation">(</span><span
+                    class="token keyword">int</span> sz<span class="token punctuation">)</span> <span
+                    class="token operator">:</span> <span class="token function">array</span> <span
+                    class="token punctuation">(</span>new <span class="token keyword">int</span><span
+                    class="token punctuation">[</span>sz<span class="token punctuation">]</span><span
+                    class="token punctuation">,</span> <span class="token function">size</span><span
+                    class="token punctuation">(</span>sz<span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+		<span class="token keyword">for</span> <span class="token punctuation">(</span><span
+                    class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span
+                    class="token punctuation">;</span> i <span class="token operator">&lt;</span> sz<span
+                    class="token punctuation">;</span> i<span class="token operator">++</span><span
+                    class="token punctuation">)</span> array<span class="token punctuation">[</span>i<span
+                    class="token punctuation">]</span> <span class="token operator">=</span> i<span
+                    class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token operator">~</span><span class="token function">Sequence</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span> delete<span class="token punctuation">[</span><span
+                    class="token punctuation">]</span> array<span class="token punctuation">;</span> <span
+                    class="token punctuation">}</span>
+	<span class="token keyword">int</span> <span class="token function">at</span><span
+                    class="token punctuation">(</span><span class="token keyword">int</span> i<span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token function">assert</span><span class="token punctuation">(</span>i<span class="token operator">&lt;</span>size<span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> array<span class="token punctuation">[</span>i<span
+                    class="token punctuation">]</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+private<span class="token operator">:</span>
+	<span class="token keyword">int</span> <span class="token operator">*</span>array<span
+                    class="token punctuation">;</span>
+	<span class="token keyword">int</span> size<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span
+        class="token directive keyword">end</span> <span class="token expression"><span class="token keyword">if</span> </span><span
+        class="token comment">// SEQUENCE_H</span></span>
+</code></pre>
+        <p>Destructors are always a better option than creating a special member function for releasing resources like
+            <code>void clean_up() { delete[] array; }</code> because sometimes main will return before reaching <code>clean_up()</code>.
+        </p>
+        <br>
+    </article>
+</main>
+<div id="foot"></div>
+</body>
+</html>

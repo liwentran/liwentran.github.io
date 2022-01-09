@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Journal: Intermediate Programming</title>
+    <base href="../../">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#nav").load("navigation.html");
+            $("#foot").load("footer.html");
+        });
+    </script>
+</head>
+
+<body>
+<div id="nav"></div>
+<main class="site-main container-md px-3">
+    <div class="file-path">
+        <ul class="path">
+            <li><a href="course/intermediate-programming.html">Intermediate Programming</a></li>
+            <li><a href="course/intermediate-programming/overloading.html">Overloading</a></li>
+        </ul>
+    </div>
+    <article class="notes">
+        <p>Overloading means piling on another definition for a name. </p>
+        <h1 class="course-title title-1" id="function-overloading">Function Overloading</h1>
+        <p>C++ compiler can distinguish functions with the same name but different parameters</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span class="token comment">// overloading1.cpp</span>
+<span class="token keyword">void</span> <span class="token function">output_type</span><span
+                    class="token punctuation">(</span><span class="token keyword">int</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span> std<span
+                    class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span
+                    class="token string">"in"</span> <span class="token operator">&lt;&lt;</span> std<span
+                    class="token operator">::</span>endl<span class="token punctuation">;</span><span
+                    class="token punctuation">}</span>
+<span class="token keyword">void</span> <span class="token function">output_type</span><span
+                    class="token punctuation">(</span><span class="token keyword">float</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span> std<span
+                    class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span
+                    class="token string">"float"</span> <span class="token operator">&lt;&lt;</span> std<span
+                    class="token operator">::</span>endl<span class="token punctuation">;</span><span
+                    class="token punctuation">}</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+	<span class="token function">output_type</span><span class="token punctuation">(</span><span
+                    class="token number">1</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span> <span class="token comment">// will print int</span>
+	<span class="token function">output_type</span><span class="token punctuation">(</span><span class="token number">1.f</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span> <span
+                    class="token comment">// will print float</span>
+	<span class="token keyword">return</span> <span class="token number">0</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <p>However, it cannot distinguish functions with the same name and parameters but different return types. </p>
+        <h1 class="course-title title-1" id="operator-overloading">Operator Overloading</h1>
+        <p>Operators like <code>+</code> and <code>&lt;&lt;</code> are like functions:</p>
+        <ul>
+            <li><code>a + b</code> is like <code>plus(a, b)</code> or <code>a.plus(b)</code></li>
+            <li><code>a + b + c</code> is like <code>plus(plus(a,b),c) </code></li>
+            <li>If it is like a function, then it can be overloaded.</li>
+        </ul>
+        <p>C++ allows us to define new classes, and we can define new meanings for operators (<code>+-*/¡—&amp;=[]==!=&lt;&lt;</code>,
+            etc.)so we can use them on these type. </p>
+        <p>Operator overloading differs from function overriding, where we replace a definition of a name </p>
+        <p>To specify a new definition for an operator with symbol S, we define a method called
+            <code>operatorS</code>.<br>
+            The compiler understands that expressions using the infix operator <code>+</code> applied to the types
+            specified in the method should map to the above function. </p>
+        <h2 id="example-output-operator">Example: Output Operator</h2>
+        <p>If we had a variable <code>const std::vector&lt;int&gt; vec = {1,2,3};</code> can make <code>std::cout &lt;&lt;
+            vec &lt;&lt;std::endl</code> work by defining the appropriate function.</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded">std<span
+                class="token operator">::</span>ostream<span class="token operator">&amp;</span> operator<span
+                class="token operator">&lt;&lt;</span><span class="token punctuation">(</span>std<span
+                class="token operator">::</span>ostream<span class="token operator">&amp;</span> os<span
+                class="token punctuation">,</span> <span class="token keyword">const</span> std<span
+                class="token operator">::</span>vector<span class="token operator">&lt;</span><span
+                class="token keyword">int</span><span class="token operator">&gt;</span><span class="token operator">&amp;</span> vec<span
+                class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span>std<span
+                    class="token operator">::</span>vector<span class="token operator">&lt;</span><span
+                    class="token keyword">int</span><span class="token operator">&gt;</span><span
+                    class="token operator">::</span>const_iterator it <span class="token operator">=</span> vec<span
+                    class="token punctuation">.</span><span class="token function">cbegin</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+	it<span class="token operator">!=</span>vec<span class="token punctuation">.</span><span
+                    class="token function">cend</span><span class="token punctuation">(</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span> <span
+                    class="token operator">++</span>it<span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+		os<span class="token operator">&lt;&lt;</span><span class="token operator">*</span>it<span
+                    class="token operator">&lt;&lt;</span><span class="token string">' '</span><span
+                    class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">return</span> os<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <ul>
+            <li>
+                <p><code>std::ostream</code> is a C++ output stream. We can write to it; cannot read from it. </p>
+            </li>
+            <li>
+                <p>It is <code>std::cout's</code> type (can be passed as parameter of type).</p>
+                <ul>
+                    <li><code>const std::ostream&amp;</code> won't work because it disallows writing.</li>
+                </ul>
+            </li>
+            <li>
+                <p>Taking as first parameter and returning <code>std::ostream&amp; os</code> enables chaining. </p>
+            </li>
+            <li>
+                <p>Taking <code>const vector&lt;int&gt;&amp;</code> as the second parameter allows <code>std::vector&lt;int&gt;</code>
+                    to appear as a right operand in a <code>operator&lt;&lt;</code> call. </p>
+            </li>
+        </ul>
+        <p>To output a value, we may need access to instance variables, which are <code>private</code>. However, we
+            can't make <code>operator&lt;&lt;</code> a member of the <code>Rational</code> class (described in the next
+            section) since a member function would get the object of that class type as its implicit argument, and the
+            first argument for <code>&lt;&lt;</code> needs to be <code>std::ostream</code> type (not
+            <code>Rational</code>). </p>
+        <ul>
+            <li>Still, we can use the <code>friend</code> keyword to give the member "almost-member" status. It says
+                that the method is trusted by the class, meaning it is allowed access to private member variables, but
+                not an actual member of the class:
+            </li>
+            <li>Why do we need <code>friend</code>? When the argument is not of your class type (<code>ostream</code>),
+                then it cannot be a member of your class type.
+            </li>
+        </ul>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded">class Rational<span
+                class="token punctuation">{</span>
+public<span class="token operator">:</span>
+	<span class="token punctuation">.</span><span class="token punctuation">.</span><span
+                    class="token punctuation">.</span>
+	friend ostream<span class="token operator">&amp;</span> operator<span class="token operator">&lt;&lt;</span><span
+                    class="token punctuation">(</span>ostream<span class="token operator">&amp;</span> os<span
+                    class="token punctuation">,</span> <span class="token keyword">const</span> Rational <span
+                    class="token operator">&amp;</span>r<span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+	<span class="token punctuation">.</span><span class="token punctuation">.</span><span
+                    class="token punctuation">.</span>
+private<span class="token operator">:</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <h2 id="assignment-operator">Assignment Operator</h2>
+        <p><code>operator=</code> is called when assigning one <code>class</code> variable to another except for
+            initialization; <a class="internal-link" data-href="Overloading.md#Copy constructor"
+                               href="course/intermediate-programming/overloading.html#copy-constructor"
+                               target="_blank" rel="noopener">copy constructor</a> handles that.</p>
+        <p>Example:</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded">Image<span class="token operator">&amp;</span> operator<span
+                class="token operator">=</span><span class="token punctuation">(</span><span
+                class="token keyword">const</span> Image<span class="token operator">&amp;</span> o<span
+                class="token punctuation">)</span> <span class="token punctuation">{</span>
+	delete<span class="token punctuation">[</span><span class="token punctuation">]</span> image<span
+                    class="token punctuation">;</span> <span
+                    class="token comment">// deallocate previous image memory</span>
+	nrow <span class="token operator">=</span> o<span class="token punctuation">.</span>nrow<span
+                    class="token punctuation">;</span>
+	ncol <span class="token operator">=</span> o<span class="token punctuation">.</span>ncol<span
+                    class="token punctuation">;</span>
+	image <span class="token operator">=</span> new <span class="token keyword">char</span><span
+                    class="token punctuation">[</span>nrow<span class="token operator">*</span>ncol<span
+                    class="token punctuation">]</span><span class="token punctuation">;</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span><span
+                    class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span
+                    class="token punctuation">;</span> i <span class="token operator">&lt;</span> nrow <span
+                    class="token operator">*</span> ncol<span class="token punctuation">;</span> i<span
+                    class="token operator">++</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+		image<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span
+                    class="token operator">=</span> o<span class="token punctuation">.</span>image<span
+                    class="token punctuation">[</span>i<span class="token punctuation">]</span><span
+                    class="token punctuation">;</span>
+	<span class="token punctuation">)</span>
+	<span class="token keyword">return</span> <span class="token operator">*</span>this<span
+                    class="token punctuation">;</span> <span class="token comment">// for chaining</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <h2 id="operator-as-instance-method">Operator as Instance Method</h2>
+        <p>Suppose we have a defined class <code>Rational</code> that stores an <code>int numerator</code> and <code>int
+            denominator</code>, the best way to declare a method named <code>operator+</code> to work two
+            <code>Rational</code> objects would be as a member of the <code>Rational</code> class since the method needs
+            to access the <code>private</code> instance variables:</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded">Rational operator<span
+                class="token operator">+</span> <span class="token punctuation">(</span><span class="token keyword">const</span> Rational<span
+                class="token operator">&amp;</span> right<span class="token punctuation">)</span> <span
+                class="token keyword">const</span><span class="token punctuation">;</span>
+</code></pre>
+        <ul>
+            <li>Only one explicit argument and one implicit argument (the item pointed to by <code>this</code>).</li>
+            <li>The last <code>const</code> in that line promises not to modify the implicit object.</li>
+        </ul>
+        <p>Full class:</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span class="token comment">// operator4.h</span>
+class Rational <span class="token punctuation">{</span>
+public<span class="token operator">:</span> 
+	Rational operator<span class="token operator">+</span><span class="token punctuation">(</span><span
+                    class="token keyword">const</span> Rational<span class="token operator">&amp;</span> right<span
+                    class="token punctuation">)</span> <span class="token keyword">const</span><span
+                    class="token punctuation">;</span>
+	
+private<span class="token operator">:</span>
+	<span class="token keyword">int</span> num<span class="token punctuation">;</span>
+	<span class="token keyword">int</span> den<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token comment">// operator4.cpp</span>
+Rational Rational<span class="token operator">::</span>operator<span class="token operator">+</span><span
+                    class="token punctuation">(</span><span class="token keyword">const</span> Rational<span
+                    class="token operator">&amp;</span> right<span class="token punctuation">)</span> <span
+                    class="token keyword">const</span> <span class="token punctuation">{</span>
+	<span class="token keyword">int</span> sum_num <span class="token operator">=</span>
+	this<span class="token operator">-&gt;</span>num <span class="token operator">*</span> right<span
+                    class="token punctuation">.</span>den <span class="token operator">+</span> right<span
+                    class="token punctuation">.</span>num <span class="token operator">*</span> this<span
+                    class="token operator">-&gt;</span>den<span class="token punctuation">;</span>
+	<span class="token keyword">int</span> sum_den <span class="token operator">=</span> this<span
+                    class="token operator">-&gt;</span>den <span class="token operator">*</span> right<span
+                    class="token punctuation">.</span>den<span class="token punctuation">;</span>
+	Rational <span class="token function">result</span><span class="token punctuation">(</span>sum_num<span
+                    class="token punctuation">,</span> sum_den<span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+	<span class="token keyword">return</span> result<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <ul>
+            <li>Notice that the return type is not a reference nor a pointer. When the <code>operator+</code> method
+                returns its locally-declared result object, the <a class="internal-link"
+                                                                   data-href="Overloading.md#Copy constructor"
+                                                                   href="course/intermediate-programming/overloading.html#copy-constructor"
+                                                                   target="_blank" rel="noopener"><strong>copy
+                    constructor</strong></a> of the class is called to make a copy of <code>result</code> before the
+                stack frame is popped.<br>
+                <code>Rational(const Rational&amp; original);</code></li>
+        </ul>
+        <h1 class="course-title title-1" id="copy-constructor">Copy constructor</h1>
+        <p>If you don't define a copy constructor, a default one is created for you (implicit; compiler-generated) which
+            performs a <strong>shallow copy</strong> (simple field-by-field copy). This would not work if your class
+            manages heap memory. </p>
+        <ul>
+            <li>If one of your member fields is a pointer, the default copy constructor would simply copy the address
+                (and not the heap memory). The copy's pointer would point to the same address. This would be problematic
+                because free would be run twice on that memory address. The class fields will have have their
+                corresponding copy constructor or assignment operator functions called.
+            </li>
+            <li>Instead, we want a <strong>deep copy</strong> (new buffer created and contents coped).</li>
+        </ul>
+        <p>Copy constructor is used:</p>
+        <ul>
+            <li>When making an explicit call to a constructor feeding it an already-created class object.<br>
+                <code>Image o_wins = x_wins;</code> has the same meaning as <code>Image o_win(x_wins);</code></li>
+            <li>When sending a class object to a function using pass-by-value.</li>
+            <li>When a class object is returned from a function by value.</li>
+        </ul>
+        <p>Copy constructor initializes a <code>class</code> variable as a copy of another. </p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span class="token function">ClassName</span><span
+                class="token punctuation">(</span><span class="token keyword">const</span> ClassName<span
+                class="token operator">&amp;</span><span class="token punctuation">)</span>
+</code></pre>
+        <br>
+    </article>
+</main>
+<div id="foot"></div>
+</body>
+</html>

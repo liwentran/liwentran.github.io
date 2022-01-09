@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Journal: Intermediate Programming</title>
+    <base href="../../">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#nav").load("navigation.html");
+            $("#foot").load("footer.html");
+        });
+    </script>
+</head>
+
+<body>
+<div id="nav"></div>
+<main class="site-main container-md px-3">
+    <div class="file-path">
+        <ul class="path">
+            <li><a href="course/intermediate-programming.html">Intermediate Programming</a></li>
+            <li><a href="course/intermediate-programming/cpp-dynamic-allocation.html">C++ Dynamic Allocation</a></li>
+        </ul>
+    </div>
+    <article class="notes">
+        <h1 class="course-title title-1" id="C++ Dynamic Memory Allocation">C++ Dynamic Memory Allocation</h1>
+        <p><code>new</code> and <code>delete</code> are essentially the C++ versions of <a class="internal-link"
+                                                                                           data-href="Memory.md#Dynamic Allocation"
+                                                                                           href="course/intermediate-programming/memory.html#dynamic-allocation"
+                                                                                           target="_blank"
+                                                                                           rel="noopener"><code>malloc</code></a>
+            $and <code>free</code>. The difference is that <code>new</code> also calls the appropriate constructor if
+            used on a class type along with allocating the memory and <code>new</code> and <code>delete</code> are
+            keywords rather than functions, so you don't use <code>(...)</code> when calling them. </p>
+        <h2 id="new-usage">new usage</h2>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span
+                class="token macro property"><span class="token directive-hash">#</span><span
+                class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+	<span class="token keyword">int</span> <span class="token operator">*</span>iptr <span
+                    class="token operator">=</span> new <span class="token keyword">int</span><span
+                    class="token punctuation">;</span>
+	<span class="token operator">*</span>iptr <span class="token operator">=</span> <span class="token number">10</span><span
+                    class="token punctuation">;</span>
+	std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span
+                    class="token string">"value of iptr "</span> <span class="token operator">&lt;&lt;</span> iptr <span
+                    class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span
+                    class="token punctuation">;</span>
+	std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span
+                    class="token string">"value in *iptr "</span> <span class="token operator">&lt;&lt;</span> <span
+                    class="token operator">*</span>iptr <span class="token operator">&lt;&lt;</span> std<span
+                    class="token operator">::</span>endl<span class="token punctuation">;</span>
+	<span class="token keyword">return</span> <span class="token number">0</span><span
+                    class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <p><code>iptr</code> needs to be freed at some point.</p>
+        <h2 id="delete-usage">delete usage</h2>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span
+                class="token keyword">int</span> <span class="token operator">*</span>iptr <span class="token operator">=</span> new <span
+                class="token keyword">int</span><span class="token punctuation">;</span>
+<span class="token operator">*</span>iptr <span class="token operator">=</span> <span class="token number">1</span><span
+                    class="token punctuation">;</span>
+delete ptr<span class="token punctuation">;</span>
+</code></pre>
+        <p>After <code>delete</code>, the value of <code>iptr</code> becomes <code>0</code> and address is changed. </p>
+        <h2 id="Dynamic array allocation">Dynamic array allocation</h2>
+        <p>No size calculations needed: <code>T * fresh = new T[n]</code> allocates an array of <code>n</code> elements
+            of type <code>T</code>.</p>
+        <ul>
+            <li>If the type <code>T</code> is a built-in type (<code>int</code>, <code>float</code>, <code>char</code>,
+                etc.), then the values are not initialized, like with <code>malloc</code>.
+            </li>
+            <li>If <code>T</code> is a <a class="internal-link" data-href="Intro to OO.md#Overview of classes"
+                                          href="course/intermediate-programming/intro-to-oo.html#overview-of-classes"
+                                          target="_blank" rel="noopener"><code>class</code></a>, then <code>T</code>'s
+                default constructor is called for each element allocated.
+            </li>
+        </ul>
+        <p>To delete, use <code>delete[] fresh</code> to deallocate a pointer returned by <code>new T[n]</code>.</p>
+        <ul>
+            <li>If <code>T</code> is not a "built-in" type (<code>int</code>, <code>float</code>, <code>char</code>,
+                etc) then the values are not initialized, like with <code>malloc</code>.
+            </li>
+        </ul>
+        <br>
+    </article>
+</main>
+<div id="foot"></div>
+</body>
+</html>

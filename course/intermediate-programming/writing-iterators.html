@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Journal: Intermediate Programming</title>
+    <base href="../../">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#nav").load("navigation.html");
+            $("#foot").load("footer.html");
+        });
+    </script>
+</head>
+
+<body>
+<div id="nav"></div>
+<main class="site-main container-md px-3">
+    <div class="file-path">
+        <ul class="path">
+            <li><a href="course/intermediate-programming.html">Intermediate Programming</a></li>
+            <li><a href="course/intermediate-programming/writing-iterators.html">Writing Iterators</a></li>
+        </ul>
+    </div>
+    <article class="notes">
+        <h1 class="course-title title-1" id="writing-iterators">Writing Iterators</h1>
+        <h2 id="Iterators">Iterators</h2>
+        <p>Often times, we need to loop over all elements in the "container".</p>
+        <p>Code to "run through all elements" can look very different for different containers.</p>
+        <ul>
+            <li><code>cur</code> pointer that advances through a linked list vs. a <code>for</code> loop over integer
+                indices of a vector.
+            </li>
+        </ul>
+        <p>C++ iterators unify these different code segments. </p>
+        <ul>
+            <li>Regardless of the container specifics, an iterator feels like a pointer to successive individual
+                elements, that we can easily advance.
+            </li>
+        </ul>
+        <p><br>
+            There are many different <a class="internal-link" data-href="STL Containers.md#Iterators"
+                                        href="course/intermediate-programming/stl-containers.html#iterators"
+                                        target="_blank" rel="noopener">iterators with different types</a> provided for
+            the container <code>class</code>es in STL. </p>
+        <h2 id="defining-custom-iterators">Defining Custom Iterators</h2>
+        <p>If we make our own container class from scratch to represent, say, a deck of cards, it would be nice to have
+            an iterator for the deck.</p>
+        <p><br>
+            We define an entirely new class to represent an iterator. </p>
+        <ul>
+            <li>Write our own <code>iterator</code> (or <code>const_iterator</code> or <code>reverse_iterator</code>) as
+                a <strong>nested class</strong> inside the container class (that's why you always use the
+                <code>::</code> to access iterators).
+            </li>
+            <li>A nested class sits inside another class definition, and has access to the members of the enclosing
+                class, including <code>private</code> members.
+                <ul>
+                    <li>Each <code>iterator</code> class simply wraps a layer of <code>operator</code> overloads around
+                        a pointer.
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <p><br>
+            Suppose we want to output the elements in <code>MyContainerType c</code>, we use the <code>iterator</code>
+            in this way: </p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded"><span
+                class="token keyword">for</span> <span class="token punctuation">(</span>MyContainerType<span
+                class="token operator">::</span>iterator it <span class="token operator">=</span> c<span
+                class="token punctuation">.</span><span class="token function">begin</span><span
+                class="token punctuation">(</span><span class="token punctuation">)</span><span
+                class="token punctuation">,</span> c <span class="token operator">!=</span> c<span
+                class="token punctuation">.</span><span class="token function">end</span><span
+                class="token punctuation">(</span><span class="token punctuation">)</span><span
+                class="token punctuation">;</span> <span class="token operator">++</span>it<span
+                class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token comment">//*it can now be used to refer to each successive element</span>
+	std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span
+                    class="token operator">*</span>it <span class="token operator">&lt;</span> <span
+                    class="token string">" "</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <p>Therefore we need to overload the</p>
+        <ul>
+            <li>inequality operator (<code>operator!=</code>)</li>
+            <li>dereference operator (<code>operator*</code>)</li>
+            <li>preincrement operator (<code>operator++</code>)</li>
+        </ul>
+        <p>A real world <code>iterator</code> might also overload:</p>
+        <ul>
+            <li>equality operator (<code>operator==</code>)</li>
+            <li>arrow operator / <code>class</code> member access operator (<code>operator-&gt;</code>)</li>
+        </ul>
+        <p>In addition to overload these operators, the enclosing (<code>containing</code>) class
+            (<code>MyContainerType</code>) should also define methods named <code>begin</code> and <code>end</code>,
+            which return <code>iterators</code> to the first item in the collection, and the just-past-last element in
+            the collection, respectively.</p>
+        <ul>
+            <li>If you are defining a <code>const_iterator</code>, it should have <code>cbegin</code>, <code>cend</code>,
+                and a different overloaded <code>operator*</code>. Similarly for <code>reverse_iterator</code>, have
+                <code>rbegin</code>, <code>rend</code>, and a different overloaded <code>operator++</code></li>
+        </ul>
+        <br>
+    </article>
+</main>
+<div id="foot"></div>
+</body>
+</html>

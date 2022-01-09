@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Journal: Intermediate Programming</title>
+    <base href="../../">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#nav").load("navigation.html");
+            $("#foot").load("footer.html");
+        });
+    </script>
+</head>
+
+<body>
+<div id="nav"></div>
+<main class="site-main container-md px-3">
+    <div class="file-path">
+        <ul class="path">
+            <li><a href="course/intermediate-programming.html">Intermediate Programming</a></li>
+            <li><a href="course/intermediate-programming/oo-design-and-uml.html">OO Design and UML</a></li>
+        </ul>
+    </div>
+    <article class="notes">
+        <h1 class="course-title title-1" id="oo-design">OO Design</h1>
+        <p>Identify when objects in a problem definition are related by <a class="internal-link"
+                                                                           data-href="Inheritance.md"
+                                                                           href="course/intermediate-programming/inheritance.html"
+                                                                           target="_blank"
+                                                                           rel="noopener">inheritance</a>; when can you
+            say "every <strong>A</strong> is <strong>B</strong>"?</p>
+        <ul>
+            <li>B could be the base class (superclass, parent)</li>
+            <li>A would be the derived class (subclass, child)</li>
+            <li>class A inherits from class B.</li>
+        </ul>
+        <p>Identify when objects are related by <em><a class="internal-link" data-href="Inheritance.md#Relationships"
+                                                       href="course/intermediate-programming/inheritance.html#relationships"
+                                                       target="_blank" rel="noopener">composition</a></em>; when can you
+            say "every <strong>A</strong> has a <strong>B</strong>"?</p>
+        <ul>
+            <li>A would be the containing class</li>
+            <li>B would be the contained class</li>
+            <li>class A is partially composed from class B.</li>
+        </ul>
+        <p><em>Aggregation</em> is composition, but for collections of objects of another class type.</p>
+        <h1 id="uml">UML</h1>
+        <p>Unified Modeling Language helps us visualize relationships. </p>
+        <ul>
+            <li>class names go in rectangles</li>
+            <li>directed arrow goes from derived class (A) to base class (B)
+                <ul>
+                    <li>class A -- IS-A --&gt; class B</li>
+                </ul>
+            </li>
+            <li>diamond at containing class (A) goes to the contained class (B).
+                <ul>
+                    <li>class A &lt;&gt;-- HAS-A -- class B</li>
+                </ul>
+            </li>
+        </ul>
+        <p>UML Design of a vet clinic.<br>
+        </p>
+        <img src="course/intermediate-programming/images/uml-design.png" class="internal-embed"></img>
+        <p></p>
+        <p>Alternative UML design.<br>
+        </p>
+        <img src="course/intermediate-programming/images/uml-design-alt.png" class="internal-embed"></img>
+        <p></p>
+        <p>A more complex UML diagram would have class name, data members, and method functions in each box.</p>
+        <p><br>
+            <a aria-label-position="top" aria-label="https://www.uml.org/" rel="noopener" class="external-link"
+               href="https://www.uml.org/" target="_blank">UML</a> is much more than just class diagrams.</p>
+        <br>
+    </article>
+</main>
+<div id="foot"></div>
+</body>
+</html>

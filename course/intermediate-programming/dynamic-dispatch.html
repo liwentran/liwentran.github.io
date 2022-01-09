@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Journal: Intermediate Programming</title>
+    <base href="../../">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#nav").load("navigation.html");
+            $("#foot").load("footer.html");
+        });
+    </script>
+</head>
+
+<body>
+<div id="nav"></div>
+<main class="site-main container-md px-3">
+    <div class="file-path">
+        <ul class="path">
+            <li><a href="course/intermediate-programming.html">Intermediate Programming</a></li>
+            <li><a href="course/intermediate-programming/dynamic-dispatch.html">Dynamic Dispatch</a></li>
+        </ul>
+    </div>
+    <article class="notes">
+        <h1 class="course-title title-1" id="dynamic-dispatch">Dynamic Dispatch</h1>
+        <h2 id="memory-layout">Memory Layout</h2>
+        <p>For this simple class:</p>
+        <pre class=" language-c" tabindex="0"><code class="++ language-c is-loaded">class Account <span
+                class="token punctuation">{</span>
+public<span class="token operator">:</span>
+	<span class="token function">Account</span><span class="token punctuation">(</span><span
+                    class="token punctuation">)</span> <span class="token operator">:</span> <span
+                    class="token function">balance</span><span class="token punctuation">(</span><span
+                    class="token number">0.0</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span> <span class="token punctuation">}</span>
+	<span class="token function">Account</span><span class="token punctuation">(</span><span class="token keyword">double</span> initial<span
+                    class="token punctuation">)</span> <span class="token operator">:</span> <span
+                    class="token function">balance</span><span class="token punctuation">(</span>initial<span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span> <span
+                    class="token punctuation">}</span>
+
+	<span class="token keyword">void</span> <span class="token function">credit</span> <span
+                    class="token punctuation">(</span><span class="token keyword">double</span> amt<span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+		balance <span class="token operator">+=</span> amt<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">void</span> <span class="token function">debit</span> <span
+                    class="token punctuation">(</span><span class="token keyword">double</span> amt<span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+		balance <span class="token operator">-=</span> amt<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">double</span> <span class="token function">get_balance</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token keyword">const</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> balance<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	std<span class="token operator">::</span>string <span class="token function">type</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token keyword">const</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> <span class="token string">"Acccount"</span><span
+                    class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+private<span class="token operator">:</span>
+	<span class="token keyword">double</span> balance<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+        <p>Stack segment:</p>
+        <ul>
+            <li>double Account::balance</li>
+        </ul>
+        <p>Code segment:</p>
+        <ul>
+            <li>Account::Account()</li>
+            <li>Account::Account(double)</li>
+            <li>Account::credit(double)</li>
+            <li>Account::debit(double)</li>
+            <li>double Account::get_balance()</li>
+            <li>std::string Account::get_type()</li>
+        </ul>
+        <p><br>
+            The memory layout of a derived class would have all of the above plus more at the end. </p>
+        <h2 id="object-slicing">Object Slicing</h2>
+        <p>When a compiler lays out a derived object in memory, it puts the data of the base class first.<br>
+            We can convert from a derived class back to its base class. </p>
+        <ul>
+            <li>The compiler <strong>slices out</strong> the derived class, i.e. ignores the contents of <a
+                    class="internal-link" data-href="Dynamic dispatch#Memory Layout"
+                    href="course/intermediate-programming/dynamic-dispatch.html#memory-layout"
+                    target="_blank" rel="noopener">memory</a> past the base data.
+            </li>
+        </ul>
+        <h2 id="virtual-dynamic-dispatch">Virtual (Dynamic Dispatch)</h2>
+        <p>Use the <code>virtual</code> keyword to indicate a method to be overridden by the derived class. </p>
+        <p><br>
+            The <a class="internal-link" data-href="Dynamic dispatch#Memory Layout"
+                   href="course/intermediate-programming/dynamic-dispatch.html#memory-layout"
+                   target="_blank" rel="noopener">memory layout</a> of the <code>Account</code> class with
+            <code>virtual</code> function <code>type()</code> would look like this:</p>
+        <p>Stack segment:</p>
+        <ul>
+            <li>double Account::balance</li>
+            <li>Account::_vptr -&gt; a virtual table
+                <ul>
+                    <li>type_info Account</li>
+                    <li>Address of std::string Account::type()</li>
+                </ul>
+            </li>
+        </ul>
+        <p>Code segment:</p>
+        <ul>
+            <li>Account::Account()</li>
+            <li>Account::Account(double)</li>
+            <li>Account::credit(double)</li>
+            <li>Account::debit(double)</li>
+            <li>double Account::get_balance()</li>
+            <li>std::string Account::get_type()</li>
+        </ul>
+        <p><br>
+            When you look at the derived class, the pointer would look like:</p>
+        <ul>
+            <li>Account::_vptr -&gt; a virtual table
+                <ul>
+                    <li>type_info CheckingAccount</li>
+                    <li>Address of std::string CheckingAccount::type()</li>
+                </ul>
+            </li>
+        </ul>
+        <h2 id="override">Override</h2>
+        <p>It's a typical mistake to believe you had override a function when you have not. Often because:</p>
+        <ul>
+            <li>Fail to match <code>const</code> status</li>
+            <li>Fail to exactly match parameters and return types</li>
+        </ul>
+        <p><br>
+            The keyword <code>override</code> helps. When you intend to override a function, add the
+            <code>override</code> modifier:</p>
+        <pre class=" language-c" tabindex="0"><code class="language-c is-loaded">class Account <span
+                class="token punctuation">{</span>
+public<span class="token operator">:</span>
+	virtual std<span class="token operator">::</span>string <span class="token function">type</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token keyword">const</span> <span class="token punctuation">{</span> <span
+                    class="token keyword">return</span> <span class="token string">"Account"</span><span
+                    class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+class CheckingAccount <span class="token operator">:</span> public Account <span class="token punctuation">{</span>
+public<span class="token operator">:</span>
+	std<span class="token operator">::</span>string <span class="token function">type</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token keyword">const</span> override <span class="token punctuation">{</span> <span
+                    class="token keyword">return</span> <span class="token string">"CheckingAccount"</span><span
+                    class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+        <p>This way, if you failed to match the functions, it will throw a warning. </p>
+        <h2 id="pass-by-value-vs-by-reference">Pass by-value vs by-reference</h2>
+        <p>When you pass by-value, a <a class="internal-link" data-href="Overloading.md#Copy constructor"
+                                        href="course/intermediate-programming/overloading.html#copy-constructor"
+                                        target="_blank" rel="noopener">copy constructor</a> is called to create a copy
+            of the passing object. It takes in the passing object as a reference (object slicing happens in the
+            constructor), but the new created object is using the base class memory layout, which means the virtual
+            function is pointing to <code>Account::type()</code>. </p>
+        <p>So, a function that takes in pass-by values will not be able to take advantage of overriding. </p>
+        <br>
+    </article>
+</main>
+<div id="foot"></div>
+</body>
+</html>
