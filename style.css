@@ -234,7 +234,6 @@ hr {
 .menu-item-courses:hover .sub-menu {
     visibility: visible;
 }
-
 .menu-item-courses:hover a.menu-item-courses {
     color: var(--link-accent-hover);
 }
