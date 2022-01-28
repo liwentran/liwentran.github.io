@@ -590,6 +590,14 @@ hr {
         padding: 0 1em;
     }
 
+    .course-item__date {
+        width: 27%;
+    }
+
+    .course-item__content {
+        width: 71%;
+    }
+
     .container-xl {
         /*max-width: 1280px;*/
         max-width: 97%;
