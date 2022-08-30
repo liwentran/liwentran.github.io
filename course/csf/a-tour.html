@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Journal: Computer System Fundamentals</title>
+    <base href="../../">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#nav").load("navigation.html");
+            $("#foot").load("footer.html");
+        });
+    </script>
+</head>
+<body>
+<div id="nav"></div>
+<main class="site-main container-md px-3">
+    <div class="file-path">
+        <ul class="path">
+            <li><a href="course/computer-system-fundamentals.html">Computer System Fundamentals</a></li>
+            <li><a href="course/csf/a-tour.html">A Tour</a></li>
+        </ul>
+    </div>
+    <article class="notes">
+
+        <h1 id="welcome" class="course-title title-1">A Tour of CSF</h1>
+        <h2 id="links">Links</h2>
+        <ul>
+            <li><a aria-label-position="top" aria-label="https://jhucsf.github.io/fall2022/" rel="noopener"
+                   class="external-link" href="https://jhucsf.github.io/fall2022/" target="_blank">Course website</a>
+            </li>
+            <li><a aria-label-position="top" aria-label="https://piazza.com/class/l6pg6tmst4pxq" rel="noopener"
+                   class="external-link" href="https://piazza.com/class/l6pg6tmst4pxq" target="_blank">Piazza</a></li>
+        </ul>
+        <h2 id="introduction">Introduction</h2>
+        <p>This course is about <em>computer systems</em> (hardware + software) from the programmer's perspective (how
+            they work
+            together).</p>
+        <p>What you will learn:</p>
+        <ul>
+            <li>How computers work down to hardware (OS runtime library interfaces, machine-level ISA/assembly language,
+                processor features, OS features)
+            </li>
+            <li>How to optimize application performance</li>
+            <li>How to avoid pitfalls like security vulnerabilities</li>
+            <li>How to take full advantage of the computer's and OS's capabilities</li>
+        </ul>
+        <p>A computer system (<em>hardware</em>) is made up of:</p>
+        <ul>
+            <li>CPU: processing</li>
+            <li>RAM: store and return short term memory values</li>
+            <li>Storage: store long term values</li>
+            <li>Network interface: allows a computer to interact with other computers</li>
+            <li>Graphics Cards: display graphics</li>
+            <li>USB hub: allow user interaction</li>
+        </ul>
+        <p>A computer system (<em>software</em>) is made up of (from lowest layer to highest). Each layer provides an
+            interface
+            to the layer above</p>
+        <ul>
+            <li>OS Kernal: abstracts hardware interactions like memory. System calls (open, read, write).</li>
+            <li>C Library: programming language runtime library (like a translation system) that provides higher level
+                mechanisms for your program.
+            </li>
+            <li>Application Libraries: provides functionality</li>
+            <li>Application program: can interact with all the layers above.</li>
+        </ul>
+        <p><em>Computer networks</em> allow your program to communicate with peer systems. </p>
+        <h2 id="binary-data-representation">Binary Data Representation</h2>
+        <p>Numbers can be represented as:</p>
+        <ul>
+            <li><em>continuous</em>: numbers can have any values. Think of physical phenomenas (mass, velocity).</li>
+            <li><em>discrete</em>: a number can have one set of possible values, where the set of possible values are
+                <em>enumerable</em>.
+                Think of a range of integers.
+            </li>
+        </ul>
+        <p>Digital computers use a <em>discrete</em> representation for all data because internally, information is
+            represented
+            using <em>digital voltages</em>.</p>
+        <ul>
+            <li>High voltage (1) vs low voltage (0)</li>
+            <li>Digital circuits have many advantages over analog circuits. We will always get an exact value. Analogs
+                are
+                inexact because of measurement errors and noise, so you cannot get repeatable results.
+                <ul>
+                    <li>Computer hardware operates on <em>binary</em> (base 2) data.</li>
+                </ul>
+            </li>
+        </ul>
+    </article>
+</main>
+<div id="foot"></div>
+</body>
+</html>
